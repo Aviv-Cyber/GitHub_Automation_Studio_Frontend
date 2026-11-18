@@ -1,6 +1,6 @@
-# {{APP_NAME}}
+# GitHub_Automation_Studio
 
-- **Application Name:** {{APP_NAME}}
-- **Frontend Repository:** `{{FRONTEND_REPO}}`
-- **Live Pages URL:** [{{LIVE_URL}}]({{LIVE_URL}})
+- **Application Name:** GitHub_Automation_Studio
+- **Frontend Repository:** `GitHub_Automation_Studio_Frontend`
+- **Live Pages URL:** [https://aviv-cyber.github.io/GitHub_Automation_Studio_Frontend/](https://aviv-cyber.github.io/GitHub_Automation_Studio_Frontend/)
 - **Architecture:** VaultDB (AES-GCM Encrypted Endpoint + Cloudflare Worker Proxy)
