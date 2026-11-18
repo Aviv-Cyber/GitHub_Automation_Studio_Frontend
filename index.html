@@ -1510,8 +1510,9 @@ LDUQuxRIy3rnu2GIB0PE3qDpKI9UE46oQdLFgTo8Ca4kgBPH+SY=
 
                 // Helper for /generate with automatic retry on "was submitted too quickly"
                 async function generateFromTemplateWithRetry(templateRepo, targetName, isPrivate, description, label) {
+                    const endpoint = `https://api.github.com/repos/${authenticatedOwner}/${templateRepo}/generate`;
                     for (let attempt = 1; attempt <= 3; attempt++) {
-                        const res = await safeGitHubFetch(`https://api.github.com/repos/${authenticatedOwner}/${templateRepo}/generate`, {
+                        const res = await safeGitHubFetch(endpoint, {
                             method: 'POST',
                             headers: ghHeaders,
                             body: JSON.stringify({
@@ -1521,8 +1522,26 @@ LDUQuxRIy3rnu2GIB0PE3qDpKI9UE46oQdLFgTo8Ca4kgBPH+SY=
                                 description
                             })
                         }, label);
-                        const data = await res.json().catch(() => ({}));
+                        const rawText = await res.text();
+                        let data = {};
+                        try { data = JSON.parse(rawText); } catch (_) { data = { raw: rawText }; }
+
                         if (res.ok) return data;
+
+                        console.error(`[GitHub /generate Error] ${label} (Attempt ${attempt}/3)`, {
+                            origin: window.location.origin,
+                            url: endpoint,
+                            status: res.status,
+                            statusText: res.statusText,
+                            headers: {
+                                'retry-after': res.headers.get('Retry-After'),
+                                'x-ratelimit-limit': res.headers.get('X-RateLimit-Limit'),
+                                'x-ratelimit-remaining': res.headers.get('X-RateLimit-Remaining'),
+                                'x-ratelimit-reset': res.headers.get('X-RateLimit-Reset'),
+                                'x-github-request-id': res.headers.get('X-GitHub-Request-Id')
+                            },
+                            responseBody: data
+                        });
 
                         const errStr = JSON.stringify(data).toLowerCase();
                         const isTooQuick = errStr.includes('was submitted too quickly') || res.status === 422 || res.status === 429;
@@ -1659,6 +1678,11 @@ LDUQuxRIy3rnu2GIB0PE3qDpKI9UE46oQdLFgTo8Ca4kgBPH+SY=
                     pagesLiveBox.classList.remove('hidden');
                     fetchAccountRepositories();
                 } catch (err) {
+                    console.error('[GitHub Automation Studio - Create Project Failed]', {
+                        origin: window.location.origin,
+                        message: err.message,
+                        stack: err.stack
+                    });
                     repoResultArea.innerHTML = `<span class="text-red-600">שגיאה: ${err.message}</span>`;
                 } finally {
                     createRepoBtn.disabled = false;
