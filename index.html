@@ -468,7 +468,7 @@ const VaultDB = {
                                 <span id="copy-worker-code-text">העתק קוד Worker</span>
                             </button>
                         </div>
-                        <textarea id="worker-code-output" rows="8" readonly dir="ltr"
+                        <textarea id="worker-code-output" rows="10" readonly dir="ltr"
                                   class="w-full bg-apple-surface/60 border border-apple-border rounded-xl px-4 py-3 text-xs font-mono text-apple-text focus:outline-none resize-y"></textarea>
                     </div>
                 </details>
@@ -1131,12 +1131,39 @@ LDUQuxRIy3rnu2GIB0PE3qDpKI9UE46oQdLFgTo8Ca4kgBPH+SY=
     const cors = {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type'
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization'
     };
     if (request.method === 'OPTIONS') return new Response(null, { headers: cors });
 
     const url = new URL(request.url);
-    const repo = url.pathname.replace(/^\\/+|\\/+$/g, '') || url.searchParams.get('repo');
+    const cleanPath = url.pathname.replace(/^\\/+|\\/+$/g, '');
+
+    // Server-to-Server /generate proxy (bypasses github.io Origin anti-automation block)
+    if (cleanPath === 'gh-generate' && request.method === 'POST') {
+      const payload = await request.json();
+      const authHeader = request.headers.get('Authorization') || \`Bearer \${env.GH_TOKEN}\`;
+      const ghRes = await fetch(\`https://api.github.com/repos/\${payload.owner}/\${payload.templateRepo}/generate\`, {
+        method: 'POST',
+        headers: {
+          'Authorization': authHeader,
+          'Accept': 'application/vnd.github+json',
+          'Content-Type': 'application/json',
+          'User-Agent': 'Cloudflare-Worker-VaultDB'
+        },
+        body: JSON.stringify({
+          owner: payload.owner,
+          name: payload.name,
+          private: payload.private,
+          description: payload.description
+        })
+      });
+      return new Response(await ghRes.text(), {
+        status: ghRes.status,
+        headers: { ...cors, 'Content-Type': 'application/json' }
+      });
+    }
+
+    const repo = cleanPath || url.searchParams.get('repo');
     const owner = url.searchParams.get('owner') || '${owner}';
     if (!repo) return new Response(JSON.stringify({ ok: true, status: 'Worker Ready', appId: '${appId}', installationId: '${instId}' }), { headers: { ...cors, 'Content-Type': 'application/json' } });
 
@@ -1477,51 +1504,50 @@ LDUQuxRIy3rnu2GIB0PE3qDpKI9UE46oQdLFgTo8Ca4kgBPH+SY=
                 const password = frontendPasswordInput.value;
                 const workerBase = workerUrlInput.value.trim().replace(/\/+$/, '');
 
-                if (!token || !authenticatedOwner) {
-                    repoResultArea.innerHTML = `<span class="text-red-600">יש לאמת חיבור Master Token בלשונית ההגדרות.</span>`;
-                    return;
-                }
-                if (!baseName) {
-                    repoResultArea.innerHTML = `<span class="text-red-600">יש להזין שם לפרויקט.</span>`;
-                    return;
-                }
-                if (!password) {
-                    repoResultArea.innerHTML = `<span class="text-red-600">יש להזין סיסמת גישה להצפנת הפרונטאנד.</span>`;
-                    return;
-                }
-
-                const isReady = templatesReady || await verifyMasterTemplates();
-                if (!isReady) {
-                    repoResultArea.innerHTML = `<span class="text-amber-600">תבניות-האם טרם הוקמו — עבור ללשונית "הגדרות ותשתית" ולחץ על "הקם אוטומטית תבניות-אם".</span>`;
-                    return;
-                }
-
-                const dbRepo = `${baseName}_Backend`;
-                const publicRepo = `${baseName}_Frontend`;
-                const ghHeaders = {
-                    'Authorization': `Bearer ${token}`,
-                    'Accept': 'application/vnd.github+json',
-                    'Content-Type': 'application/json'
-                };
-
-                createRepoBtn.disabled = true;
-                createRepoBtn.classList.add('opacity-60', 'cursor-not-allowed');
-                pagesLiveBox.classList.add('hidden');
-
-                // Helper for /generate with automatic retry on "was submitted too quickly"
+                // Helper for /generate with automatic Worker Proxy fallback when hosted on *.github.io
                 async function generateFromTemplateWithRetry(templateRepo, targetName, isPrivate, description, label) {
-                    const endpoint = `https://api.github.com/repos/${authenticatedOwner}/${templateRepo}/generate`;
+                    const isHostedOnGitHubPages = window.location.hostname.endsWith('.github.io');
+                    const useWorkerProxy = isHostedOnGitHubPages && Boolean(workerBase);
+                    const endpoint = useWorkerProxy
+                        ? `${workerBase}/gh-generate`
+                        : `https://api.github.com/repos/${authenticatedOwner}/${templateRepo}/generate`;
+
+                    const requestBody = useWorkerProxy
+                        ? {
+                            owner: authenticatedOwner,
+                            templateRepo,
+                            name: targetName,
+                            private: isPrivate,
+                            description
+                        }
+                        : {
+                            owner: authenticatedOwner,
+                            name: targetName,
+                            private: isPrivate,
+                            description
+                        };
+
                     for (let attempt = 1; attempt <= 3; attempt++) {
-                        const res = await safeGitHubFetch(endpoint, {
+                        let res = await safeGitHubFetch(endpoint, {
                             method: 'POST',
                             headers: ghHeaders,
-                            body: JSON.stringify({
-                                owner: authenticatedOwner,
-                                name: targetName,
-                                private: isPrivate,
-                                description
-                            })
+                            body: JSON.stringify(requestBody)
                         }, label);
+
+                        // Fallback to direct GitHub API if Worker does not yet have /gh-generate route deployed
+                        if (useWorkerProxy && (res.status === 404 || res.status === 405)) {
+                            res = await safeGitHubFetch(`https://api.github.com/repos/${authenticatedOwner}/${templateRepo}/generate`, {
+                                method: 'POST',
+                                headers: ghHeaders,
+                                body: JSON.stringify({
+                                    owner: authenticatedOwner,
+                                    name: targetName,
+                                    private: isPrivate,
+                                    description
+                                })
+                            }, label);
+                        }
+
                         const rawText = await res.text();
                         let data = {};
                         try { data = JSON.parse(rawText); } catch (_) { data = { raw: rawText }; }
@@ -1530,6 +1556,7 @@ LDUQuxRIy3rnu2GIB0PE3qDpKI9UE46oQdLFgTo8Ca4kgBPH+SY=
 
                         console.error(`[GitHub /generate Error] ${label} (Attempt ${attempt}/3)`, {
                             origin: window.location.origin,
+                            viaWorkerProxy: useWorkerProxy,
                             url: endpoint,
                             status: res.status,
                             statusText: res.statusText,
