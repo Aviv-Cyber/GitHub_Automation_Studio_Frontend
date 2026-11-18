@@ -7,13 +7,13 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+                        sans: ['Heebo', 'Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
                     },
                     colors: {
                         apple: {
@@ -39,19 +39,19 @@
         <!-- Header -->
         <header class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-2">
             <div>
-                <h1 class="text-2xl sm:text-3xl font-semibold tracking-tight text-apple-text">GitHub Automation Studio</h1>
-                <p class="text-sm text-apple-secondary mt-1">הקמת מאגרים פרטיים, Cloudflare Worker Proxy ואפליקציות Pages באוטומציה מלאה</p>
+                <h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-apple-text">GitHub Automation Studio</h1>
+                <p class="text-sm sm:text-base text-apple-secondary mt-1 font-normal">הקמת מאגרים פרטיים, Cloudflare Worker Proxy ואפליקציות Pages באוטומציה מלאה</p>
             </div>
-            <div id="connection-badge" class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-apple-surface border border-apple-border text-xs font-medium text-apple-secondary self-start sm:self-auto">
-                <span id="status-dot" class="w-2 h-2 rounded-full bg-gray-400"></span>
+            <div id="connection-badge" class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-apple-surface border border-apple-border text-xs sm:text-sm font-medium text-apple-secondary self-start sm:self-auto">
+                <span id="status-dot" class="w-2.5 h-2.5 rounded-full bg-gray-400"></span>
                 <span id="status-text">מאמת חיבור...</span>
             </div>
         </header>
 
         <!-- Navigation Tabs -->
-        <nav class="flex items-center gap-1 p-1 bg-apple-surface border border-apple-border rounded-full w-fit" aria-label="תפריט ניווט">
+        <nav class="flex items-center gap-1.5 p-1 bg-apple-surface border border-apple-border rounded-full w-fit" aria-label="תפריט ניווט">
             <button type="button" id="tab-btn-main"
-                    class="px-5 py-2 rounded-full text-xs sm:text-sm font-medium bg-white text-apple-text shadow-xs transition-all">
+                    class="px-5 py-2 rounded-full text-xs sm:text-sm font-semibold bg-white text-apple-text shadow-xs transition-all">
                 ראשי • הקמת פרויקט
             </button>
             <button type="button" id="tab-btn-repos"
@@ -102,27 +102,27 @@
                 <div class="space-y-4">
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <div>
-                            <label for="repo-name" class="block text-xs font-medium text-apple-secondary mb-1.5">שם המאגר הפרטי (Database)</label>
+                            <label for="repo-name" class="block text-xs sm:text-sm font-medium text-apple-secondary mb-1.5">שם המאגר הפרטי (Database)</label>
                             <div dir="ltr" class="flex items-center bg-apple-surface/60 border border-apple-border rounded-xl overflow-hidden focus-within:bg-white focus-within:border-apple-blue focus-within:ring-2 focus-within:ring-apple-blue/15 transition-all">
                                 <input type="text" id="repo-name" placeholder="project_name"
-                                       class="w-full bg-transparent px-4 py-2.5 text-sm text-apple-text placeholder-gray-400 focus:outline-none">
+                                       class="w-full bg-transparent px-4 py-2.5 text-sm sm:text-base text-apple-text placeholder-gray-400 focus:outline-none">
                                 <span class="px-3 py-2.5 text-xs font-mono font-medium text-apple-secondary bg-apple-surface border-l border-apple-border select-none shrink-0">_Backend</span>
                             </div>
                         </div>
                         <div>
-                            <label for="public-repo-name" class="block text-xs font-medium text-apple-secondary mb-1.5">שם המאגר הפומבי (Frontend + Pages)</label>
+                            <label for="public-repo-name" class="block text-xs sm:text-sm font-medium text-apple-secondary mb-1.5">שם המאגר הפומבי (Frontend + Pages)</label>
                             <div dir="ltr" class="flex items-center bg-apple-surface/60 border border-apple-border rounded-xl overflow-hidden focus-within:bg-white focus-within:border-apple-blue focus-within:ring-2 focus-within:ring-apple-blue/15 transition-all">
                                 <input type="text" id="public-repo-name" placeholder="project_name"
-                                       class="w-full bg-transparent px-4 py-2.5 text-sm text-apple-text placeholder-gray-400 focus:outline-none">
+                                       class="w-full bg-transparent px-4 py-2.5 text-sm sm:text-base text-apple-text placeholder-gray-400 focus:outline-none">
                                 <span class="px-3 py-2.5 text-xs font-mono font-medium text-apple-secondary bg-apple-surface border-l border-apple-border select-none shrink-0">_Frontend</span>
                             </div>
                         </div>
                     </div>
 
                     <div>
-                        <label for="frontend-password" class="block text-xs font-medium text-apple-secondary mb-1.5">סיסמת גישה לפרונטאנד (להצפנת ה-ENDPOINT ב-Salted AES-GCM)</label>
+                        <label for="frontend-password" class="block text-xs sm:text-sm font-medium text-apple-secondary mb-1.5">סיסמת גישה לפרונטאנד (להצפנת ה-ENDPOINT ב-Salted AES-GCM)</label>
                         <input type="password" id="frontend-password" placeholder="הזן סיסמה שתגן על כתובת ה-API בקובץ הפומבי..." dir="ltr"
-                               class="w-full bg-apple-surface/60 border border-apple-border rounded-xl px-4 py-2.5 text-sm text-apple-text placeholder-gray-400 focus:outline-none focus:bg-white focus:border-apple-blue focus:ring-2 focus:ring-apple-blue/15 transition-all">
+                               class="w-full bg-apple-surface/60 border border-apple-border rounded-xl px-4 py-2.5 text-sm sm:text-base text-apple-text placeholder-gray-400 focus:outline-none focus:bg-white focus:border-apple-blue focus:ring-2 focus:ring-apple-blue/15 transition-all">
                     </div>
 
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-1">
@@ -308,13 +308,13 @@ const VaultDB = {
             <section class="bg-white border border-apple-border rounded-2xl p-6 sm:p-8 shadow-[0_2px_10px_rgba(0,0,0,0.02)] space-y-5">
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-apple-border pb-4">
                     <div>
-                        <h2 class="text-lg font-semibold text-apple-text">ניהול מאגרים בחשבון המחובר</h2>
-                        <p class="text-xs text-apple-secondary mt-0.5">צפייה, פתיחה מהירה ומחיקה של מאגרים פרטיים ופומביים ישירות מול GitHub API.</p>
+                        <h2 class="text-lg sm:text-xl font-bold text-apple-text">ניהול מאגרים בחשבון המחובר</h2>
+                        <p class="text-xs sm:text-sm text-apple-secondary mt-0.5">צפייה, פתיחה מהירה ומחיקה של מאגרים פרטיים ופומביים ישירות מול GitHub API.</p>
                     </div>
                     <div class="flex items-center gap-2 shrink-0">
-                        <span id="repos-count-badge" class="text-xs font-medium text-apple-secondary bg-apple-surface px-2.5 py-1 rounded-md">0 מאגרים</span>
+                        <span id="repos-count-badge" class="text-xs font-medium text-apple-secondary bg-apple-surface px-2.5 py-1.5 rounded-md">0 מאגרים</span>
                         <button type="button" id="refresh-repos-list-btn"
-                                class="px-4 py-1.5 rounded-full bg-apple-surface hover:bg-gray-200/80 text-apple-text text-xs font-medium transition-colors">
+                                class="px-4 py-2 rounded-full bg-apple-surface hover:bg-gray-200/80 text-apple-text text-xs sm:text-sm font-medium transition-colors">
                             רענן רשימה
                         </button>
                     </div>
@@ -371,18 +371,18 @@ const VaultDB = {
             <section class="bg-white border border-apple-border rounded-2xl p-6 sm:p-8 shadow-[0_2px_10px_rgba(0,0,0,0.02)] space-y-5">
                 <div class="flex items-center justify-between border-b border-apple-border pb-4">
                     <div>
-                        <h2 class="text-lg font-semibold text-apple-text">1. מפתח גישה ראשי (Master Token)</h2>
-                        <p class="text-xs text-apple-secondary mt-0.5">מוגדר מראש ומאומת אוטומטית מול חשבון ה-GitHub שלך.</p>
+                        <h2 class="text-lg sm:text-xl font-bold text-apple-text">1. מפתח גישה ראשי (Master Token)</h2>
+                        <p class="text-xs sm:text-sm text-apple-secondary mt-0.5">מוגדר מראש ומאומת אוטומטית מול חשבון ה-GitHub שלך.</p>
                     </div>
                     <span class="text-xs font-medium text-apple-secondary bg-apple-surface px-2.5 py-1 rounded-md">שלב 01</span>
                 </div>
 
                 <div class="space-y-3">
-                    <label for="github-token" class="block text-xs font-medium text-apple-secondary">Personal Access Token (PAT)</label>
+                    <label for="github-token" class="block text-xs sm:text-sm font-medium text-apple-secondary">Personal Access Token (PAT)</label>
                     <div class="flex flex-col sm:flex-row gap-3">
                         <div class="relative flex-1">
                             <input type="password" id="github-token" value="" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" dir="ltr"
-                                   class="w-full bg-apple-surface/60 border border-apple-border rounded-xl px-4 py-2.5 pr-11 text-sm text-apple-text placeholder-gray-400 focus:outline-none focus:bg-white focus:border-apple-blue focus:ring-2 focus:ring-apple-blue/15 transition-all">
+                                   class="w-full bg-apple-surface/60 border border-apple-border rounded-xl px-4 py-3 pr-11 text-sm sm:text-base text-apple-text placeholder-gray-400 focus:outline-none focus:bg-white focus:border-apple-blue focus:ring-2 focus:ring-apple-blue/15 transition-all">
                             <button type="button" id="toggle-token-visibility" aria-label="הצג או הסתר מפתח"
                                     class="absolute inset-y-0 right-0 px-3.5 flex items-center text-apple-secondary hover:text-apple-text transition-colors">
                                 <svg id="eye-icon" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
@@ -392,11 +392,11 @@ const VaultDB = {
                             </button>
                         </div>
                         <button type="button" id="verify-token-btn"
-                                class="px-5 py-2.5 rounded-xl bg-apple-surface hover:bg-gray-200/80 text-apple-text text-sm font-medium transition-colors shrink-0">
+                                class="px-5 py-3 rounded-xl bg-apple-surface hover:bg-gray-200/80 text-apple-text text-sm font-medium transition-colors shrink-0">
                             אמת חיבור
                         </button>
                     </div>
-                    <div id="token-feedback" class="text-xs text-apple-secondary"></div>
+                    <div id="token-feedback" class="text-xs sm:text-sm text-apple-secondary"></div>
                 </div>
             </section>
 
