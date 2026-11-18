@@ -1504,7 +1504,38 @@ LDUQuxRIy3rnu2GIB0PE3qDpKI9UE46oQdLFgTo8Ca4kgBPH+SY=
                 const password = frontendPasswordInput.value;
                 const workerBase = workerUrlInput.value.trim().replace(/\/+$/, '');
 
-                // Helper for /generate with automatic Worker Proxy fallback when hosted on *.github.io
+                if (!token || !authenticatedOwner) {
+                    repoResultArea.innerHTML = `<span class="text-red-600">יש לאמת חיבור Master Token בלשונית ההגדרות.</span>`;
+                    return;
+                }
+                if (!baseName) {
+                    repoResultArea.innerHTML = `<span class="text-red-600">יש להזין שם לפרויקט.</span>`;
+                    return;
+                }
+                if (!password) {
+                    repoResultArea.innerHTML = `<span class="text-red-600">יש להזין סיסמת גישה להצפנת הפרונטאנד.</span>`;
+                    return;
+                }
+
+                const isReady = templatesReady || await verifyMasterTemplates();
+                if (!isReady) {
+                    repoResultArea.innerHTML = `<span class="text-amber-600">תבניות-האם טרם הוקמו — עבור ללשונית "הגדרות ותשתית" ולחץ על "הקם אוטומטית תבניות-אם".</span>`;
+                    return;
+                }
+
+                const dbRepo = `${baseName}_Backend`;
+                const publicRepo = `${baseName}_Frontend`;
+                const ghHeaders = {
+                    'Authorization': `Bearer ${token}`,
+                    'Accept': 'application/vnd.github+json',
+                    'Content-Type': 'application/json'
+                };
+
+                createRepoBtn.disabled = true;
+                createRepoBtn.classList.add('opacity-60', 'cursor-not-allowed');
+                pagesLiveBox.classList.add('hidden');
+
+                // Helper for /generate with automatic Worker Proxy when hosted on *.github.io
                 async function generateFromTemplateWithRetry(templateRepo, targetName, isPrivate, description, label) {
                     const isHostedOnGitHubPages = window.location.hostname.endsWith('.github.io');
                     const useWorkerProxy = isHostedOnGitHubPages && Boolean(workerBase);
@@ -1533,20 +1564,6 @@ LDUQuxRIy3rnu2GIB0PE3qDpKI9UE46oQdLFgTo8Ca4kgBPH+SY=
                             headers: ghHeaders,
                             body: JSON.stringify(requestBody)
                         }, label);
-
-                        // Fallback to direct GitHub API if Worker does not yet have /gh-generate route deployed
-                        if (useWorkerProxy && (res.status === 404 || res.status === 405)) {
-                            res = await safeGitHubFetch(`https://api.github.com/repos/${authenticatedOwner}/${templateRepo}/generate`, {
-                                method: 'POST',
-                                headers: ghHeaders,
-                                body: JSON.stringify({
-                                    owner: authenticatedOwner,
-                                    name: targetName,
-                                    private: isPrivate,
-                                    description
-                                })
-                            }, label);
-                        }
 
                         const rawText = await res.text();
                         let data = {};
