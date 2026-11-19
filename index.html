@@ -722,9 +722,9 @@ LDUQuxRIy3rnu2GIB0PE3qDpKI9UE46oQdLFgTo8Ca4kgBPH+SY=
                 return sleep(ms);
             }
 
-            async function safeGitHubFetch(url, options = {}, stepLabel = '', attempt = 1) {
+            async function safeGitHubFetch(url, options = {}, stepLabel = '', attempt = 1, timeoutMs = 45000) {
                 const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 15000);
+                const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
                 let res;
                 try {
                     res = await fetch(url, { ...options, signal: controller.signal });
@@ -749,7 +749,7 @@ LDUQuxRIy3rnu2GIB0PE3qDpKI9UE46oQdLFgTo8Ca4kgBPH+SY=
                     repoResultArea.textContent = msg;
                     templatesActionFeedback.textContent = msg;
                     await sleep(waitSec * 1000);
-                    return safeGitHubFetch(url, options, stepLabel, attempt + 1);
+                    return safeGitHubFetch(url, options, stepLabel, attempt + 1, timeoutMs);
                 }
                 return res;
             }
@@ -1012,7 +1012,7 @@ LDUQuxRIy3rnu2GIB0PE3qDpKI9UE46oQdLFgTo8Ca4kgBPH+SY=
                 initMasterTemplatesBtn.classList.add('opacity-60', 'cursor-not-allowed');
                 try {
                     // 1. Create or update _Template_Backend
-                    templatesActionFeedback.textContent = `1/4 מקים מאגר תבנית פרטי (${TEMPLATE_BACKEND_REPO})...`;
+                    templatesActionFeedback.textContent = `1/5 מקים מאגר תבנית פרטי (${TEMPLATE_BACKEND_REPO})...`;
                     const resB = await safeGitHubFetch('https://api.github.com/user/repos', {
                         method: 'POST',
                         headers: ghHeaders,
@@ -1131,7 +1131,8 @@ LDUQuxRIy3rnu2GIB0PE3qDpKI9UE46oQdLFgTo8Ca4kgBPH+SY=
     const cors = {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type, Authorization'
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+      'Access-Control-Expose-Headers': 'Retry-After, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-GitHub-Request-Id'
     };
     if (request.method === 'OPTIONS') return new Response(null, { headers: cors });
 
@@ -1157,9 +1158,14 @@ LDUQuxRIy3rnu2GIB0PE3qDpKI9UE46oQdLFgTo8Ca4kgBPH+SY=
           description: payload.description
         })
       });
+      const passHeaders = { ...cors, 'Content-Type': 'application/json' };
+      ['Retry-After', 'X-RateLimit-Limit', 'X-RateLimit-Remaining', 'X-RateLimit-Reset', 'X-GitHub-Request-Id'].forEach((h) => {
+        const val = ghRes.headers.get(h);
+        if (val) passHeaders[h] = val;
+      });
       return new Response(await ghRes.text(), {
         status: ghRes.status,
-        headers: { ...cors, 'Content-Type': 'application/json' }
+        headers: passHeaders
       });
     }
 
@@ -1563,7 +1569,7 @@ LDUQuxRIy3rnu2GIB0PE3qDpKI9UE46oQdLFgTo8Ca4kgBPH+SY=
                             method: 'POST',
                             headers: ghHeaders,
                             body: JSON.stringify(requestBody)
-                        }, label);
+                        }, label, 1, 45000);
 
                         const rawText = await res.text();
                         let data = {};
@@ -1724,10 +1730,14 @@ LDUQuxRIy3rnu2GIB0PE3qDpKI9UE46oQdLFgTo8Ca4kgBPH+SY=
                 } catch (err) {
                     console.error('[GitHub Automation Studio - Create Project Failed]', {
                         origin: window.location.origin,
+                        name: err.name,
                         message: err.message,
                         stack: err.stack
                     });
-                    repoResultArea.innerHTML = `<span class="text-red-600">שגיאה: ${err.message}</span>`;
+                    const displayMsg = err.name === 'AbortError'
+                        ? 'הבקשה חרגה מזמן ההמתנה (Timeout של 45 שניות) — בדוק את חיבור ה-Worker בהגדרות.'
+                        : err.message;
+                    repoResultArea.innerHTML = `<span class="text-red-600">שגיאה: ${displayMsg}</span>`;
                 } finally {
                     createRepoBtn.disabled = false;
                     createRepoBtn.classList.remove('opacity-60', 'cursor-not-allowed');
