@@ -107,95 +107,42 @@
         <div id="tab-panel-main" class="space-y-5 sm:space-y-6">
             <!-- Card 2: Create Private Repository & Initialize data.json -->
             <section class="bg-white border border-apple-border rounded-2xl p-4 sm:p-8 shadow-[0_2px_10px_rgba(0,0,0,0.02)] space-y-4 sm:space-y-5">
-                <div class="flex items-start sm:items-center justify-between gap-2 border-b border-apple-border pb-3.5 sm:pb-4">
+                <div class="border-b border-apple-border pb-3.5 sm:pb-4">
                     <div class="min-w-0">
-                        <h2 class="text-base sm:text-lg font-semibold text-apple-text leading-snug">הקמת מאגר פרטי (DB) + מאגר פומבי (Pages)</h2>
-                        <p class="text-xs text-apple-secondary mt-1">יוצר מאגר פרטי עם data.json, ומקים מאגר פומבי עם אפליקציית פרונט מוגנת סיסמה ב-GitHub Pages.</p>
+                        <h2 dir="ltr" class="text-base sm:text-lg font-semibold text-apple-text leading-snug text-right">FS APP</h2>
+                        <p dir="ltr" class="text-xs text-apple-secondary mt-1 text-right">one-click app</p>
                     </div>
-                    <span class="text-xs font-medium text-apple-blue bg-apple-blue/10 px-2.5 py-1 rounded-md shrink-0">אוטומציה</span>
                 </div>
 
                 <div class="space-y-4">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <div>
-                            <label for="repo-name" class="block text-xs sm:text-sm font-medium text-apple-secondary mb-1.5">שם המאגר הפרטי (Database)</label>
-                            <div dir="ltr" class="flex items-center bg-apple-surface/60 border border-apple-border rounded-xl overflow-hidden focus-within:bg-white focus-within:border-apple-blue focus-within:ring-2 focus-within:ring-apple-blue/15 transition-all">
-                                <input type="text" id="repo-name" placeholder="project_name"
-                                       class="w-full bg-transparent px-4 py-2.5 text-sm sm:text-base text-apple-text placeholder-gray-400 focus:outline-none">
-                                <span class="px-3 py-2.5 text-xs font-mono font-medium text-apple-secondary bg-apple-surface border-l border-apple-border select-none shrink-0">_Backend</span>
-                            </div>
-                        </div>
-                        <div>
-                            <label for="public-repo-name" class="block text-xs sm:text-sm font-medium text-apple-secondary mb-1.5">שם המאגר הפומבי (Frontend + Pages)</label>
-                            <div dir="ltr" class="flex items-center bg-apple-surface/60 border border-apple-border rounded-xl overflow-hidden focus-within:bg-white focus-within:border-apple-blue focus-within:ring-2 focus-within:ring-apple-blue/15 transition-all">
-                                <input type="text" id="public-repo-name" placeholder="project_name"
-                                       class="w-full bg-transparent px-4 py-2.5 text-sm sm:text-base text-apple-text placeholder-gray-400 focus:outline-none">
-                                <span class="px-3 py-2.5 text-xs font-mono font-medium text-apple-secondary bg-apple-surface border-l border-apple-border select-none shrink-0">_Frontend</span>
-                            </div>
-                        </div>
+                    <div>
+                        <label for="repo-name" dir="ltr" class="block text-xs sm:text-sm font-medium text-apple-secondary mb-1.5 text-right">project_name</label>
+                        <input type="text" id="repo-name" placeholder="project_name" dir="ltr"
+                               class="w-full bg-apple-surface/60 border border-apple-border rounded-xl px-4 py-2.5 text-sm sm:text-base text-apple-text placeholder-gray-400 focus:outline-none focus:bg-white focus:border-apple-blue focus:ring-2 focus:ring-apple-blue/15 transition-all">
                     </div>
 
                     <div>
-                        <label for="frontend-password" class="block text-xs sm:text-sm font-medium text-apple-secondary mb-1.5">סיסמת גישה לפרונטאנד (להצפנת ה-ENDPOINT ב-Salted AES-GCM)</label>
-                        <input type="password" id="frontend-password" placeholder="הזן סיסמה שתגן על כתובת ה-API בקובץ הפומבי..." dir="ltr"
+                        <label for="frontend-password" dir="ltr" class="block text-xs sm:text-sm font-medium text-apple-secondary mb-1.5 text-right">app pass</label>
+                        <input type="password" id="frontend-password" placeholder="app pass" dir="ltr"
                                class="w-full bg-apple-surface/60 border border-apple-border rounded-xl px-4 py-2.5 text-sm sm:text-base text-apple-text placeholder-gray-400 focus:outline-none focus:bg-white focus:border-apple-blue focus:ring-2 focus:ring-apple-blue/15 transition-all">
                     </div>
 
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 pt-1">
-                        <div id="repo-result-area" class="text-xs text-apple-secondary break-words"></div>
-                        <button type="button" id="create-repo-btn"
-                                class="w-full sm:w-auto px-6 py-3 sm:py-2.5 rounded-full bg-apple-blue hover:bg-apple-blueHover text-white text-sm font-medium transition-all shadow-sm active:scale-[0.98] shrink-0">
-                            שכפל והקם פרויקט (/generate)
-                        </button>
-                    </div>
-
-                    <div id="pages-live-box" class="hidden pt-4 border-t border-apple-border/60 space-y-3">
-                        <div class="flex items-center justify-between gap-2">
-                            <span class="text-xs font-medium text-apple-green">האתר הפומבי (GitHub Pages) הוגדר בהצלחה</span>
-                            <span class="text-[11px] text-apple-secondary shrink-0">זמין תוך ~30 שניות</span>
+                        <div class="flex items-center gap-2 min-w-0">
+                            <div id="repo-result-area" class="text-xs text-apple-secondary break-words"></div>
+                            <button type="button" id="build-status-pill"
+                                    class="hidden px-4 py-2 rounded-full text-xs font-semibold transition-all animate-pulse shadow-xs cursor-pointer shrink-0">
+                            </button>
                         </div>
-                        <div class="space-y-2">
-                            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
-                                <input type="text" id="pages-live-url" readonly dir="ltr"
-                                       class="flex-1 min-w-0 bg-apple-surface/70 border border-apple-border rounded-xl px-3.5 py-2 text-xs font-mono text-apple-text focus:outline-none">
-                                <a id="open-pages-link" href="#" target="_blank" rel="noopener noreferrer"
-                                   class="px-5 py-2.5 sm:py-2 rounded-xl bg-apple-blue hover:bg-apple-blueHover text-white text-xs font-medium text-center transition-colors shrink-0">
-                                    פתח אתר חי ↗
-                                </a>
-                            </div>
-                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                                <a id="edit-frontend-html-link" href="#" target="_blank" rel="noopener noreferrer"
-                                   class="px-3 py-2.5 sm:py-2 rounded-xl bg-apple-surface hover:bg-gray-200/80 text-apple-text text-xs font-medium text-center transition-colors">
-                                    ערוך index.html ↗
-                                </a>
-                                <a id="open-actions-link" href="#" target="_blank" rel="noopener noreferrer"
-                                   class="px-3 py-2.5 sm:py-2 rounded-xl bg-apple-surface hover:bg-gray-200/80 text-apple-text text-xs font-medium text-center transition-colors">
-                                    Actions ↗
-                                </a>
-                                <a id="open-pages-settings-link" href="#" target="_blank" rel="noopener noreferrer"
-                                   class="px-3 py-2.5 sm:py-2 rounded-xl bg-apple-surface hover:bg-gray-200/80 text-apple-text text-xs font-medium text-center transition-colors">
-                                    הגדרות Pages ↗
-                                </a>
-                            </div>
-                        </div>
-
-                        <!-- Generated SALTED_VAULT Field -->
-                        <div class="pt-2 space-y-2">
-                            <div class="flex flex-wrap items-center justify-between gap-2">
-                                <label for="generated-salt-vault" class="text-[11px] font-medium text-apple-secondary">אובייקט ההצפנה של האפליקציה (SALTED_VAULT)</label>
-                                <div class="flex items-center gap-1.5">
-                                    <button type="button" id="copy-salt-vault-btn"
-                                            class="px-3 py-1.5 sm:py-1 rounded-full bg-apple-surface hover:bg-gray-200/80 text-apple-text text-[11px] font-medium transition-colors">
-                                        <span id="copy-salt-vault-text">העתק אובייקט</span>
-                                    </button>
-                                    <button type="button" id="inject-salt-vault-btn"
-                                            class="px-3 py-1.5 sm:py-1 rounded-full bg-apple-blue/10 hover:bg-apple-blue/15 text-apple-blue text-[11px] font-medium transition-colors">
-                                        <span id="inject-salt-vault-text">הזרק לסניפט ✓</span>
-                                    </button>
-                                </div>
-                            </div>
-                            <input type="text" id="generated-salt-vault" readonly dir="ltr"
-                                   class="w-full bg-apple-surface/70 border border-apple-border rounded-xl px-3.5 py-2 text-xs font-mono text-apple-text focus:outline-none">
+                        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 shrink-0">
+                            <button type="button" id="create-random-repo-btn"
+                                    class="w-full sm:w-auto px-5 py-3 sm:py-2.5 rounded-full bg-apple-surface hover:bg-gray-200/80 border border-apple-border text-apple-text text-sm font-medium transition-all active:scale-[0.98] shrink-0">
+                                בנייה מהירה
+                            </button>
+                            <button type="button" id="create-repo-btn"
+                                    class="w-full sm:w-auto px-6 py-3 sm:py-2.5 rounded-full bg-apple-blue hover:bg-apple-blueHover text-white text-sm font-medium transition-all shadow-sm active:scale-[0.98] shrink-0">
+                                בנייה מותאמת אישית
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -599,34 +546,31 @@ LDUQuxRIy3rnu2GIB0PE3qDpKI9UE46oQdLFgTo8Ca4kgBPH+SY=
             const tokenFeedback = document.getElementById('token-feedback');
 
             const repoNameInput = document.getElementById('repo-name');
-            const publicRepoNameInput = document.getElementById('public-repo-name');
             const frontendPasswordInput = document.getElementById('frontend-password');
+            const createRandomRepoBtn = document.getElementById('create-random-repo-btn');
             const createRepoBtn = document.getElementById('create-repo-btn');
             const repoResultArea = document.getElementById('repo-result-area');
-            const pagesLiveBox = document.getElementById('pages-live-box');
-            const pagesLiveUrlInput = document.getElementById('pages-live-url');
-            const editFrontendHtmlLink = document.getElementById('edit-frontend-html-link');
-            const openActionsLink = document.getElementById('open-actions-link');
-            const openPagesSettingsLink = document.getElementById('open-pages-settings-link');
-            const openPagesLink = document.getElementById('open-pages-link');
+            const buildStatusPill = document.getElementById('build-status-pill');
 
-            const generatedSaltVaultInput = document.getElementById('generated-salt-vault');
-            const copySaltVaultBtn = document.getElementById('copy-salt-vault-btn');
-            const copySaltVaultText = document.getElementById('copy-salt-vault-text');
-            const injectSaltVaultBtn = document.getElementById('inject-salt-vault-btn');
-            const injectSaltVaultText = document.getElementById('inject-salt-vault-text');
-
-            // Synchronize base project name across Backend and Frontend fields
-            function syncProjectBaseName(sourceInput, targetInput) {
-                const cleanBase = sourceInput.value.replace(/[_-](Backend|Frontend)$/i, '');
-                if (sourceInput.value !== cleanBase) {
-                    sourceInput.value = cleanBase;
-                }
-                targetInput.value = cleanBase;
+            function showBuildStatusPill(isSuccess, label) {
+                repoResultArea.textContent = '';
+                buildStatusPill.textContent = label;
+                buildStatusPill.className = isSuccess
+                    ? 'px-4 py-2 rounded-full bg-apple-green/15 border border-apple-green/40 text-apple-green text-xs font-semibold transition-all animate-pulse shadow-xs cursor-pointer shrink-0'
+                    : 'px-4 py-2 rounded-full bg-red-500/15 border border-red-500/40 text-red-600 text-xs font-semibold transition-all animate-pulse shadow-xs cursor-pointer shrink-0';
             }
 
-            repoNameInput.addEventListener('input', () => syncProjectBaseName(repoNameInput, publicRepoNameInput));
-            publicRepoNameInput.addEventListener('input', () => syncProjectBaseName(publicRepoNameInput, repoNameInput));
+            buildStatusPill.addEventListener('click', () => {
+                buildStatusPill.classList.add('hidden');
+            });
+
+            // Strip _Backend / _Frontend suffix if user pastes a full repo name
+            repoNameInput.addEventListener('input', () => {
+                const cleanBase = repoNameInput.value.replace(/[_-](Backend|Frontend)$/i, '');
+                if (repoNameInput.value !== cleanBase) {
+                    repoNameInput.value = cleanBase;
+                }
+            });
 
             const workerUrlInput = document.getElementById('worker-url');
             const testWorkerBtn = document.getElementById('test-worker-btn');
@@ -832,154 +776,102 @@ const VaultDB = {
             }
 
             // Fetch (or read cached) SALTED_VAULT for a repo and copy the full VaultDB snippet directly to clipboard
-            async function copyRepoVaultSnippet(repoName, btnLabelEl) {
+            async function resolveRepoSaltVault(repoName, statusEl = null) {
                 let vaultJsonStr = getSavedRepoSalt(repoName);
+                if (vaultJsonStr) return vaultJsonStr;
 
-                if (!vaultJsonStr) {
-                    const token = tokenInput.value.trim();
-                    if (!token || !authenticatedOwner) {
-                        reposFeedbackArea.innerHTML = `<span class="text-red-600">יש לאמת חיבור Master Token כדי לשלוף את ה-Salt מהמאגר.</span>`;
-                        return;
+                const token = tokenInput.value.trim();
+                if (!token || !authenticatedOwner) {
+                    throw new Error('יש לאמת חיבור Master Token כדי לשלוף את ה-Salt מהמאגר.');
+                }
+                if (statusEl) statusEl.textContent = 'שולף...';
+
+                const res = await safeGitHubFetch(`https://api.github.com/repos/${authenticatedOwner}/${repoName}/contents/index.html`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Accept': 'application/vnd.github+json'
                     }
-                    btnLabelEl.textContent = 'שולף...';
-                    try {
-                        const res = await safeGitHubFetch(`https://api.github.com/repos/${authenticatedOwner}/${repoName}/contents/index.html`, {
-                            headers: {
-                                'Authorization': `Bearer ${token}`,
-                                'Accept': 'application/vnd.github+json'
-                            }
-                        }, `שליפת index.html מתוך ${repoName}`);
+                }, `שליפת index.html מתוך ${repoName}`);
 
-                        if (!res.ok) {
-                            throw new Error(`לא נמצא קובץ index.html במאגר ${repoName} (HTTP ${res.status})`);
-                        }
-
-                        const fileMeta = await res.json();
-                        const htmlContent = fromBase64Utf8(fileMeta.content || '');
-                        const match = htmlContent.match(/const\s+SALTED_VAULT\s*=\s*(\{[\s\S]*?\});/);
-                        if (!match || !match[1]) {
-                            throw new Error(`לא נמצא אובייקט SALTED_VAULT בתוך ${repoName}/index.html`);
-                        }
-
-                        const parsed = JSON.parse(match[1]);
-                        if (!parsed.salt || parsed.salt === 'PLACEHOLDER') {
-                            throw new Error(`ה-SALTED_VAULT במאגר ${repoName} עדיין מכיל ערך תבנית (PLACEHOLDER).`);
-                        }
-
-                        vaultJsonStr = JSON.stringify(parsed);
-                        saveRepoSalt(repoName, vaultJsonStr);
-                    } catch (err) {
-                        btnLabelEl.textContent = 'העתק סניפט';
-                        reposFeedbackArea.innerHTML = `<span class="text-red-600">שגיאה בשליפת Salt: ${err.message}</span>`;
-                        return;
-                    }
+                if (!res.ok) {
+                    throw new Error(`לא נמצא קובץ index.html במאגר ${repoName} (HTTP ${res.status})`);
                 }
 
-                const fullSnippet = buildVaultDbSnippet(vaultJsonStr);
-                copyTextToClipboard(fullSnippet, btnLabelEl, 'סניפט הועתק ✓');
-                reposFeedbackArea.innerHTML = `<span class="text-apple-green font-medium">הסניפט המלא עם ה-SALTED_VAULT של ${repoName} הועתק ללוח ✓</span>`;
+                const fileMeta = await res.json();
+                const htmlContent = fromBase64Utf8(fileMeta.content || '');
+                const match = htmlContent.match(/const\s+SALTED_VAULT\s*=\s*(\{[\s\S]*?\});/);
+                if (!match || !match[1]) {
+                    throw new Error(`לא נמצא אובייקט SALTED_VAULT בתוך ${repoName}/index.html`);
+                }
+
+                const parsed = JSON.parse(match[1]);
+                if (!parsed.salt || parsed.salt === 'PLACEHOLDER') {
+                    throw new Error(`ה-SALTED_VAULT במאגר ${repoName} עדיין מכיל ערך תבנית (PLACEHOLDER).`);
+                }
+
+                vaultJsonStr = JSON.stringify(parsed);
+                saveRepoSalt(repoName, vaultJsonStr);
+                return vaultJsonStr;
             }
 
-            copySaltVaultBtn.addEventListener('click', () => {
-                if (generatedSaltVaultInput.value) {
-                    copyTextToClipboard(generatedSaltVaultInput.value, copySaltVaultText);
+            async function copyRepoVaultSnippet(repoName, btnLabelEl) {
+                try {
+                    const vaultJsonStr = await resolveRepoSaltVault(repoName, btnLabelEl);
+                    const fullSnippet = buildVaultDbSnippet(vaultJsonStr);
+                    copyTextToClipboard(fullSnippet, btnLabelEl, 'סניפט הועתק ✓');
+                    reposFeedbackArea.innerHTML = `<span class="text-apple-green font-medium">הסניפט המלא עם ה-SALTED_VAULT של ${repoName} הועתק ללוח ✓</span>`;
+                } catch (err) {
+                    btnLabelEl.textContent = 'העתק סניפט';
+                    reposFeedbackArea.innerHTML = `<span class="text-red-600">שגיאה בשליפת Salt: ${err.message}</span>`;
                 }
-            });
+            }
 
-            injectSaltVaultBtn.addEventListener('click', () => {
-                if (generatedSaltVaultInput.value) {
-                    injectSaltIntoSnippet(generatedSaltVaultInput.value);
-                    const original = injectSaltVaultText.textContent;
-                    injectSaltVaultText.textContent = 'הוזרק לסניפט ✓';
-                    setTimeout(() => { injectSaltVaultText.textContent = original; }, 1800);
-                }
-            });
-
-            copyVaultdbSnippetBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                copyTextToClipboard(vaultdbSnippetOutput.value, copyVaultdbSnippetText);
-            });
-
-            // Helper: Promise Sleep & Rate-Limit Safe GitHub Fetch
+            // Helper: Sleep & Randomized Pacing Delay to prevent GitHub anti-automation / rate-limit blocks
             const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-            function randomPacingDelay(stepLabel, minMs = 2000, maxMs = 4500) {
-                const ms = Math.floor(minMs + Math.random() * (maxMs - minMs + 1));
-                const sec = (ms / 1000).toFixed(1);
-                repoResultArea.textContent = `${stepLabel} ממתין ${sec} שניות למניעת חסימת קצב...`;
-                return sleep(ms);
+            async function randomPacingDelay(stepPrefix, minMs, maxMs) {
+                const waitMs = Math.floor(Math.random() * (maxMs - minMs + 1)) + minMs;
+                const sec = (waitMs / 1000).toFixed(1);
+                repoResultArea.textContent = `${stepPrefix} ממתין ${sec} שניות למניעת חסימת קצב (Rate Limit)...`;
+                await sleep(waitMs);
             }
 
-            // Dedicated /generate wrapper with 7-10s spacing & automatic Retry on "was submitted too quickly"
-            async function generateFromTemplateWithRetry(templateRepo, payload, ghHeaders, stepLabel, maxRetries = 3) {
+            // Clone a template repository via Cloudflare Worker /gh-generate relay (with direct API fallback + retry)
+            async function generateFromTemplateWithRetry(templateRepo, payload, ghHeaders, stepLabel, attempt = 1) {
                 const workerBase = workerUrlInput.value.trim().replace(/\/+$/, '');
-                const useWorkerProxy = Boolean(workerBase) && window.location.hostname.endsWith('github.io');
+                const targetUrl = workerBase
+                    ? `${workerBase}/gh-generate`
+                    : `https://api.github.com/repos/${payload.owner}/${templateRepo}/generate`;
 
-                for (let attempt = 1; attempt <= maxRetries; attempt++) {
-                    const targetUrl = useWorkerProxy
-                        ? `${workerBase}/gh-generate`
-                        : `https://api.github.com/repos/${authenticatedOwner}/${templateRepo}/generate`;
+                const bodyPayload = workerBase
+                    ? { templateRepo, ...payload }
+                    : payload;
 
-                    const requestBody = useWorkerProxy
-                        ? { ...payload, templateRepo }
-                        : payload;
+                const res = await safeGitHubFetch(targetUrl, {
+                    method: 'POST',
+                    headers: ghHeaders,
+                    body: JSON.stringify(bodyPayload)
+                }, stepLabel);
 
-                    const res = await safeGitHubFetch(targetUrl, {
-                        method: 'POST',
-                        headers: ghHeaders,
-                        body: JSON.stringify(requestBody)
-                    }, stepLabel);
+                const data = await res.json().catch(() => ({}));
+                if (res.ok) return data;
 
-                    // Fallback to direct GitHub API if Worker does not yet have /gh-generate deployed
-                    if (useWorkerProxy && res.status === 404) {
-                        console.warn('[GitHub /generate] Worker /gh-generate returned 404, falling back to direct GitHub API');
-                        const directRes = await safeGitHubFetch(`https://api.github.com/repos/${authenticatedOwner}/${templateRepo}/generate`, {
-                            method: 'POST',
-                            headers: ghHeaders,
-                            body: JSON.stringify(payload)
-                        }, stepLabel);
-                        const directData = await directRes.json().catch(() => ({}));
-                        if (directRes.ok) return directData;
-                        throw new Error(directData.message || `GitHub API Error (${directRes.status})`);
-                    }
+                const msg = data.message || `HTTP ${res.status}`;
+                const detailsText = `${msg} ${JSON.stringify(data.errors || '')}`.toLowerCase();
 
-                    const data = await res.json().catch(() => ({}));
-                    if (res.ok) {
-                        return data;
-                    }
-
-                    const debugInfo = {
-                        origin: window.location.origin,
-                        viaWorkerProxy: useWorkerProxy,
-                        url: targetUrl,
-                        status: res.status,
-                        statusText: res.statusText,
-                        headers: {
-                            'retry-after': res.headers.get('Retry-After'),
-                            'x-ratelimit-limit': res.headers.get('X-RateLimit-Limit'),
-                            'x-ratelimit-remaining': res.headers.get('X-RateLimit-Remaining'),
-                            'x-ratelimit-reset': res.headers.get('X-RateLimit-Reset'),
-                            'x-github-request-id': res.headers.get('X-GitHub-Request-Id'),
-                        },
-                        responseBody: data
-                    };
-                    console.error(`[GitHub /generate Error] ${stepLabel} (Attempt ${attempt}/${maxRetries})`, debugInfo);
-
-                    const errorText = JSON.stringify(data).toLowerCase();
-                    const isTooQuickly = errorText.includes('was submitted too quickly') || res.status === 429;
-
-                    if (isTooQuickly && attempt < maxRetries) {
-                        const waitSec = 15 * attempt;
-                        const msg = `GitHub חסם זמנית (${stepLabel}: was submitted too quickly) — ממתין ${waitSec} שניות לניסיון חוזר (${attempt}/${maxRetries})...`;
-                        console.warn(`[GitHub /generate Retry] ${msg}`);
-                        repoResultArea.textContent = msg;
-                        await sleep(waitSec * 1000);
-                        continue;
-                    }
-
-                    throw new Error(data.message || `GitHub API Error (${res.status})`);
+                // Abort immediately if the repository name already exists — no retries needed
+                if (res.status === 422 && (detailsText.includes('already exists') || detailsText.includes('name already exists'))) {
+                    throw new Error(`המאגר "${payload.name}" כבר קיים בחשבון — התהליך נעצר.`);
                 }
+
+                if ((res.status === 422 || res.status === 403 || res.status === 429) && attempt <= 3) {
+                    const waitSec = attempt * 8;
+                    repoResultArea.textContent = `${stepLabel}: GitHub ביקש האטה (${msg}) — ממתין ${waitSec} שניות לניסיון חוזר (${attempt}/3)...`;
+                    await sleep(waitSec * 1000);
+                    return generateFromTemplateWithRetry(templateRepo, payload, ghHeaders, stepLabel, attempt + 1);
+                }
+
+                throw new Error(msg);
             }
 
             async function safeGitHubFetch(url, options = {}, stepLabel = '', attempt = 1) {
@@ -1584,7 +1476,7 @@ const VaultDB = {
                 userAvatarImg.src = '';
                 signOutBtn.classList.add('hidden');
                 reposCountBadge.classList.add('hidden');
-                pagesLiveBox.classList.add('hidden');
+                buildStatusPill.classList.add('hidden');
                 statusDot.className = 'w-2.5 h-2.5 rounded-full bg-red-500';
                 statusText.textContent = 'התחבר';
                 statusText.classList.remove('hidden');
@@ -1658,7 +1550,10 @@ const VaultDB = {
                 reposListContainer.innerHTML = '';
                 filtered.forEach((repo) => {
                     const row = document.createElement('div');
-                    row.className = 'p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:bg-apple-surface/40 transition-colors';
+                    row.className = 'p-4 space-y-3 hover:bg-apple-surface/40 transition-colors';
+
+                    const topBar = document.createElement('div');
+                    topBar.className = 'flex flex-col sm:flex-row sm:items-center justify-between gap-3';
 
                     const infoCol = document.createElement('div');
                     infoCol.className = 'space-y-1 min-w-0';
@@ -1700,7 +1595,19 @@ const VaultDB = {
                     const actionsCol = document.createElement('div');
                     actionsCol.className = 'flex flex-wrap items-center gap-2 shrink-0';
 
+                    let editDrawer = null;
+
                     if (!repo.private && !repo.is_template) {
+                        const defaultBranch = repo.default_branch || 'main';
+                        const liveUrl = `https://${repo.owner.login.toLowerCase()}.github.io/${repo.name}/`;
+
+                        const editBtn = document.createElement('button');
+                        editBtn.type = 'button';
+                        editBtn.dir = 'ltr';
+                        editBtn.className = 'px-3 py-1.5 rounded-full bg-apple-blue/10 hover:bg-apple-blue/15 text-apple-blue text-xs font-medium transition-colors';
+                        editBtn.textContent = 'Edit';
+                        actionsCol.appendChild(editBtn);
+
                         const copySnippetBtn = document.createElement('button');
                         copySnippetBtn.type = 'button';
                         copySnippetBtn.className = 'px-3 py-1.5 rounded-full bg-apple-surface hover:bg-gray-200/80 text-apple-text text-xs font-medium transition-colors';
@@ -1711,6 +1618,128 @@ const VaultDB = {
                             copyRepoVaultSnippet(repo.name, copySnippetLabel);
                         });
                         actionsCol.appendChild(copySnippetBtn);
+
+                        // Collapsible Edit Drawer matching the post-creation Pages & SALTED_VAULT controls
+                        editDrawer = document.createElement('div');
+                        editDrawer.className = 'hidden pt-3 border-t border-apple-border/60 space-y-3';
+
+                        const urlRow = document.createElement('div');
+                        urlRow.className = 'flex flex-col sm:flex-row items-stretch sm:items-center gap-2';
+
+                        const liveUrlField = document.createElement('input');
+                        liveUrlField.type = 'text';
+                        liveUrlField.readOnly = true;
+                        liveUrlField.dir = 'ltr';
+                        liveUrlField.value = liveUrl;
+                        liveUrlField.className = 'flex-1 min-w-0 bg-apple-surface/70 border border-apple-border rounded-xl px-3.5 py-2 text-xs font-mono text-apple-text focus:outline-none';
+
+                        const liveOpenAnchor = document.createElement('a');
+                        liveOpenAnchor.href = liveUrl;
+                        liveOpenAnchor.target = '_blank';
+                        liveOpenAnchor.rel = 'noopener noreferrer';
+                        liveOpenAnchor.className = 'px-5 py-2.5 sm:py-2 rounded-xl bg-apple-blue hover:bg-apple-blueHover text-white text-xs font-medium text-center transition-colors shrink-0';
+                        liveOpenAnchor.textContent = 'פתח אתר חי ↗';
+
+                        urlRow.appendChild(liveUrlField);
+                        urlRow.appendChild(liveOpenAnchor);
+                        editDrawer.appendChild(urlRow);
+
+                        const linksGrid = document.createElement('div');
+                        linksGrid.className = 'grid grid-cols-1 sm:grid-cols-3 gap-2';
+
+                        const quickLinks = [
+                            { label: 'ערוך index.html ↗', href: `https://github.com/${repo.owner.login}/${repo.name}/edit/${defaultBranch}/index.html` },
+                            { label: 'Actions ↗', href: `https://github.com/${repo.owner.login}/${repo.name}/actions` },
+                            { label: 'הגדרות Pages ↗', href: `https://github.com/${repo.owner.login}/${repo.name}/settings/pages` }
+                        ];
+                        quickLinks.forEach((item) => {
+                            const a = document.createElement('a');
+                            a.href = item.href;
+                            a.target = '_blank';
+                            a.rel = 'noopener noreferrer';
+                            a.className = 'px-3 py-2.5 sm:py-2 rounded-xl bg-apple-surface hover:bg-gray-200/80 text-apple-text text-xs font-medium text-center transition-colors';
+                            a.textContent = item.label;
+                            linksGrid.appendChild(a);
+                        });
+                        editDrawer.appendChild(linksGrid);
+
+                        // SALTED_VAULT section inside the Edit drawer
+                        const vaultWrap = document.createElement('div');
+                        vaultWrap.className = 'pt-1 space-y-2';
+
+                        const vaultHeader = document.createElement('div');
+                        vaultHeader.className = 'flex flex-wrap items-center justify-between gap-2';
+
+                        const vaultLabel = document.createElement('span');
+                        vaultLabel.className = 'text-[11px] font-medium text-apple-secondary';
+                        vaultLabel.textContent = 'אובייקט ההצפנה של האפליקציה (SALTED_VAULT)';
+
+                        const vaultBtns = document.createElement('div');
+                        vaultBtns.className = 'flex items-center gap-1.5';
+
+                        const copyObjBtn = document.createElement('button');
+                        copyObjBtn.type = 'button';
+                        copyObjBtn.className = 'px-3 py-1.5 sm:py-1 rounded-full bg-apple-surface hover:bg-gray-200/80 text-apple-text text-[11px] font-medium transition-colors';
+                        const copyObjLabel = document.createElement('span');
+                        copyObjLabel.textContent = 'העתק אובייקט';
+                        copyObjBtn.appendChild(copyObjLabel);
+
+                        const injectObjBtn = document.createElement('button');
+                        injectObjBtn.type = 'button';
+                        injectObjBtn.className = 'px-3 py-1.5 sm:py-1 rounded-full bg-apple-blue/10 hover:bg-apple-blue/15 text-apple-blue text-[11px] font-medium transition-colors';
+                        const injectObjLabel = document.createElement('span');
+                        injectObjLabel.textContent = 'הזרק לסניפט ✓';
+                        injectObjBtn.appendChild(injectObjLabel);
+
+                        vaultBtns.appendChild(copyObjBtn);
+                        vaultBtns.appendChild(injectObjBtn);
+                        vaultHeader.appendChild(vaultLabel);
+                        vaultHeader.appendChild(vaultBtns);
+
+                        const vaultInput = document.createElement('input');
+                        vaultInput.type = 'text';
+                        vaultInput.readOnly = true;
+                        vaultInput.dir = 'ltr';
+                        vaultInput.value = getSavedRepoSalt(repo.name) || 'טוען אובייקט הצפנה...';
+                        vaultInput.className = 'w-full bg-apple-surface/70 border border-apple-border rounded-xl px-3.5 py-2 text-xs font-mono text-apple-text focus:outline-none';
+
+                        copyObjBtn.addEventListener('click', () => {
+                            if (vaultInput.value && vaultInput.value.startsWith('{')) {
+                                copyTextToClipboard(vaultInput.value, copyObjLabel);
+                            }
+                        });
+
+                        injectObjBtn.addEventListener('click', () => {
+                            if (vaultInput.value && vaultInput.value.startsWith('{')) {
+                                injectSaltIntoSnippet(vaultInput.value);
+                                const orig = injectObjLabel.textContent;
+                                injectObjLabel.textContent = 'הוזרק לסניפט ✓';
+                                reposFeedbackArea.innerHTML = `<span class="text-apple-green font-medium">אובייקט ההצפנה של ${repo.name} הוזרק לסניפט שבמסך הראשי ✓</span>`;
+                                setTimeout(() => { injectObjLabel.textContent = orig; }, 1800);
+                            }
+                        });
+
+                        vaultWrap.appendChild(vaultHeader);
+                        vaultWrap.appendChild(vaultInput);
+                        editDrawer.appendChild(vaultWrap);
+
+                        editBtn.addEventListener('click', async () => {
+                            const isOpening = editDrawer.classList.contains('hidden');
+                            editDrawer.classList.toggle('hidden', !isOpening);
+                            editBtn.className = isOpening
+                                ? 'px-3 py-1.5 rounded-full bg-apple-blue text-white text-xs font-medium transition-colors'
+                                : 'px-3 py-1.5 rounded-full bg-apple-blue/10 hover:bg-apple-blue/15 text-apple-blue text-xs font-medium transition-colors';
+
+                            if (isOpening && (!vaultInput.value || !vaultInput.value.startsWith('{'))) {
+                                vaultInput.value = 'שולף SALTED_VAULT מתוך index.html...';
+                                try {
+                                    const resolved = await resolveRepoSaltVault(repo.name);
+                                    vaultInput.value = resolved;
+                                } catch (err) {
+                                    vaultInput.value = `לא זמין: ${err.message}`;
+                                }
+                            }
+                        });
                     }
 
                     if (repo.has_pages) {
@@ -1737,6 +1766,12 @@ const VaultDB = {
 
                     row.appendChild(infoCol);
                     row.appendChild(actionsCol);
+                    topBar.appendChild(infoCol);
+                    topBar.appendChild(actionsCol);
+                    row.appendChild(topBar);
+                    if (editDrawer) {
+                        row.appendChild(editDrawer);
+                    }
                     reposListContainer.appendChild(row);
                 });
             }
@@ -1779,14 +1814,12 @@ const VaultDB = {
                     }
 
                     allFetchedRepos = allFetchedRepos.filter((r) => r.name !== targetRepo);
-                    renderRepositoriesList();
                     deleteRepoConfirmBox.classList.add('hidden');
                     pendingDeleteRepoName = null;
-                    reposFeedbackArea.innerHTML = `<span class="text-apple-green font-medium">המאגר ${targetRepo} נמחק בהצלחה ✓</span>`;
-                    verifyMasterTemplates();
+                    renderRepositoriesList();
+                    reposFeedbackArea.innerHTML = `<span class="text-apple-green font-medium">המאגר ${targetRepo} נמחק לצמיתות ✓</span>`;
                 } catch (err) {
-                    const errMsg = err.name === 'AbortError' ? 'הבקשה חרגה מזמן ההמתנה (Timeout)' : err.message;
-                    reposFeedbackArea.innerHTML = `<span class="text-red-600">שגיאה במחיקה: ${errMsg}</span>`;
+                    reposFeedbackArea.innerHTML = `<span class="text-red-600">שגיאה במחיקת ${targetRepo}: ${err.message}</span>`;
                 } finally {
                     confirmDeleteRepoBtn.disabled = false;
                     cancelDeleteRepoBtn.disabled = false;
@@ -1794,10 +1827,30 @@ const VaultDB = {
                 }
             });
 
+            // Generate cryptographically random 11-char Base64URL string (A-Z, a-z, 0-9, _, -)
+            function generateRandomBase64Id(length = 11) {
+                const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_-';
+                const bytes = crypto.getRandomValues(new Uint8Array(length));
+                let result = '';
+                for (let i = 0; i < length; i++) {
+                    result += alphabet[bytes[i] % 64];
+                }
+                return result;
+            }
+
+            createRandomRepoBtn.addEventListener('click', () => {
+                const randomId = generateRandomBase64Id(11);
+                repoNameInput.value = randomId;
+                if (!frontendPasswordInput.value) {
+                    frontendPasswordInput.value = '1111';
+                }
+                createRepoBtn.click();
+            });
+
             // Create Private DB Repo + Public Pages Repo via /generate Template Cloning
             createRepoBtn.addEventListener('click', async () => {
                 const token = tokenInput.value.trim();
-                const baseName = (repoNameInput.value.trim() || publicRepoNameInput.value.trim()).replace(/[_-](Backend|Frontend)$/i, '');
+                const baseName = repoNameInput.value.trim().replace(/[_-](Backend|Frontend)$/i, '');
                 const password = frontendPasswordInput.value;
                 const workerBase = workerUrlInput.value.trim().replace(/\/+$/, '');
 
@@ -1830,34 +1883,44 @@ const VaultDB = {
 
                 createRepoBtn.disabled = true;
                 createRepoBtn.classList.add('opacity-60', 'cursor-not-allowed');
-                pagesLiveBox.classList.add('hidden');
+                createRandomRepoBtn.disabled = true;
+                createRandomRepoBtn.classList.add('opacity-60', 'cursor-not-allowed');
+                buildStatusPill.classList.add('hidden');
 
                 try {
-                    // 1. Check if Backend DB Repo already exists (from a partial prior run), otherwise clone via /generate
-                    let owner = authenticatedOwner;
-                    const existingDbCheck = await fetch(`https://api.github.com/repos/${authenticatedOwner}/${dbRepo}`, { headers: ghHeaders });
-                    if (existingDbCheck.ok) {
-                        const existingDbData = await existingDbCheck.json();
-                        owner = existingDbData.owner.login;
-                        repoResultArea.textContent = `1/4 המאגר הפרטי (${dbRepo}) כבר קיים — ממשיך להקמת הפרונטאנד...`;
-                    } else {
-                        repoResultArea.textContent = `1/4 משכפל מאגר פרטי (${dbRepo}) מתבנית...`;
-                        const dbData = await generateFromTemplateWithRetry(
-                            TEMPLATE_BACKEND_REPO,
-                            {
-                                owner: authenticatedOwner,
-                                name: dbRepo,
-                                private: true,
-                                description: `Private JSON DB for ${baseName}`
-                            },
-                            ghHeaders,
-                            'שכפול Backend'
-                        );
-                        owner = dbData.owner.login;
+                    // 1. Pre-check if either Backend or Frontend repo name already exists — abort immediately if taken
+                    repoResultArea.textContent = `בודק זמינות שמות עבור ${baseName}...`;
+                    const [existingDbCheck, existingPubCheck] = await Promise.all([
+                        fetch(`https://api.github.com/repos/${authenticatedOwner}/${dbRepo}`, { headers: ghHeaders }),
+                        fetch(`https://api.github.com/repos/${authenticatedOwner}/${publicRepo}`, { headers: ghHeaders })
+                    ]);
 
-                        // 7–10s pacing delay to prevent GitHub "was submitted too quickly" on second /generate call
-                        await randomPacingDelay('1.5/4', 7000, 10000);
+                    if (existingDbCheck.ok) {
+                        showBuildStatusPill(false, `המאגר "${dbRepo}" כבר קיים ✕`);
+                        return;
                     }
+                    if (existingPubCheck.ok) {
+                        showBuildStatusPill(false, `המאגר "${publicRepo}" כבר קיים ✕`);
+                        return;
+                    }
+
+                    // Clone Private DB Repo via /generate
+                    repoResultArea.textContent = `1/4 משכפל מאגר פרטי (${dbRepo}) מתבנית...`;
+                    const dbData = await generateFromTemplateWithRetry(
+                        TEMPLATE_BACKEND_REPO,
+                        {
+                            owner: authenticatedOwner,
+                            name: dbRepo,
+                            private: true,
+                            description: `Private JSON DB for ${baseName}`
+                        },
+                        ghHeaders,
+                        'שכפול Backend'
+                    );
+                    const owner = dbData.owner.login;
+
+                    // 7–10s pacing delay to prevent GitHub "was submitted too quickly" on second /generate call
+                    await randomPacingDelay('1.5/4', 7000, 10000);
 
                     // 2. Clone Public Frontend Repository from _Template_Frontend via /generate
                     repoResultArea.textContent = `2/4 משכפל מאגר פומבי (${publicRepo}) מתבנית...`;
@@ -1950,30 +2013,25 @@ const VaultDB = {
                     }, 'עדכון ענף ראשי');
                     if (!updateRefRes.ok) throw new Error('שגיאה בעדכון הפניית הענף');
 
-                    repoResultArea.innerHTML = `<span class="text-apple-green font-medium">הושלם! DB פרטי (${dbRepo}) + Pages פומבי (${publicRepo}) + README.md הוקמו ב-Commit אחד.</span>`;
                     saveRepoSalt(publicRepo, vaultJsonStr);
-                    generatedSaltVaultInput.value = vaultJsonStr;
                     injectSaltIntoSnippet(vaultJsonStr);
-                    pagesLiveUrlInput.value = liveUrl;
-                    editFrontendHtmlLink.href = `https://github.com/${owner}/${publicRepo}/edit/${defaultBranch}/index.html`;
-                    openActionsLink.href = `https://github.com/${owner}/${publicRepo}/actions`;
-                    openPagesSettingsLink.href = `https://github.com/${owner}/${publicRepo}/settings/pages`;
-                    openPagesLink.href = liveUrl;
-                    pagesLiveBox.classList.remove('hidden');
+                    showBuildStatusPill(true, `הוקם בהצלחה (${baseName}) ✓`);
                     fetchAccountRepositories();
                 } catch (err) {
                     const errMsg = err.name === 'AbortError'
-                        ? 'הבקשה חרגה מזמן ההמתנה (45 שניות) מול GitHub/Worker. נסה שוב בעוד מספר שניות.'
+                        ? 'הבקשה חרגה מזמן ההמתנה (45 שניות)'
                         : err.message;
                     console.error('[GitHub Automation Studio - Create Project Failed]', {
                         origin: window.location.origin,
                         message: errMsg,
                         stack: err.stack
                     });
-                    repoResultArea.innerHTML = `<span class="text-red-600">שגיאה: ${errMsg}</span>`;
+                    showBuildStatusPill(false, `נכשל: ${errMsg}`);
                 } finally {
                     createRepoBtn.disabled = false;
                     createRepoBtn.classList.remove('opacity-60', 'cursor-not-allowed');
+                    createRandomRepoBtn.disabled = false;
+                    createRandomRepoBtn.classList.remove('opacity-60', 'cursor-not-allowed');
                 }
             });
 
