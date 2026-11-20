@@ -33,7 +33,8 @@
         }
     </script>
 </head>
-<body class="bg-apple-bg text-apple-text font-sans antialiased selection:bg-apple-blue/15 selection:text-apple-blue overflow-x-hidden">
+<body class="bg-black text-white font-sans antialiased selection:bg-apple-blue/25 selection:text-white overflow-x-hidden">
+    <main class="max-w-4xl mx-auto px-3.5 sm:px-6 py-4 sm:py-8 space-y-5 sm:space-y-6">
         <!-- Header & Navigation in One Row (with safe mobile wrap when quick token input opens) -->
         <header class="relative z-20 flex flex-wrap items-center justify-between gap-2 sm:gap-3 pb-2">
             <div class="flex items-center gap-1.5 sm:gap-3 shrink-0">
@@ -106,44 +107,37 @@
         <!-- Main Tab: Step 2 Only -->
         <div id="tab-panel-main" class="space-y-5 sm:space-y-6">
             <!-- Card 2: Create Private Repository & Initialize data.json -->
-            <section class="bg-white border border-apple-border rounded-2xl p-4 sm:p-8 shadow-[0_2px_10px_rgba(0,0,0,0.02)] space-y-4 sm:space-y-5">
-                <div class="border-b border-apple-border pb-3.5 sm:pb-4">
-                    <div class="min-w-0">
-                        <h2 dir="ltr" class="text-base sm:text-lg font-semibold text-apple-text leading-snug text-right">FS APP</h2>
-                        <p dir="ltr" class="text-xs text-apple-secondary mt-1 text-right">one-click app</p>
+            <section class="bg-black border border-zinc-800/90 rounded-2xl p-4 sm:p-6 shadow-[0_8px_32px_rgba(0,0,0,0.85)] space-y-4">
+                <div class="border-b border-zinc-800/80 pb-4 flex items-center justify-center bg-black rounded-t-xl">
+                    <div id="sphere-glow-wrapper"
+                         class="relative flex items-center justify-center bg-black transition-all duration-700"
+                         style="width:min(68vw,210px);aspect-ratio:1;margin:auto;">
+                        <canvas id="liquidSphere" title="לחץ לבנייה מהירה (או גרור לסיבוב)" style="width:100%;height:100%;display:block;background:transparent;cursor:pointer;filter:drop-shadow(0 0 12px rgba(228,228,231,0.22))"></canvas>
                     </div>
                 </div>
 
-                <div class="space-y-4">
-                    <div>
-                        <label for="repo-name" dir="ltr" class="block text-xs sm:text-sm font-medium text-apple-secondary mb-1.5 text-right">project_name</label>
-                        <input type="text" id="repo-name" placeholder="project_name" dir="ltr"
-                               class="w-full bg-apple-surface/60 border border-apple-border rounded-xl px-4 py-2.5 text-sm sm:text-base text-apple-text placeholder-gray-400 focus:outline-none focus:bg-white focus:border-apple-blue focus:ring-2 focus:ring-apple-blue/15 transition-all">
+                <div class="space-y-3">
+                    <!-- Hidden by default; revealed compactly when clicking "בנייה מותאמת אישית" -->
+                    <div id="custom-build-fields" class="hidden max-w-md mx-auto grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+                        <div>
+                            <label for="repo-name" dir="ltr" class="block text-[11px] font-medium text-zinc-400 mb-1 text-right">project_name</label>
+                            <input type="text" id="repo-name" placeholder="project_name" dir="ltr"
+                                   class="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-3 py-1.5 text-xs text-white placeholder-zinc-500 focus:outline-none focus:bg-zinc-950 focus:border-apple-blue transition-all">
+                        </div>
+
+                        <div>
+                            <label for="frontend-password" dir="ltr" class="block text-[11px] font-medium text-zinc-400 mb-1 text-right">app pass</label>
+                            <input type="password" id="frontend-password" placeholder="app pass" dir="ltr"
+                                   class="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-3 py-1.5 text-xs text-white placeholder-zinc-500 focus:outline-none focus:bg-zinc-950 focus:border-apple-blue transition-all">
+                        </div>
                     </div>
 
-                    <div>
-                        <label for="frontend-password" dir="ltr" class="block text-xs sm:text-sm font-medium text-apple-secondary mb-1.5 text-right">app pass</label>
-                        <input type="password" id="frontend-password" placeholder="app pass" dir="ltr"
-                               class="w-full bg-apple-surface/60 border border-apple-border rounded-xl px-4 py-2.5 text-sm sm:text-base text-apple-text placeholder-gray-400 focus:outline-none focus:bg-white focus:border-apple-blue focus:ring-2 focus:ring-apple-blue/15 transition-all">
-                    </div>
-
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 pt-1">
-                        <div class="flex items-center gap-2 min-w-0">
-                            <div id="repo-result-area" class="text-xs text-apple-secondary break-words"></div>
-                            <button type="button" id="build-status-pill"
-                                    class="hidden px-4 py-2 rounded-full text-xs font-semibold transition-all animate-pulse shadow-xs cursor-pointer shrink-0">
-                            </button>
-                        </div>
-                        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 shrink-0">
-                            <button type="button" id="create-random-repo-btn"
-                                    class="w-full sm:w-auto px-5 py-3 sm:py-2.5 rounded-full bg-apple-surface hover:bg-gray-200/80 border border-apple-border text-apple-text text-sm font-medium transition-all active:scale-[0.98] shrink-0">
-                                בנייה מהירה
-                            </button>
-                            <button type="button" id="create-repo-btn"
-                                    class="w-full sm:w-auto px-6 py-3 sm:py-2.5 rounded-full bg-apple-blue hover:bg-apple-blueHover text-white text-sm font-medium transition-all shadow-sm active:scale-[0.98] shrink-0">
-                                בנייה מותאמת אישית
-                            </button>
-                        </div>
+                    <div class="flex flex-col items-center justify-center gap-2 pt-0.5">
+                        <button type="button" id="create-repo-btn"
+                                class="px-5 py-2 rounded-full bg-apple-blue hover:bg-apple-blueHover text-white text-xs sm:text-sm font-medium transition-all shadow-sm active:scale-[0.98]">
+                            בנייה מותאמת אישית
+                        </button>
+                        <div id="repo-result-area" class="text-xs text-zinc-400 text-center break-words"></div>
                     </div>
                 </div>
             </section>
@@ -547,22 +541,41 @@ LDUQuxRIy3rnu2GIB0PE3qDpKI9UE46oQdLFgTo8Ca4kgBPH+SY=
 
             const repoNameInput = document.getElementById('repo-name');
             const frontendPasswordInput = document.getElementById('frontend-password');
-            const createRandomRepoBtn = document.getElementById('create-random-repo-btn');
+            const customBuildFields = document.getElementById('custom-build-fields');
             const createRepoBtn = document.getElementById('create-repo-btn');
             const repoResultArea = document.getElementById('repo-result-area');
-            const buildStatusPill = document.getElementById('build-status-pill');
+            const sphereGlowWrapper = document.getElementById('sphere-glow-wrapper');
+            const liquidSphereCanvas = document.getElementById('liquidSphere');
 
-            function showBuildStatusPill(isSuccess, label) {
-                repoResultArea.textContent = '';
-                buildStatusPill.textContent = label;
-                buildStatusPill.className = isSuccess
-                    ? 'px-4 py-2 rounded-full bg-apple-green/15 border border-apple-green/40 text-apple-green text-xs font-semibold transition-all animate-pulse shadow-xs cursor-pointer shrink-0'
-                    : 'px-4 py-2 rounded-full bg-red-500/15 border border-red-500/40 text-red-600 text-xs font-semibold transition-all animate-pulse shadow-xs cursor-pointer shrink-0';
+            const SPHERE_PALETTES = {
+                idle: ["#18181B", "#3F3F46", "#71717A", "#A1A1AA", "#E4E4E7"],
+                building: ["#9A3412", "#EA580C", "#F97316", "#FACC15", "#FEF08A"],
+                success: ["#064E3B", "#047857", "#10B981", "#34D399", "#A7F3D0"],
+                error: ["#7F1D1D", "#B91C1C", "#EF4444", "#F87171", "#FCA5A5"]
+            };
+
+            const SPHERE_GLOWS = {
+                idle: {
+                    drop: 'drop-shadow(0 0 12px rgba(228, 228, 231, 0.22)) drop-shadow(0 0 26px rgba(161, 161, 170, 0.12))'
+                },
+                building: {
+                    drop: 'drop-shadow(0 0 14px rgba(249, 115, 22, 0.34)) drop-shadow(0 0 30px rgba(250, 204, 21, 0.16))'
+                },
+                success: {
+                    drop: 'drop-shadow(0 0 14px rgba(16, 185, 129, 0.34)) drop-shadow(0 0 30px rgba(52, 211, 153, 0.16))'
+                },
+                error: {
+                    drop: 'drop-shadow(0 0 14px rgba(239, 68, 68, 0.34)) drop-shadow(0 0 30px rgba(248, 113, 113, 0.16))'
+                }
+            };
+
+            function updateSphereState(state) {
+                if (typeof window.setSpherePalette === 'function' && SPHERE_PALETTES[state]) {
+                    window.setSpherePalette(SPHERE_PALETTES[state]);
+                }
+                const glow = SPHERE_GLOWS[state] || SPHERE_GLOWS.idle;
+                if (liquidSphereCanvas) liquidSphereCanvas.style.filter = glow.drop;
             }
-
-            buildStatusPill.addEventListener('click', () => {
-                buildStatusPill.classList.add('hidden');
-            });
 
             // Strip _Backend / _Frontend suffix if user pastes a full repo name
             repoNameInput.addEventListener('input', () => {
@@ -1476,7 +1489,7 @@ const VaultDB = {
                 userAvatarImg.src = '';
                 signOutBtn.classList.add('hidden');
                 reposCountBadge.classList.add('hidden');
-                buildStatusPill.classList.add('hidden');
+                updateSphereState('idle');
                 statusDot.className = 'w-2.5 h-2.5 rounded-full bg-red-500';
                 statusText.textContent = 'התחבר';
                 statusText.classList.remove('hidden');
@@ -1838,17 +1851,29 @@ const VaultDB = {
                 return result;
             }
 
-            createRandomRepoBtn.addEventListener('click', () => {
+            function triggerQuickBuild() {
+                if (createRepoBtn.disabled) return;
                 const randomId = generateRandomBase64Id(11);
                 repoNameInput.value = randomId;
                 if (!frontendPasswordInput.value) {
                     frontendPasswordInput.value = '1111';
                 }
+                createRepoBtn.dataset.quickBuild = '1';
                 createRepoBtn.click();
-            });
+            }
 
             // Create Private DB Repo + Public Pages Repo via /generate Template Cloning
             createRepoBtn.addEventListener('click', async () => {
+                const isQuickBuild = createRepoBtn.dataset.quickBuild === '1';
+                delete createRepoBtn.dataset.quickBuild;
+
+                // If custom build fields are hidden, reveal them compactly on first click
+                if (!isQuickBuild && customBuildFields.classList.contains('hidden')) {
+                    customBuildFields.classList.remove('hidden');
+                    repoNameInput.focus();
+                    return;
+                }
+
                 const token = tokenInput.value.trim();
                 const baseName = repoNameInput.value.trim().replace(/[_-](Backend|Frontend)$/i, '');
                 const password = frontendPasswordInput.value;
@@ -1856,20 +1881,24 @@ const VaultDB = {
 
                 if (!token || !authenticatedOwner) {
                     repoResultArea.innerHTML = `<span class="text-red-600">יש לאמת חיבור Master Token בלשונית ההגדרות.</span>`;
+                    updateSphereState('error');
                     return;
                 }
                 if (!baseName) {
                     repoResultArea.innerHTML = `<span class="text-red-600">יש להזין שם לפרויקט.</span>`;
+                    updateSphereState('error');
                     return;
                 }
                 if (!password) {
                     repoResultArea.innerHTML = `<span class="text-red-600">יש להזין סיסמת גישה להצפנת הפרונטאנד.</span>`;
+                    updateSphereState('error');
                     return;
                 }
 
                 const isReady = templatesReady || await verifyMasterTemplates();
                 if (!isReady) {
                     repoResultArea.innerHTML = `<span class="text-amber-600">תבניות-האם טרם הוקמו — עבור ללשונית "הגדרות ותשתית" ולחץ על "הקם אוטומטית תבניות-אם".</span>`;
+                    updateSphereState('error');
                     return;
                 }
 
@@ -1883,9 +1912,7 @@ const VaultDB = {
 
                 createRepoBtn.disabled = true;
                 createRepoBtn.classList.add('opacity-60', 'cursor-not-allowed');
-                createRandomRepoBtn.disabled = true;
-                createRandomRepoBtn.classList.add('opacity-60', 'cursor-not-allowed');
-                buildStatusPill.classList.add('hidden');
+                updateSphereState('building');
 
                 try {
                     // 1. Pre-check if either Backend or Frontend repo name already exists — abort immediately if taken
@@ -1896,11 +1923,13 @@ const VaultDB = {
                     ]);
 
                     if (existingDbCheck.ok) {
-                        showBuildStatusPill(false, `המאגר "${dbRepo}" כבר קיים ✕`);
+                        repoResultArea.innerHTML = `<span class="text-red-600">המאגר "${dbRepo}" כבר קיים ✕</span>`;
+                        updateSphereState('error');
                         return;
                     }
                     if (existingPubCheck.ok) {
-                        showBuildStatusPill(false, `המאגר "${publicRepo}" כבר קיים ✕`);
+                        repoResultArea.innerHTML = `<span class="text-red-600">המאגר "${publicRepo}" כבר קיים ✕</span>`;
+                        updateSphereState('error');
                         return;
                     }
 
@@ -2015,7 +2044,8 @@ const VaultDB = {
 
                     saveRepoSalt(publicRepo, vaultJsonStr);
                     injectSaltIntoSnippet(vaultJsonStr);
-                    showBuildStatusPill(true, `הוקם בהצלחה (${baseName}) ✓`);
+                    repoResultArea.textContent = '';
+                    updateSphereState('success');
                     fetchAccountRepositories();
                 } catch (err) {
                     const errMsg = err.name === 'AbortError'
@@ -2026,12 +2056,11 @@ const VaultDB = {
                         message: errMsg,
                         stack: err.stack
                     });
-                    showBuildStatusPill(false, `נכשל: ${errMsg}`);
+                    repoResultArea.innerHTML = `<span class="text-red-600">נכשל: ${errMsg}</span>`;
+                    updateSphereState('error');
                 } finally {
                     createRepoBtn.disabled = false;
                     createRepoBtn.classList.remove('opacity-60', 'cursor-not-allowed');
-                    createRandomRepoBtn.disabled = false;
-                    createRandomRepoBtn.classList.remove('opacity-60', 'cursor-not-allowed');
                 }
             });
 
@@ -2039,6 +2068,99 @@ const VaultDB = {
             refreshWorkerBackupCode();
             verifyMasterToken();
             testWorkerConnection();
+
+            // Liquid Sphere Animation
+            let PALETTE = SPHERE_PALETTES.idle.slice();
+            (() => {
+                const c = document.getElementById('liquidSphere'), ctx = c.getContext('2d');
+                const off = document.createElement('canvas'), octx = off.getContext('2d');
+                const swirl = 0.65, autoSpin = true;
+                let rgbs = [], dirs = [], yaw = 0.4, pitch = -0.2, vy = 0, vp = 0, drag = false, moved = false, sx = 0, sy = 0, lx = 0, ly = 0, t = 0;
+
+                const hex2rgb = (h) => {
+                    const n = parseInt(h.replace('#', ''), 16);
+                    return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+                };
+
+                window.setSpherePalette = (list) => {
+                    PALETTE = (Array.isArray(list) && list.length ? list : ['#10B981', '#6366F1']).map((x) => x.trim());
+                    rgbs = PALETTE.map(hex2rgb);
+                    const ga = Math.PI * (3 - Math.sqrt(5));
+                    dirs = rgbs.map((_, i) => {
+                        const y = rgbs.length > 1 ? 1 - (i / (rgbs.length - 1)) * 2 : 0;
+                        const r = Math.sqrt(Math.max(0, 1 - y * y));
+                        return [Math.cos(ga * i) * r, y, Math.sin(ga * i) * r];
+                    });
+                };
+                setSpherePalette(PALETTE);
+
+                const resize = () => {
+                    const r = c.getBoundingClientRect(), w = Math.max(120, r.width | 0), h = Math.max(120, r.height | 0);
+                    c.width = w; c.height = h; off.width = Math.max(110, (w * 0.65) | 0); off.height = Math.max(110, (h * 0.65) | 0);
+                };
+                new ResizeObserver(resize).observe(c); resize();
+
+                const down = (e) => { const p = e.touches ? e.touches[0] : e; drag = true; moved = false; sx = lx = p.clientX; sy = ly = p.clientY; vy = vp = 0; };
+                const move = (e) => {
+                    if (!drag) return;
+                    const p = e.touches ? e.touches[0] : e;
+                    if (Math.hypot(p.clientX - sx, p.clientY - sy) > 6) moved = true;
+                    vy = (p.clientX - lx) * 0.01; vp = (p.clientY - ly) * 0.01;
+                    yaw += vy; pitch = Math.max(-1.45, Math.min(1.45, pitch + vp));
+                    lx = p.clientX; ly = p.clientY;
+                };
+                const up = () => {
+                    if (drag && !moved) triggerQuickBuild();
+                    drag = false;
+                };
+                c.addEventListener('mousedown', down); window.addEventListener('mousemove', move); window.addEventListener('mouseup', up);
+                c.addEventListener('touchstart', down, { passive: true }); window.addEventListener('touchmove', move, { passive: true }); window.addEventListener('touchend', up);
+
+                (function loop() {
+                    t += 0.025;
+                    if (!drag) {
+                        yaw += (autoSpin ? 0.024 : 0) + vy;
+                        pitch = autoSpin ? Math.sin(t * 0.55) * 0.24 + vp : Math.max(-1.45, Math.min(1.45, pitch + vp));
+                        vy *= 0.92; vp *= 0.92;
+                    }
+                    const w = off.width, h = off.height, img = octx.createImageData(w, h), d = img.data;
+                    const cx = w * 0.5, cy = h * 0.5, invR = 1 / (Math.min(w, h) * 0.46);
+                    const cy1 = Math.cos(yaw), sy1 = Math.sin(yaw), cp1 = Math.cos(pitch), sp1 = Math.sin(pitch);
+                    const sharp = 3.2 - swirl * 1.35, amp = 0.68 * swirl;
+
+                    for (let y = 0; y < h; y++) {
+                        const ny = (y - cy) * invR, ny2 = ny * ny;
+                        for (let x = 0; x < w; x++) {
+                            const nx = (x - cx) * invR, r2 = nx * nx + ny2;
+                            if (r2 > 1) continue;
+                            const nz = Math.sqrt(1 - r2);
+                            const x1 = nx * cy1 - nz * sy1, z1 = nx * sy1 + nz * cy1;
+                            const y2 = ny * cp1 - z1 * sp1, z2 = ny * sp1 + z1 * cp1;
+                            let fx = x1 + Math.sin(y2 * 2.4 + t * 1.3) * amp;
+                            let fy = y2 + Math.cos(z2 * 2.4 - t * 1.2) * amp;
+                            let fz = z2 + Math.sin(x1 * 2.4 + t * 1.1) * amp;
+                            const fl = Math.hypot(fx, fy, fz) || 1; fx /= fl; fy /= fl; fz /= fl;
+
+                            let ws = 0, br = 0, bg = 0, bb = 0;
+                            for (let i = 0; i < rgbs.length; i++) {
+                                const wt = Math.exp((fx * dirs[i][0] + fy * dirs[i][1] + fz * dirs[i][2] - 1) * sharp);
+                                ws += wt; br += rgbs[i][0] * wt; bg += rgbs[i][1] * wt; bb += rgbs[i][2] * wt;
+                            }
+                            const diff = 0.45 + 0.65 * Math.max(0, -0.45 * nx - 0.55 * ny + 0.7 * nz);
+                            const spec = Math.pow(Math.max(0, -0.3 * nx - 0.38 * ny + 0.87 * nz), 36) * 165;
+                            const i = (y * w + x) * 4;
+                            d[i] = Math.min(255, (br / ws) * diff + spec);
+                            d[i + 1] = Math.min(255, (bg / ws) * diff + spec);
+                            d[i + 2] = Math.min(255, (bb / ws) * diff + spec);
+                            d[i + 3] = Math.min(255, ((1 - r2) * 26 * 255) | 0);
+                        }
+                    }
+                    octx.putImageData(img, 0, 0);
+                    ctx.clearRect(0, 0, c.width, c.height);
+                    ctx.drawImage(off, 0, 0, c.width, c.height);
+                    requestAnimationFrame(loop);
+                })();
+            })();
         });
     </script>
 </body>
