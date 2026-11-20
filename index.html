@@ -34,17 +34,17 @@
     </script>
 </head>
 <body class="bg-apple-bg text-apple-text font-sans antialiased selection:bg-apple-blue/15 selection:text-apple-blue overflow-x-hidden">
-
-    <main class="max-w-3xl mx-auto px-3.5 sm:px-6 py-6 sm:py-14 space-y-5 sm:space-y-6">
-
         <!-- Header & Navigation in One Row (with safe mobile wrap when quick token input opens) -->
-        <header class="flex flex-wrap items-center justify-between gap-2 sm:gap-3 pb-2">
+        <header class="relative z-20 flex flex-wrap items-center justify-between gap-2 sm:gap-3 pb-2">
             <div class="flex items-center gap-1.5 sm:gap-3 shrink-0">
-                <a href="https://aviv-cyber.github.io/GitHub_Automation_Studio_Frontend/"
+                <a id="github-home-link"
+                   href="https://aviv-cyber.github.io/GitHub_Automation_Studio_Frontend/"
+                   target="_top"
+                   rel="noopener noreferrer"
                    title="דף הבית — GitHub Automation Studio"
                    aria-label="דף הבית"
-                   class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-apple-surface hover:bg-gray-200/80 border border-apple-border flex items-center justify-center text-apple-text hover:text-apple-blue transition-all shadow-[0_1px_4px_rgba(0,0,0,0.03)] active:scale-95 shrink-0">
-                    <svg data-component="Octicon" aria-hidden="true" focusable="false" class="octicon octicon-mark-github w-4 h-4 sm:w-5 sm:h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M10.226 17.284c-2.965-.36-5.054-2.493-5.054-5.256 0-1.123.404-2.336 1.078-3.144-.292-.741-.247-2.314.09-2.965.898-.112 2.111.36 2.83 1.01.853-.269 1.752-.404 2.853-.404 1.1 0 1.999.135 2.807.382.696-.629 1.932-1.1 2.83-.988.315.606.36 2.179.067 2.942.72.854 1.101 2 1.101 3.167 0 2.763-2.089 4.852-5.098 5.234.763.494 1.28 1.572 1.28 2.807v2.336c0 .674.561 1.056 1.235.786 4.066-1.55 7.255-5.615 7.255-10.646C23.5 6.188 18.334 1 11.978 1 5.62 1 .5 6.188.5 12.545c0 4.986 3.167 9.12 7.435 10.669.606.225 1.19-.18 1.19-.786V20.63a2.9 2.9 0 0 1-1.078.224c-1.483 0-2.359-.808-2.987-2.313-.247-.607-.517-.966-1.034-1.033-.27-.023-.359-.135-.359-.27 0-.27.45-.471.898-.471.652 0 1.213.404 1.797 1.235.45.651.921.943 1.483.943.561 0 .92-.202 1.437-.719.382-.381.674-.718.944-.943"></path></svg>
+                   class="relative z-10 touch-manipulation cursor-pointer select-none w-10 h-10 rounded-full bg-apple-surface hover:bg-gray-200/80 border border-apple-border flex items-center justify-center text-apple-text hover:text-apple-blue transition-all shadow-[0_1px_4px_rgba(0,0,0,0.03)] active:scale-95 shrink-0">
+                    <svg data-component="Octicon" aria-hidden="true" focusable="false" class="pointer-events-none octicon octicon-mark-github w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M10.226 17.284c-2.965-.36-5.054-2.493-5.054-5.256 0-1.123.404-2.336 1.078-3.144-.292-.741-.247-2.314.09-2.965.898-.112 2.111.36 2.83 1.01.853-.269 1.752-.404 2.853-.404 1.1 0 1.999.135 2.807.382.696-.629 1.932-1.1 2.83-.988.315.606.36 2.179.067 2.942.72.854 1.101 2 1.101 3.167 0 2.763-2.089 4.852-5.098 5.234.763.494 1.28 1.572 1.28 2.807v2.336c0 .674.561 1.056 1.235.786 4.066-1.55 7.255-5.615 7.255-10.646C23.5 6.188 18.334 1 11.978 1 5.62 1 .5 6.188.5 12.545c0 4.986 3.167 9.12 7.435 10.669.606.225 1.19-.18 1.19-.786V20.63a2.9 2.9 0 0 1-1.078.224c-1.483 0-2.359-.808-2.987-2.313-.247-.607-.517-.966-1.034-1.033-.27-.023-.359-.135-.359-.27 0-.27.45-.471.898-.471.652 0 1.213.404 1.797 1.235.45.651.921.943 1.483.943.561 0 .92-.202 1.437-.719.382-.381.674-.718.944-.943"></path></svg>
                 </a>
 
                 <!-- Navigation Tabs -->
@@ -75,7 +75,7 @@
                 </a>
             </div>
 
-            <div class="flex items-center gap-2 shrink-0 max-w-full">
+            <div class="relative flex items-center gap-2 shrink-0">
                 <div id="connection-badge" role="button" tabindex="0" title="הזן מפתח GitHub להתחברות"
                      class="inline-flex items-center gap-2 sm:gap-2.5 px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-full bg-apple-surface border border-apple-border text-xs sm:text-sm font-medium text-apple-secondary transition-all shrink-0">
                     <span id="status-dot" class="w-2.5 h-2.5 rounded-full bg-gray-400 shrink-0"></span>
@@ -90,16 +90,17 @@
                         </svg>
                     </button>
                 </div>
-            </div>
 
-            <form id="quick-token-form" class="hidden w-full sm:w-auto flex items-center gap-1.5 bg-white border border-apple-border rounded-full px-2.5 py-1.5 sm:py-1 shadow-xs">
-                <input type="password" id="quick-token-input" placeholder="ghp_xxxxxxxxxxxx" dir="ltr"
-                       class="flex-1 min-w-0 sm:w-48 bg-transparent px-2 py-0.5 text-xs sm:text-sm font-mono text-apple-text placeholder-gray-400 focus:outline-none">
-                <button type="submit"
-                        class="px-3.5 py-1.5 sm:py-1 rounded-full bg-apple-blue hover:bg-apple-blueHover text-white text-xs font-medium transition-colors shrink-0">
-                    התחבר
-                </button>
-            </form>
+                <!-- Floating Popover below the Connect button -->
+                <form id="quick-token-form" class="hidden absolute top-full left-0 mt-2 z-50 w-72 sm:w-80 flex items-center gap-1.5 bg-white border border-apple-border rounded-2xl p-2 shadow-lg">
+                    <input type="password" id="quick-token-input" placeholder="ghp_xxxxxxxxxxxx" dir="ltr"
+                           class="flex-1 min-w-0 bg-apple-surface/70 border border-apple-border rounded-xl px-3 py-1.5 text-xs sm:text-sm font-mono text-apple-text placeholder-gray-400 focus:outline-none focus:bg-white focus:border-apple-blue">
+                    <button type="submit"
+                            class="px-3.5 py-1.5 rounded-xl bg-apple-blue hover:bg-apple-blueHover text-white text-xs font-medium transition-colors shrink-0">
+                        התחבר
+                    </button>
+                </form>
+            </div>
         </header>
 
         <!-- Main Tab: Step 2 Only -->
