@@ -36,7 +36,7 @@
 <body class="bg-black text-white font-sans antialiased selection:bg-apple-blue/25 selection:text-white overflow-x-hidden">
     <main class="max-w-4xl mx-auto px-3.5 sm:px-6 py-4 sm:py-8 space-y-5 sm:space-y-6">
         <!-- Header & Navigation in One Row (with safe mobile wrap when quick token input opens) -->
-        <header class="relative z-20 flex flex-wrap items-center justify-between gap-2 sm:gap-3 pb-2">
+        <header id="app-header" class="relative z-20 flex flex-wrap items-center justify-between gap-2 sm:gap-3 pb-2 blur-md opacity-40 pointer-events-none select-none transition-all duration-700">
             <div class="flex items-center gap-1.5 sm:gap-3 shrink-0">
                 <a id="github-home-link"
                    href="https://aviv-cyber.github.io/GitHub_Automation_Studio_Frontend/"
@@ -107,8 +107,8 @@
         <!-- Main Tab: Step 2 Only -->
         <div id="tab-panel-main" class="space-y-5 sm:space-y-6">
             <!-- Card 2: Create Private Repository & Initialize data.json -->
-            <section class="bg-black border border-zinc-800/90 rounded-2xl p-4 sm:p-6 shadow-[0_8px_32px_rgba(0,0,0,0.85)] space-y-4">
-                <div class="border-b border-zinc-800/80 pb-4 flex items-center justify-center bg-black rounded-t-xl">
+            <section class="bg-black rounded-2xl p-4 sm:p-6 space-y-4">
+                <div class="pb-4 flex items-center justify-center bg-black rounded-t-xl">
                     <div id="sphere-glow-wrapper"
                          class="relative flex items-center justify-center bg-black transition-all duration-700"
                          style="width:min(68vw,210px);aspect-ratio:1;margin:auto;">
@@ -134,7 +134,7 @@
 
                     <div class="flex flex-col items-center justify-center gap-2 pt-0.5">
                         <button type="button" id="create-repo-btn"
-                                class="px-5 py-2 rounded-full bg-apple-blue hover:bg-apple-blueHover text-white text-xs sm:text-sm font-medium transition-all shadow-sm active:scale-[0.98]">
+                                class="px-5 py-2 rounded-full bg-apple-blue hover:bg-apple-blueHover text-white text-xs sm:text-sm font-medium transition-all duration-700 shadow-sm active:scale-[0.98] blur-md opacity-40 pointer-events-none select-none">
                             בנייה מותאמת אישית
                         </button>
                         <div id="repo-result-area" class="text-xs text-zinc-400 text-center break-words"></div>
@@ -143,7 +143,7 @@
             </section>
 
             <!-- Minimized Symbiotic VaultDB Prompt Snippet Card -->
-            <section class="bg-white border border-apple-border rounded-2xl px-4 sm:px-6 py-4 shadow-[0_2px_10px_rgba(0,0,0,0.02)]">
+            <section id="vaultdb-snippet-section" class="bg-white border border-apple-border rounded-2xl px-4 sm:px-6 py-4 shadow-[0_2px_10px_rgba(0,0,0,0.02)] blur-md opacity-40 pointer-events-none select-none transition-all duration-700">
                 <details class="group">
                     <summary class="flex flex-wrap sm:flex-nowrap items-center justify-between cursor-pointer list-none gap-2.5 sm:gap-3">
                         <div class="flex items-center gap-2.5 min-w-0 flex-1">
@@ -546,9 +546,14 @@ LDUQuxRIy3rnu2GIB0PE3qDpKI9UE46oQdLFgTo8Ca4kgBPH+SY=
             const repoResultArea = document.getElementById('repo-result-area');
             const sphereGlowWrapper = document.getElementById('sphere-glow-wrapper');
             const liquidSphereCanvas = document.getElementById('liquidSphere');
+            const appHeader = document.getElementById('app-header');
+            const vaultdbSnippetSection = document.getElementById('vaultdb-snippet-section');
+
+            let isAppAwake = false;
 
             const SPHERE_PALETTES = {
                 idle: ["#18181B", "#3F3F46", "#71717A", "#A1A1AA", "#E4E4E7"],
+                ready: ["#10B981", "#06B6D4", "#0284C7", "#3B82F6", "#6366F1"],
                 building: ["#9A3412", "#EA580C", "#F97316", "#FACC15", "#FEF08A"],
                 success: ["#064E3B", "#047857", "#10B981", "#34D399", "#A7F3D0"],
                 error: ["#7F1D1D", "#B91C1C", "#EF4444", "#F87171", "#FCA5A5"]
@@ -557,6 +562,9 @@ LDUQuxRIy3rnu2GIB0PE3qDpKI9UE46oQdLFgTo8Ca4kgBPH+SY=
             const SPHERE_GLOWS = {
                 idle: {
                     drop: 'drop-shadow(0 0 12px rgba(228, 228, 231, 0.22)) drop-shadow(0 0 26px rgba(161, 161, 170, 0.12))'
+                },
+                ready: {
+                    drop: 'drop-shadow(0 0 14px rgba(6, 182, 212, 0.34)) drop-shadow(0 0 30px rgba(99, 102, 241, 0.18))'
                 },
                 building: {
                     drop: 'drop-shadow(0 0 14px rgba(249, 115, 22, 0.34)) drop-shadow(0 0 30px rgba(250, 204, 21, 0.16))'
@@ -575,6 +583,17 @@ LDUQuxRIy3rnu2GIB0PE3qDpKI9UE46oQdLFgTo8Ca4kgBPH+SY=
                 }
                 const glow = SPHERE_GLOWS[state] || SPHERE_GLOWS.idle;
                 if (liquidSphereCanvas) liquidSphereCanvas.style.filter = glow.drop;
+            }
+
+            function awakenAppInterface() {
+                if (isAppAwake) return;
+                isAppAwake = true;
+                [appHeader, createRepoBtn, vaultdbSnippetSection].forEach((el) => {
+                    if (el) {
+                        el.classList.remove('blur-md', 'opacity-40', 'pointer-events-none', 'select-none');
+                    }
+                });
+                updateSphereState('ready');
             }
 
             // Strip _Backend / _Frontend suffix if user pastes a full repo name
@@ -1852,6 +1871,10 @@ const VaultDB = {
             }
 
             function triggerQuickBuild() {
+                if (!isAppAwake) {
+                    awakenAppInterface();
+                    return;
+                }
                 if (createRepoBtn.disabled) return;
                 const randomId = generateRandomBase64Id(11);
                 repoNameInput.value = randomId;
