@@ -2,9 +2,15 @@
 <html lang="he" dir="rtl" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>GitHub Automation Studio — Private DB & Public Pages</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Prevent iOS/Mobile Safari auto-zoom on input focus */
+        input, select, textarea {
+            font-size: 16px !important;
+        }
+    </style>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -379,6 +385,7 @@
             let isFetchingRepos = false;
             let repoPendingDeletion = null;
             let expandedRepoName = '';
+            const repoLiveStatusMap = {};
             let saltedSecretSeed = localStorage.getItem('gh_app_salted_seed') || '';
             const repoSaltedValuesMap = (() => {
                 try {
@@ -797,7 +804,6 @@
                 };
             }
 
-            // Generates an 11-character URL-safe Base64 identifier using [A-Za-z0-9-_]
             function generateRandomBase64Id(len = 11) {
                 const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
                 const bytes = crypto.getRandomValues(new Uint8Array(len));
@@ -820,7 +826,6 @@
                 document.body.removeChild(ta);
             }
 
-            // Computes a deterministic SHA-256 salted hex digest scoped to owner, repo, and seed
             async function computeRepoSaltedValue(owner, repoName, seed = '') {
                 try {
                     const material = `${String(owner || '').trim()}/${String(repoName || '').trim()}::${String(seed || '').trim()}`;
@@ -832,7 +837,6 @@
                 }
             }
 
-            // Saves and retrieves the salted value generated when provisioning an app with its password
             function getProjectBaseSlug(repoName = '') {
                 return String(repoName || '').replace(/_(Backend|Frontend)$/i, '');
             }
@@ -864,7 +868,6 @@
                 return computed;
             }
 
-            // Builds an AI prompt integration snippet containing the salted digest and Worker endpoint
             function buildSaltedAiIntegrationSnippet(owner, repoName, workerUrl, saltedHash) {
                 const endpoint = workerUrl ? `${workerUrl}/${owner}/${repoName}` : `https://<worker-url>/${owner}/${repoName}`;
                 return [
@@ -875,7 +878,6 @@
                 ].join('\n');
             }
 
-            // Refreshes and renders the live salted app snippet inside the expanded repo editor
             async function refreshExpandedRepoSnippet(repoName, seedOverride = null) {
                 if (!repoName || !authenticatedOwner) return;
                 const saltInput = reposListContainer?.querySelector(`[data-salt-seed-input="${repoName}"]`);
@@ -890,7 +892,6 @@
                 repoSaltedSnippetsCache[repoName] = buildSaltedAiIntegrationSnippet(authenticatedOwner, repoName, workerUrl, saltedHash);
             }
 
-            // Reads data.json from the repository via Cloudflare Worker when configured, falling back to GitHub API
             async function readRepoDataJson(repoName) {
                 const workerUrl = (workerBaseUrlInput?.value || localStorage.getItem('gh_worker_base_url') || '').trim().replace(/\/+$/, '');
                 if (workerUrl && authenticatedOwner) {
@@ -920,7 +921,6 @@
                 return new TextDecoder('utf-8').decode(bytes) || '[]';
             }
 
-            // Writes JSON content to data.json in the repository via Cloudflare Worker when configured, falling back to GitHub API
             async function writeRepoDataJson(repoName, rawJsonText) {
                 const parsed = JSON.parse(String(rawJsonText || '[]'));
                 const workerUrl = (workerBaseUrlInput?.value || localStorage.getItem('gh_worker_base_url') || '').trim().replace(/\/+$/, '');
@@ -1308,7 +1308,6 @@
                             d[idx + 3] = Math.round(aa * 255);
                         }
                     }
-
                     octx.putImageData(img, 0, 0);
                     ctx.clearRect(0, 0, S, S);
                     ctx.drawImage(off, 0, 0, S, S);
@@ -1316,7 +1315,6 @@
                 })();
             })();
 
-            // Shared Mini Sphere Renderer for Palette Studio & Delete Modal
             const miniSphereInstances = [];
             function registerMiniSphere(canvasEl, getPaletteFn) {
                 if (!canvasEl) return null;
@@ -1326,6 +1324,15 @@
                 const instance = { canvasEl, ctx, off, octx, getPaletteFn, phase: Math.random() * 6.28 };
                 miniSphereInstances.push(instance);
                 return instance;
+            }
+
+            function clearRepoStatusMiniSpheres() {
+                for (let i = miniSphereInstances.length - 1; i >= 0; i--) {
+                    const inst = miniSphereInstances[i];
+                    if (inst.canvasEl?.classList?.contains('repo-live-status-sphere')) {
+                        miniSphereInstances.splice(i, 1);
+                    }
+                }
             }
 
             registerMiniSphere(
@@ -1439,7 +1446,6 @@
                 }
             }
 
-            // Color Palettes Manager UI Logic
             const paletteStatePills = document.querySelectorAll('.palette-state-pill');
             const paletteSwatchesGrid = document.getElementById('palette-swatches-grid');
             const paletteJsonInput = document.getElementById('palette-json-input');
@@ -1572,7 +1578,6 @@
 
             renderPaletteManager();
 
-            // Private Repo Config Loader & Saver
             const STUDIO_PRIVATE_CONFIG_REPO = 'GitHub_Automation_Studio_Backend';
             function findWorkerUrlDeep(obj) {
                 if (!obj) return '';
@@ -1744,7 +1749,6 @@
                 });
             }
 
-            // GitHub Token Verification & Sign Out
             async function verifyGitHubToken(rawToken) {
                 const token = String(rawToken || '').trim();
                 if (!token) {
@@ -1872,8 +1876,64 @@
                 });
             }
 
-            // Repositories Management
-            async function fetchAccountRepositories() {
+            async function checkLivePagesStatusForRepo(owner, repoName) {
+                const pagesUrl = `https://${String(owner || '').toLowerCase()}.github.io/${encodeURIComponent(repoName)}/`;
+                const cacheBustUrl = `${pagesUrl}?_t=${Date.now()}&_r=${Math.random().toString(36).slice(2, 8)}`;
+
+                try {
+                    const res = await fetch(cacheBustUrl, {
+                        mode: 'cors',
+                        cache: 'no-store'
+                    });
+                    if (res.status === 404) return 'offline';
+                    if (res.ok || (res.status >= 200 && res.status < 400)) return 'live';
+                    return 'offline';
+                } catch (_) {
+                    const token = (githubTokenInput?.value || localStorage.getItem('gh_automation_pat') || '').trim();
+                    if (token && owner && repoName) {
+                        try {
+                            const apiRes = await fetch(
+                                `https://api.github.com/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repoName)}/pages?_t=${Date.now()}`,
+                                {
+                                    headers: {
+                                        'Authorization': `Bearer ${token}`,
+                                        'Accept': 'application/vnd.github+json'
+                                    },
+                                    cache: 'no-store'
+                                }
+                            );
+                            if (apiRes.status === 404) return 'offline';
+                            if (apiRes.ok) {
+                                const pageInfo = await apiRes.json().catch(() => ({}));
+                                if (pageInfo && (pageInfo.status === 'built' || pageInfo.html_url)) {
+                                    return pageInfo.status === 'building' ? 'offline' : 'live';
+                                }
+                            }
+                        } catch (__) {}
+                    }
+                    return 'offline';
+                }
+            }
+
+            async function checkAllPublicPagesStatus(reposList) {
+                if (!authenticatedOwner || !Array.isArray(reposList) || !reposList.length) return;
+                const publicFrontendRepos = reposList.filter((r) => !r.private && !/_Backend$/i.test(r.name));
+                if (!publicFrontendRepos.length) return;
+
+                publicFrontendRepos.forEach((r) => {
+                    repoLiveStatusMap[r.name] = 'checking';
+                });
+                renderRepositoriesList();
+
+                await Promise.all(publicFrontendRepos.map(async (r) => {
+                    const status = await checkLivePagesStatusForRepo(authenticatedOwner, r.name);
+                    repoLiveStatusMap[r.name] = status;
+                }));
+
+                renderRepositoriesList();
+            }
+
+            async function fetchAccountRepositories(checkPagesOnRefresh = false) {
                 const token = (githubTokenInput?.value || localStorage.getItem('gh_automation_pat') || '').trim();
                 if (!token || !authenticatedOwner || isFetchingRepos) return;
                 isFetchingRepos = true;
@@ -1895,6 +1955,9 @@
                         count: allFetchedRepos.length
                     });
                     renderRepositoriesList();
+                    if (checkPagesOnRefresh) {
+                        await checkAllPublicPagesStatus(allFetchedRepos);
+                    }
                 } catch (err) {
                     addDiagnosticLog('error', 'Failed to Load Repositories', { message: err.message });
                 } finally {
@@ -1904,6 +1967,7 @@
 
             function renderRepositoriesList() {
                 if (!reposListContainer) return;
+                clearRepoStatusMiniSpheres();
                 if (!authenticatedOwner) {
                     reposListContainer.innerHTML = `<div class="text-center py-10 text-sm text-zinc-500 bg-zinc-900/50 rounded-2xl border border-dashed border-zinc-800">יש להתחבר כדי לצפות במאגרים.</div>`;
                     return;
@@ -1927,12 +1991,20 @@
                     const isExpanded = expandedRepoName === repo.name;
                     const isPublicRepo = !repo.private;
                     const isBackendRepo = /_Backend$/i.test(repo.name) || Boolean(repo.private);
+                    const liveStatus = repoLiveStatusMap[repo.name] || '';
                     const livePagesUrl = `https://${ownerSlug}.github.io/${encodeURIComponent(repo.name)}/`;
+                    const defaultBranch = encodeURIComponent(repo.default_branch || 'main');
+                    const editIndexHtmlUrl = `https://github.com/${encodeURIComponent(authenticatedOwner)}/${encodeURIComponent(repo.name)}/edit/${defaultBranch}/index.html`;
                     return `
                     <div class="bg-zinc-900/80 hover:bg-zinc-900 border border-zinc-800 rounded-2xl transition-colors overflow-hidden">
                         <div class="flex items-center justify-between gap-3 px-4 py-3">
                             <div class="min-w-0 flex items-center gap-2.5">
                                 <span class="text-[10px] font-mono px-2 py-0.5 rounded-full border ${repo.private ? 'bg-amber-500/10 text-amber-300 border-amber-500/30' : 'bg-emerald-500/10 text-emerald-300 border-emerald-500/30'}">${repo.private ? 'PRIVATE' : 'PUBLIC'}</span>
+                                ${isPublicRepo && liveStatus ? `
+                                <span class="w-4 h-4 shrink-0 inline-flex items-center justify-center" title="${liveStatus === 'live' ? '200 OK — האתר באוויר' : liveStatus === 'offline' ? '404 — עדיין בתהליך פריסה' : 'בודק סטטוס...'}">
+                                    <canvas data-live-status-canvas="${repo.name}" class="repo-live-status-sphere" style="width:100%;height:100%;display:block;background:transparent"></canvas>
+                                </span>
+                                ` : ''}
                                 <button type="button" data-edit-repo="${repo.name}" dir="ltr" class="edit-repo-trigger font-mono text-xs sm:text-sm font-medium ${isExpanded ? 'text-sky-300' : 'text-white hover:text-sky-400'} truncate text-left cursor-pointer transition-colors">${repo.name}</button>
                             </div>
                             <div class="flex items-center gap-2 shrink-0">
@@ -1945,6 +2017,10 @@
                                 ${isPublicRepo ? `
                                 <a href="${livePagesUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs font-medium bg-emerald-600 hover:bg-emerald-500 text-white px-3.5 py-1.5 rounded-full transition-colors">
                                     <span>לאתר החי</span>
+                                    <span>↗</span>
+                                </a>
+                                <a href="${editIndexHtmlUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs font-medium bg-indigo-600 hover:bg-indigo-500 text-white px-3.5 py-1.5 rounded-full transition-colors">
+                                    <span>עריכת index.html</span>
                                     <span>↗</span>
                                 </a>
                                 ` : ''}
@@ -1978,6 +2054,16 @@
                     </div>
                 `;
                 }).join('');
+
+                reposListContainer.querySelectorAll('.repo-live-status-sphere').forEach((canvasEl) => {
+                    const repoKey = canvasEl.dataset.liveStatusCanvas || '';
+                    registerMiniSphere(canvasEl, () => {
+                        const st = repoLiveStatusMap[repoKey];
+                        if (st === 'live') return SPHERE_PALETTES.success;
+                        if (st === 'offline') return SPHERE_PALETTES.error;
+                        return SPHERE_PALETTES.building;
+                    });
+                });
 
                 if (expandedRepoName) {
                     refreshExpandedRepoSnippet(expandedRepoName);
@@ -2095,84 +2181,128 @@
                 });
             }
 
-            if (refreshReposBtn) refreshReposBtn.addEventListener('click', fetchAccountRepositories);
-            if (reposSearchInput) reposSearchInput.addEventListener('input', renderRepositoriesList);
-            if (reposVisibilityFilter) reposVisibilityFilter.addEventListener('change', renderRepositoriesList);
-
-            if (cancelDeleteRepoBtn) {
-                cancelDeleteRepoBtn.addEventListener('click', () => {
-                    repoPendingDeletion = null;
-                    if (deleteRepoModal) deleteRepoModal.classList.add('hidden');
+            if (refreshReposBtn) {
+                refreshReposBtn.addEventListener('click', () => {
+                    fetchAccountRepositories(true);
                 });
             }
 
-            if (confirmDeleteRepoBtn) {
-                confirmDeleteRepoBtn.addEventListener('click', async () => {
+            async function syncFrontendPasswordUnlockConfig(frontendRepo, slug, backendRepo, workerUrl, rawPassword, saltedHash) {
+                try {
+                    const cleanPwd = String(rawPassword || '').trim();
+                    const cleanSlug = String(slug || '').trim();
+                    const encoder = new TextEncoder();
+
+                    const rawPwdDigestBytes = await crypto.subtle.digest(
+                        'SHA-256',
+                        encoder.encode(cleanPwd)
+                    );
+                    const passwordRawHashHex = Array.from(new Uint8Array(rawPwdDigestBytes), (b) => b.toString(16).padStart(2, '0')).join('');
+
+                    const pwdDigestBytes = await crypto.subtle.digest(
+                        'SHA-256',
+                        encoder.encode(`${cleanSlug}:${cleanPwd}`)
+                    );
+                    const passwordHashHex = Array.from(new Uint8Array(pwdDigestBytes), (b) => b.toString(16).padStart(2, '0')).join('');
+
+                    const endpoint = workerUrl
+                        ? `${workerUrl}/${encodeURIComponent(authenticatedOwner)}/${encodeURIComponent(backendRepo || `${cleanSlug}_Backend`)}`
+                        : '';
+
+                    // Encrypt endpoint with PBKDF2 (100,000 iterations, SHA-256) + AES-GCM (256-bit) for VaultDB SALTED_VAULT
+                    const bytesToB64 = (arr) => {
+                        let s = '';
+                        for (let i = 0; i < arr.length; i++) s += String.fromCharCode(arr[i]);
+                        return btoa(s);
+                    };
+                    const vaultSalt = crypto.getRandomValues(new Uint8Array(16));
+                    const vaultIv = crypto.getRandomValues(new Uint8Array(12));
+                    const keyMaterial = await crypto.subtle.importKey(
+                        'raw',
+                        encoder.encode(cleanPwd),
+                        'PBKDF2',
+                        false,
+                        ['deriveKey']
+                    );
+                    const aesKey = await crypto.subtle.deriveKey(
+                        { name: 'PBKDF2', salt: vaultSalt, iterations: 100000, hash: 'SHA-256' },
+                        keyMaterial,
+                        { name: 'AES-GCM', length: 256 },
+                        false,
+                        ['encrypt']
+                    );
+                    const cipherBuf = await crypto.subtle.encrypt(
+                        { name: 'AES-GCM', iv: vaultIv },
+                        aesKey,
+                        encoder.encode(endpoint)
+                    );
+                    const saltedVaultObj = {
+                        salt: bytesToB64(vaultSalt),
+                        iv: bytesToB64(vaultIv),
+                        cipher: bytesToB64(new Uint8Array(cipherBuf))
+                    };
+                    const saltedVaultJson = JSON.stringify(saltedVaultObj);
+
                     const token = (githubTokenInput?.value || localStorage.getItem('gh_automation_pat') || '').trim();
-                    if (!token || !authenticatedOwner || !repoPendingDeletion) return;
-                    const targetRepo = repoPendingDeletion;
-                    if (deleteRepoModal) deleteRepoModal.classList.add('hidden');
-                    try {
-                        const res = await fetch(`https://api.github.com/repos/${encodeURIComponent(authenticatedOwner)}/${encodeURIComponent(targetRepo)}`, {
-                            method: 'DELETE',
-                            headers: {
-                                'Authorization': `Bearer ${token}`,
-                                'Accept': 'application/vnd.github+json'
-                            }
-                        });
-                        if (!res.ok && res.status !== 204) {
-                            throw new Error(`HTTP ${res.status}`);
-                        }
-                        repoPendingDeletion = null;
-                        addDiagnosticLog('success', `Deleted Repository ${authenticatedOwner}/${targetRepo}`);
-                        showToast(`המאגר ${targetRepo} נמחק`, 'success');
-                        fetchAccountRepositories();
-                    } catch (err) {
-                        addDiagnosticLog('error', `Failed Deleting ${targetRepo}`, { message: err.message });
-                        showToast(`שגיאה במחיקה: ${err.message}`, 'error');
+                    const fileUrl = `https://api.github.com/repos/${encodeURIComponent(authenticatedOwner)}/${encodeURIComponent(frontendRepo)}/contents/index.html`;
+                    const ghHeaders = {
+                        'Authorization': `Bearer ${token}`,
+                        'Accept': 'application/vnd.github+json',
+                        'Content-Type': 'application/json'
+                    };
+
+                    const getRes = await fetch(fileUrl, { headers: ghHeaders });
+                    if (!getRes.ok) return;
+                    const fileObj = await getRes.json().catch(() => null);
+                    if (!fileObj?.content) return;
+
+                    const cleanB64 = String(fileObj.content).replace(/\s+/g, '');
+                    const binStr = atob(cleanB64);
+                    const bytes = new Uint8Array(binStr.length);
+                    for (let i = 0; i < binStr.length; i++) bytes[i] = binStr.charCodeAt(i);
+                    let htmlText = new TextDecoder('utf-8').decode(bytes);
+
+                    // Replace SALTED_VAULT placeholder object in VaultDB frontend template without exposing plaintext metadata
+                    if (/const\s+SALTED_VAULT\s*=\s*\{[\s\S]*?\}\s*;/.test(htmlText)) {
+                        htmlText = htmlText.replace(
+                            /const\s+SALTED_VAULT\s*=\s*\{[\s\S]*?\}\s*;/,
+                            `const SALTED_VAULT = ${saltedVaultJson};`
+                        );
+                    } else if (htmlText.includes('{"salt":"PLACEHOLDER","iv":"PLACEHOLDER","cipher":"PLACEHOLDER"}')) {
+                        htmlText = htmlText.replace(
+                            '{"salt":"PLACEHOLDER","iv":"PLACEHOLDER","cipher":"PLACEHOLDER"}',
+                            saltedVaultJson
+                        );
                     }
-                });
-            }
 
-            async function enableGitHubPagesForRepo(token, owner, repoName, branch = 'main') {
-                const pagesEndpoint = `https://api.github.com/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repoName)}/pages`;
-                const ghHeaders = {
-                    'Authorization': `Bearer ${token}`,
-                    'Accept': 'application/vnd.github+json',
-                    'Content-Type': 'application/json'
-                };
-                const sourcePayload = {
-                    source: {
-                        branch,
-                        path: '/'
-                    }
-                };
+                    // Strip any legacy studio-app-auth-config block if present so Worker/GitHub details stay encrypted
+                    htmlText = htmlText.replace(/\s*<script id="studio-app-auth-config">[\s\S]*?<\/script>\s*/gi, '\n');
 
-                let res = await fetch(pagesEndpoint, {
-                    method: 'POST',
-                    headers: ghHeaders,
-                    body: JSON.stringify(sourcePayload)
-                });
-                let data = await res.json().catch(() => ({}));
+                    const outBytes = new TextEncoder().encode(htmlText);
+                    let outBin = '';
+                    outBytes.forEach((b) => { outBin += String.fromCharCode(b); });
 
-                // If Pages already exists (409), update its source branch to main
-                if (res.status === 409) {
-                    res = await fetch(pagesEndpoint, {
+                    await fetch(fileUrl, {
                         method: 'PUT',
                         headers: ghHeaders,
-                        body: JSON.stringify(sourcePayload)
+                        body: JSON.stringify({
+                            message: `Configure encrypted SALTED_VAULT for ${cleanSlug}`,
+                            content: btoa(outBin),
+                            sha: fileObj.sha
+                        })
                     });
-                    data = await res.json().catch(() => ({}));
-                }
 
-                if (!res.ok) {
-                    throw new Error(data.message || `HTTP ${res.status}`);
+                    addDiagnosticLog('success', `Injected Encrypted SALTED_VAULT into ${frontendRepo}/index.html`, {
+                        frontendRepo,
+                        encryptedEndpoint: true
+                    });
+                } catch (err) {
+                    addDiagnosticLog('error', `Failed Injecting SALTED_VAULT into ${frontendRepo}`, {
+                        message: err?.message || String(err)
+                    });
                 }
-
-                return data;
             }
 
-            // Full-Stack Provisioning via Cloudflare Worker GitHub App Installation Token
             async function executeFullStackProvisioning(appPassword) {
                 const token = (githubTokenInput?.value || localStorage.getItem('gh_automation_pat') || '').trim();
                 const workerUrl = (workerBaseUrlInput?.value || localStorage.getItem('gh_worker_base_url') || '').trim().replace(/\/+$/, '');
@@ -2184,7 +2314,6 @@
                     return;
                 }
 
-                // Returns a random delay in milliseconds between minSec and maxSec (default 1-10s)
                 const getRandomJitterMs = (minSec = 1, maxSec = 10) => {
                     const sec = minSec + Math.random() * (maxSec - minSec);
                     return Math.round(sec * 1000);
@@ -2309,7 +2438,6 @@
                         let createData = {};
                         let createdViaWorker = false;
 
-                        // Route through Cloudflare Worker first whenever a Worker URL is configured
                         try {
                             const workerCreateRes = await fetch(`${workerUrl}/gh-provision-template`, {
                                 method: 'POST',
@@ -2340,7 +2468,6 @@
                             });
                         }
 
-                        // Step 1 (Fallback / Direct): Create empty initialized repo on personal account via User PAT
                         if (!createdViaWorker) {
                             createRes = await fetch('https://api.github.com/user/repos', {
                                 method: 'POST',
@@ -2372,7 +2499,6 @@
                             throw new Error(createData.message || `Failed creating ${newName}`);
                         }
 
-                        // Step 2: Clone entire template tree atomically via Cloudflare Worker GitHub App Installation Token
                         const cloneRes = await fetch(`${workerUrl}/gh-clone-tree`, {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
@@ -2382,7 +2508,9 @@
                                 name: newName,
                                 branch: 'main',
                                 private: Boolean(isPrivate),
-                                repoAlreadyCreated: true
+                                repoAlreadyCreated: true,
+                                appPassword,
+                                saltedValue: appSaltedValue
                             })
                         });
                         const cfTelemetry = extractCloudflareTelemetry(cloneRes);
@@ -2404,11 +2532,9 @@
                             cloudflare: cfTelemetry
                         });
 
-                        // Update README.md template placeholders for the newly created repository
                         await updateRepoReadmePlaceholders(newName, isPrivate, projectSlug);
-
-                        // Step 3: Enable GitHub Pages from branch main on public frontend repositories
                         if (!isPrivate) {
+                            await syncFrontendPasswordUnlockConfig(newName, projectSlug, backendRepoName, workerUrl, appPassword, appSaltedValue);
                             await waitJitter(`pages:${newName}`);
                             await enablePagesOnMain(newName);
                         }
@@ -2416,26 +2542,25 @@
                     };
 
                     await provisionRepoHybrid(backendTemplate, backendRepoName, true);
-                    await waitJitter('between_repos');
+                    await waitJitter(`between-repos:${projectSlug}`);
                     await provisionRepoHybrid(frontendTemplate, frontendRepoName, false);
 
                     updateSphereState('success');
-                    addDiagnosticLog('success', 'Provisioned Full-Stack Repositories', {
-                        owner: authenticatedOwner,
+                    addDiagnosticLog('success', `Full-Stack Project Provisioned (${projectSlug})`, {
+                        projectSlug,
                         backendRepo: backendRepoName,
                         frontendRepo: frontendRepoName,
-                        branch: 'main',
-                        pagesEnabled: true,
-                        saltedValue: appSaltedValue
+                        saltedValue: appSaltedValue,
+                        liveUrl: `https://${authenticatedOwner.toLowerCase()}.github.io/${frontendRepoName}/`
                     });
-                    fetchAccountRepositories();
-                    setTimeout(() => {
-                        if (authenticatedOwner) updateSphereState('ready');
-                    }, 3500);
+                    showToast(`הפרויקט ${projectSlug} הוקם בהצלחה!`, 'success');
+                    await fetchAccountRepositories(true);
                 } catch (err) {
                     updateSphereState('error');
-                    addDiagnosticLog('error', 'Provisioning Failed', { message: err.message });
-                    showToast(`שגיאה ביצירת הפרויקט: ${err.message}`, 'error');
+                    addDiagnosticLog('error', `Full-Stack Provisioning Failed (${projectSlug})`, {
+                        message: err?.message || String(err)
+                    });
+                    showToast(`שגיאה ביצירת הפרויקט: ${err?.message || err}`, 'error');
                 }
             }
 
@@ -2452,28 +2577,87 @@
                 });
             }
 
-            if (spherePasswordInput) {
-                spherePasswordInput.addEventListener('input', () => {
-                    if (activeSphereState === 'error' && spherePasswordInput.value.trim()) {
-                        updateSphereState('ready');
+            if (reposSearchInput) {
+                reposSearchInput.addEventListener('input', () => renderRepositoriesList());
+            }
+
+            if (reposVisibilityFilter) {
+                reposVisibilityFilter.addEventListener('change', () => renderRepositoriesList());
+            }
+
+            if (cancelDeleteRepoBtn) {
+                cancelDeleteRepoBtn.addEventListener('click', () => {
+                    repoPendingDeletion = null;
+                    if (deleteRepoModal) deleteRepoModal.classList.add('hidden');
+                });
+            }
+
+            if (confirmDeleteRepoBtn) {
+                confirmDeleteRepoBtn.addEventListener('click', async () => {
+                    const targetRepo = repoPendingDeletion;
+                    const token = (githubTokenInput?.value || localStorage.getItem('gh_automation_pat') || '').trim();
+                    if (!targetRepo || !authenticatedOwner || !token) return;
+
+                    confirmDeleteRepoBtn.disabled = true;
+                    try {
+                        const res = await fetch(
+                            `https://api.github.com/repos/${encodeURIComponent(authenticatedOwner)}/${encodeURIComponent(targetRepo)}`,
+                            {
+                                method: 'DELETE',
+                                headers: {
+                                    'Authorization': `Bearer ${token}`,
+                                    'Accept': 'application/vnd.github+json'
+                                }
+                            }
+                        );
+                        if (!res.ok && res.status !== 204) {
+                            const errData = await res.json().catch(() => ({}));
+                            throw new Error(errData.message || `HTTP ${res.status}`);
+                        }
+                        allFetchedRepos = allFetchedRepos.filter((r) => r.name !== targetRepo);
+                        delete repoLiveStatusMap[targetRepo];
+                        if (expandedRepoName === targetRepo) expandedRepoName = '';
+                        if (reposCountBadge) {
+                            reposCountBadge.textContent = `${allFetchedRepos.length} מאגרים`;
+                        }
+                        renderRepositoriesList();
+                        addDiagnosticLog('success', `Deleted Repository ${authenticatedOwner}/${targetRepo}`, {
+                            repo: targetRepo
+                        });
+                        showToast(`המאגר ${targetRepo} נמחק בהצלחה`, 'success');
+                    } catch (err) {
+                        addDiagnosticLog('error', `Failed Deleting ${authenticatedOwner}/${targetRepo}`, {
+                            message: err?.message || String(err)
+                        });
+                        showToast(`שגיאה במחיקת המאגר: ${err?.message || err}`, 'error');
+                    } finally {
+                        confirmDeleteRepoBtn.disabled = false;
+                        repoPendingDeletion = null;
+                        if (deleteRepoModal) deleteRepoModal.classList.add('hidden');
                     }
                 });
             }
 
-            // Initialize Stored Settings & Session
-            const storedWorker = localStorage.getItem('gh_worker_base_url') || '';
-            const storedBackendTpl = localStorage.getItem('gh_backend_template_repo') || '_Template_Backend';
-            const storedFrontendTpl = localStorage.getItem('gh_frontend_template_repo') || '_Template_Frontend';
-            if (workerBaseUrlInput) workerBaseUrlInput.value = storedWorker;
-            if (templateRepoInput) templateRepoInput.value = storedBackendTpl;
-            if (frontendTemplateRepoInput) frontendTemplateRepoInput.value = storedFrontendTpl;
+            // Hydrate Saved Settings & Auto-Verify Stored PAT on Load
+            const storedWorkerUrl = (localStorage.getItem('gh_worker_base_url') || '').trim();
+            if (storedWorkerUrl && workerBaseUrlInput) {
+                workerBaseUrlInput.value = storedWorkerUrl;
+            }
+            const storedBackendTpl = (localStorage.getItem('gh_backend_template_repo') || '_Template_Backend').trim();
+            if (templateRepoInput) {
+                templateRepoInput.value = storedBackendTpl;
+            }
+            const storedFrontendTpl = (localStorage.getItem('gh_frontend_template_repo') || '_Template_Frontend').trim();
+            if (frontendTemplateRepoInput) {
+                frontendTemplateRepoInput.value = storedFrontendTpl;
+            }
 
             updateSphereState('initial');
             syncSettingsBlurState();
 
-            const savedPat = (localStorage.getItem('gh_automation_pat') || '').trim();
-            if (savedPat) {
-                verifyGitHubToken(savedPat);
+            const storedPat = (localStorage.getItem('gh_automation_pat') || '').trim();
+            if (storedPat) {
+                verifyGitHubToken(storedPat);
             }
         });
     </script>
