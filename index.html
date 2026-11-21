@@ -4,7 +4,62 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>AutoGit</title>
-    <link id="dynamic-favicon" rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
+    <meta name="application-name" content="AutoGit">
+    <meta name="apple-mobile-web-app-title" content="AutoGit">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#0F0F0F">
+    <link id="dynamic-favicon" rel="icon" type="image/png" sizes="180x180" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Cdefs%3E%3CradialGradient id='g' cx='36%25' cy='30%25' r='68%25'%3E%3Cstop offset='0%25' stop-color='%23FFFFFF'/%3E%3Cstop offset='32%25' stop-color='%2338BDF8'/%3E%3Cstop offset='72%25' stop-color='%233B82F6'/%3E%3Cstop offset='100%25' stop-color='%230F172A'/%3E%3C/radialGradient%3E%3C/defs%3E%3Crect width='180' height='180' rx='40' fill='%230F0F0F'/%3E%3Ccircle cx='90' cy='90' r='66' fill='url(%23g)'/%3E%3C/svg%3E">
+    <link id="apple-touch-icon-link" rel="apple-touch-icon" sizes="180x180" href="">
+    <link id="web-app-manifest-link" rel="manifest" href="">
+    <script>
+        (function initStaticWebAppIcons() {
+            try {
+                const size = 512;
+                const canvas = document.createElement('canvas');
+                canvas.width = size;
+                canvas.height = size;
+                const ctx = canvas.getContext('2d');
+                ctx.fillStyle = '#0F0F0F';
+                ctx.fillRect(0, 0, size, size);
+
+                const cx = size * 0.5, cy = size * 0.5, r = size * 0.37;
+                const grad = ctx.createRadialGradient(cx - r * 0.32, cy - r * 0.36, r * 0.06, cx, cy, r);
+                grad.addColorStop(0, '#E0F2FE');
+                grad.addColorStop(0.28, '#38BDF8');
+                grad.addColorStop(0.68, '#2563EB');
+                grad.addColorStop(1, '#0F172A');
+
+                ctx.beginPath();
+                ctx.arc(cx, cy, r, 0, Math.PI * 2);
+                ctx.fillStyle = grad;
+                ctx.fill();
+
+                const pngDataUrl = canvas.toDataURL('image/png');
+                const appleLink = document.getElementById('apple-touch-icon-link');
+                if (appleLink) appleLink.href = pngDataUrl;
+                const favLink = document.getElementById('dynamic-favicon');
+                if (favLink) favLink.href = pngDataUrl;
+
+                const manifestObj = {
+                    name: 'AutoGit',
+                    short_name: 'AutoGit',
+                    start_url: './',
+                    display: 'standalone',
+                    background_color: '#0F0F0F',
+                    theme_color: '#0F0F0F',
+                    icons: [
+                        { src: pngDataUrl, sizes: '192x192', type: 'image/png' },
+                        { src: pngDataUrl, sizes: '512x512', type: 'image/png' }
+                    ]
+                };
+                const manifestBlob = new Blob([JSON.stringify(manifestObj)], { type: 'application/manifest+json' });
+                const manifestLink = document.getElementById('web-app-manifest-link');
+                if (manifestLink) manifestLink.href = URL.createObjectURL(manifestBlob);
+            } catch (_) {}
+        })();
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         html, body {
