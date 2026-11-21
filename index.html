@@ -36,68 +36,91 @@
 <body class="bg-black text-white font-sans antialiased min-h-screen flex flex-col selection:bg-apple-blue/30 selection:text-white">
     <!-- Top Navigation Bar (Dynamic Color Synced with Sphere) -->
     <header id="app-header" class="sticky top-0 z-30 bg-zinc-900/90 backdrop-blur-md border-b border-zinc-700/60 transition-all duration-700 blur-md opacity-40 pointer-events-none select-none">
-        <div class="relative max-w-5xl mx-auto px-4 sm:px-6 h-20 sm:h-24 flex items-center justify-between gap-3">
-            <!-- Right Side: Navigation Tabs + Cloudflare Shortcut -->
-            <div class="flex items-center gap-2.5 sm:gap-3.5">
-                <!-- Segmented Icon Pill -->
-                <nav id="header-nav-pill" class="flex items-center bg-black/25 p-2 rounded-full border border-white/15 gap-1.5 backdrop-blur-sm" aria-label="ניווט ראשי">
-                    <button type="button" data-tab="create" class="nav-tab-btn active p-2.5 rounded-full bg-white text-zinc-950 shadow-sm transition-all flex items-center justify-center" title="מסך ראשי" aria-label="מסך ראשי">
-                        <svg class="w-6 h-6 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-                        </svg>
-                    </button>
-                    <button type="button" data-tab="repos" class="nav-tab-btn p-2.5 rounded-full text-white/70 hover:text-white transition-all" title="ניהול מאגרים" aria-label="ניהול מאגרים">
-                        <svg class="w-6 h-6 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
-                        </svg>
-                    </button>
-                    <button type="button" data-tab="logs" class="nav-tab-btn relative p-2.5 rounded-full text-white/70 hover:text-white transition-all" title="לוגים ואבחון תקלות (Logs)" aria-label="לוגים ואבחון תקלות">
-                        <svg class="w-6 h-6 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                        </svg>
-                        <span id="logs-error-badge" class="hidden absolute top-1.5 right-1.5 w-2.5 h-2.5 rounded-full bg-red-500 ring-2 ring-zinc-900"></span>
-                    </button>
-                    <button type="button" data-tab="settings" class="nav-tab-btn p-2.5 rounded-full text-white/70 hover:text-white transition-all" title="הגדרות תשתית" aria-label="הגדרות תשתית">
-                        <svg class="w-6 h-6 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                        </svg>
-                    </button>
-                </nav>
-
-                <!-- Cloudflare Worker Shortcut -->
-                <a href="https://dash.cloudflare.com" target="_blank" rel="noopener noreferrer" title="Cloudflare Workers Dashboard" aria-label="Cloudflare Workers Dashboard" class="w-12 h-12 sm:w-13 sm:h-13 rounded-full bg-black/25 hover:bg-black/40 border border-white/15 flex items-center justify-center transition-colors">
-                    <svg class="w-6 h-6 text-[#F38020]" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M16.5088 16.8447c.1475-.5068.0908-.9707-.1553-1.3154-.2246-.3164-.6045-.499-1.0615-.5205l-8.6592-.1123a.1559.1559 0 0 1-.1333-.0713c-.0283-.042-.0351-.0986-.021-.1553.0278-.084.1123-.1484.2036-.1562l8.7359-.1123c1.0351-.0489 2.1601-.8868 2.5537-1.9136l.499-1.3013c.0215-.0561.0293-.1128.0147-.168-.5625-2.5463-2.835-4.4453-5.5499-4.4453-2.5039 0-4.6284 1.6177-5.3876 3.8614-.4927-.3658-1.1187-.5625-1.794-.499-1.2026.119-2.1665 1.083-2.2861 2.2856-.0283.31-.0069.6128.0635.894C1.5683 13.171 0 14.7754 0 16.752c0 .1748.0142.3515.0352.5205.0141.083.0844.1474.1689.1474h15.9814c.0909 0 .1758-.0644.2032-.1552l.1201-.42zm2.7676-5.5635c-.0772 0-.1611 0-.2383.0112-.0566 0-.1055.0415-.127.0977l-.3378 1.1743c-.1475.5068-.0918.9707.1543 1.3164.2256.3164.6055.498 1.0625.5195l1.8437.1133c.0557 0 .1055.0263.1328.0703.0284.043.0352.1074.0215.1563-.0283.084-.1133.1484-.2041.1552l-1.9209.1123c-1.041.0489-2.1582.8868-2.5527 1.9141l-.1406.3584c-.0284.0713.0214.1416.0986.1416h6.5976c.0772 0 .1475-.0489.169-.126.1123-.4082.1758-.8379.1758-1.2803 0-2.6025-2.125-4.727-4.7344-4.727"/>
+        <div class="relative max-w-5xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between gap-3">
+            <!-- Right Side: Expandable Hamburger Menu Trigger & Drawer -->
+            <div class="relative flex items-center">
+                <button type="button" id="hamburger-menu-btn" aria-expanded="false" aria-controls="hamburger-menu-panel" title="תפריט ניווט" aria-label="תפריט ניווט" class="relative w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-black/25 hover:bg-black/40 border border-white/15 flex items-center justify-center text-white transition-all active:scale-95">
+                    <svg id="hamburger-icon-open" class="w-6 h-6 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 7h16M4 12h16M4 17h16"/>
                     </svg>
-                </a>
+                    <svg id="hamburger-icon-close" class="hidden w-6 h-6 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                    <span id="logs-error-badge" class="hidden absolute top-1.5 right-1.5 w-2.5 h-2.5 rounded-full bg-red-500 ring-2 ring-zinc-900"></span>
+                </button>
+
+                <!-- Expandable Menu Panel -->
+                <div id="hamburger-menu-panel" class="hidden absolute top-full right-0 mt-2.5 z-50 w-64 bg-zinc-950/95 backdrop-blur-xl border border-white/15 rounded-3xl p-2 shadow-2xl space-y-1">
+                    <nav id="header-nav-pill" class="flex flex-col gap-1" aria-label="ניווט ראשי">
+                        <button type="button" data-tab="create" class="nav-tab-btn active w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl bg-white text-zinc-950 font-medium text-sm shadow-sm transition-all">
+                            <svg class="w-5 h-5 shrink-0 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                            </svg>
+                            <span>מסך ראשי</span>
+                        </button>
+                        <button type="button" data-tab="repos" class="nav-tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-white/80 hover:text-white hover:bg-white/10 font-medium text-sm transition-all">
+                            <svg class="w-5 h-5 shrink-0 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                            </svg>
+                            <span>ניהול מאגרים</span>
+                        </button>
+                        <button type="button" data-tab="logs" class="nav-tab-btn relative w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-white/80 hover:text-white hover:bg-white/10 font-medium text-sm transition-all">
+                            <span class="flex items-center gap-3">
+                                <svg class="w-5 h-5 shrink-0 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                </svg>
+                                <span>לוגים (Diagnostics)</span>
+                            </span>
+                            <span id="logs-menu-dot" class="hidden w-2 h-2 rounded-full bg-red-500"></span>
+                        </button>
+                        <button type="button" data-tab="settings" class="nav-tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-white/80 hover:text-white hover:bg-white/10 font-medium text-sm transition-all">
+                            <svg class="w-5 h-5 shrink-0 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            </svg>
+                            <span>הגדרות תשתית</span>
+                        </button>
+                    </nav>
+
+                    <div class="border-t border-white/10 pt-1 mt-1">
+                        <a href="https://dash.cloudflare.com" target="_blank" rel="noopener noreferrer" class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-white/80 hover:text-white hover:bg-white/10 font-medium text-sm transition-colors">
+                            <span class="flex items-center gap-3">
+                                <svg class="w-5 h-5 shrink-0 text-[#F38020]" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M16.5088 16.8447c.1475-.5068.0908-.9707-.1553-1.3154-.2246-.3164-.6045-.499-1.0615-.5205l-8.6592-.1123a.1559.1559 0 0 1-.1333-.0713c-.0283-.042-.0351-.0986-.021-.1553.0278-.084.1123-.1484.2036-.1562l8.7359-.1123c1.0351-.0489 2.1601-.8868 2.5537-1.9136l.499-1.3013c.0215-.0561.0293-.1128.0147-.168-.5625-2.5463-2.835-4.4453-5.5499-4.4453-2.5039 0-4.6284 1.6177-5.3876 3.8614-.4927-.3658-1.1187-.5625-1.794-.499-1.2026.119-2.1665 1.083-2.2861 2.2856-.0283.31-.0069.6128.0635.894C1.5683 13.171 0 14.7754 0 16.752c0 .1748.0142.3515.0352.5205.0141.083.0844.1474.1689.1474h15.9814c.0909 0 .1758-.0644.2032-.1552l.1201-.42zm2.7676-5.5635c-.0772 0-.1611 0-.2383.0112-.0566 0-.1055.0415-.127.0977l-.3378 1.1743c-.1475.5068-.0918.9707.1543 1.3164.2256.3164.6055.498 1.0625.5195l1.8437.1133c.0557 0 .1055.0263.1328.0703.0284.043.0352.1074.0215.1563-.0283.084-.1133.1484-.2041.1552l-1.9209.1123c-1.041.0489-2.1582.8868-2.5527 1.9141l-.1406.3584c-.0284.0713.0214.1416.0986.1416h6.5976c.0772 0 .1475-.0489.169-.126.1123-.4082.1758-.8379.1758-1.2803 0-2.6025-2.125-4.727-4.7344-4.727"/>
+                                </svg>
+                                <span>Cloudflare Workers</span>
+                            </span>
+                            <span class="text-xs text-white/50">↗</span>
+                        </a>
+                    </div>
+                </div>
             </div>
 
             <!-- Center: Inline Header Info Toast -->
-            <div id="toast-banner" class="hidden pointer-events-none z-40 sm:absolute sm:left-1/2 sm:top-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 bg-black/55 backdrop-blur-md text-white border border-white/20 px-3.5 py-1.5 rounded-full shadow-lg text-[11px] sm:text-xs font-medium flex items-center gap-2 max-w-[46vw] sm:max-w-xs truncate transition-all">
+            <div id="toast-banner" class="hidden pointer-events-none z-40 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-black/65 backdrop-blur-md text-white border border-white/20 px-3.5 py-1.5 rounded-full shadow-lg text-[11px] sm:text-xs font-medium flex items-center gap-2 max-w-[52vw] sm:max-w-xs truncate transition-all">
                 <span id="toast-dot" class="w-2 h-2 shrink-0 rounded-full bg-emerald-400"></span>
                 <span id="toast-text" class="truncate"></span>
             </div>
 
             <!-- Left Side: Connection Status Pill & Floating Token Input -->
-            <div class="relative flex items-center">
-                <div id="header-connection-pill" class="flex items-center gap-2.5 bg-black/25 px-4 py-2.5 rounded-full border border-white/15 text-sm sm:text-base backdrop-blur-sm">
-                    <button type="button" id="quick-connect-trigger" class="flex items-center gap-2.5 text-white/80 hover:text-white transition-colors cursor-pointer">
-                        <span id="connection-dot" class="w-3 h-3 rounded-full bg-red-500 transition-colors"></span>
-                        <span id="connection-status" class="font-medium text-white">התחבר</span>
+            <div class="relative flex items-center shrink-0">
+                <div id="header-connection-pill" class="flex items-center gap-2 bg-black/25 px-3 sm:px-4 py-2 sm:py-2.5 rounded-full border border-white/15 text-xs sm:text-base backdrop-blur-sm">
+                    <button type="button" id="quick-connect-trigger" class="flex items-center gap-2 text-white/80 hover:text-white transition-colors cursor-pointer">
+                        <span id="connection-dot" class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-red-500 transition-colors"></span>
+                        <span id="connection-status" class="font-medium text-white whitespace-nowrap">התחבר</span>
                     </button>
-                    <img id="header-user-avatar" src="" alt="User Avatar" class="hidden w-7 h-7 rounded-full object-cover border border-white/25">
+                    <img id="header-user-avatar" src="" alt="User Avatar" class="hidden w-6 h-6 sm:w-7 sm:h-7 rounded-full object-cover border border-white/25">
                     <button type="button" id="header-signout-btn" title="התנתק" aria-label="התנתק" class="hidden text-white/70 hover:text-red-300 transition-colors p-1 rounded-full">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
                         </svg>
                     </button>
                 </div>
 
                 <!-- Floating Token Dropdown -->
-                <form id="quick-token-form" class="hidden absolute top-full left-0 mt-2 z-50 w-72 bg-white rounded-2xl p-2 shadow-xl border border-apple-border flex items-center gap-1.5">
-                    <input type="password" id="quick-token-input" dir="ltr" placeholder="ghp_xxxxxxxxxxxx" class="flex-1 min-w-0 bg-apple-surface rounded-xl px-3 py-1.5 text-xs font-mono text-apple-text placeholder:text-apple-secondary focus:outline-none focus:ring-2 focus:ring-apple-blue/30">
-                    <button type="submit" id="quick-token-submit" class="bg-apple-blue hover:bg-apple-blueHover text-white text-xs font-medium px-3 py-1.5 rounded-xl transition-colors whitespace-nowrap">התחבר</button>
+                <form id="quick-token-form" class="hidden fixed sm:absolute top-20 sm:top-full left-3 right-3 sm:left-0 sm:right-auto mt-2 z-50 w-auto sm:w-72 bg-white rounded-2xl p-2 shadow-xl border border-apple-border flex items-center gap-1.5">
+                    <input type="password" id="quick-token-input" dir="ltr" placeholder="ghp_xxxxxxxxxxxx" class="flex-1 min-w-0 bg-apple-surface rounded-xl px-3 py-2 sm:py-1.5 text-xs font-mono text-apple-text placeholder:text-apple-secondary focus:outline-none focus:ring-2 focus:ring-apple-blue/30">
+                    <button type="submit" id="quick-token-submit" class="bg-apple-blue hover:bg-apple-blueHover text-white text-xs font-medium px-3.5 py-2 sm:py-1.5 rounded-xl transition-colors whitespace-nowrap">התחבר</button>
                 </form>
             </div>
         </div>
@@ -187,7 +210,10 @@
 
                 <div>
                     <label for="worker-base-url" class="block text-xs font-medium text-apple-secondary mb-1.5">Cloudflare Worker Proxy URL</label>
-                    <input type="url" id="worker-base-url" dir="ltr" value="https://github-db-proxy.aviv-cyber.workers.dev" class="w-full bg-apple-surface border border-apple-border/60 rounded-2xl px-4 py-2.5 text-xs font-mono text-apple-text focus:outline-none focus:ring-2 focus:ring-apple-blue/30">
+                    <div class="flex gap-2">
+                        <input type="url" id="worker-base-url" dir="ltr" value="https://spring-poetry-11f4.avivyl1234.workers.dev" class="flex-1 bg-apple-surface border border-apple-border/60 rounded-2xl px-4 py-2.5 text-xs font-mono text-apple-text focus:outline-none focus:ring-2 focus:ring-apple-blue/30">
+                        <button type="button" id="test-worker-btn" class="bg-apple-surface hover:bg-apple-surfaceHover text-apple-text text-xs font-medium px-3.5 py-2.5 rounded-2xl border border-apple-border/60 transition-colors whitespace-nowrap">בדוק Worker</button>
+                    </div>
                 </div>
 
                 <div>
@@ -199,20 +225,6 @@
                     <label for="frontend-template-repo" class="block text-xs font-medium text-apple-secondary mb-1.5">מאגר תבנית פומבי (Frontend Template)</label>
                     <input type="text" id="frontend-template-repo" dir="ltr" value="_Template_Frontend" class="w-full bg-apple-surface border border-apple-border/60 rounded-2xl px-4 py-2.5 text-xs font-mono text-apple-text focus:outline-none focus:ring-2 focus:ring-apple-blue/30">
                 </div>
-            </div>
-
-            <!-- Symbiotic Prompt Snippet -->
-            <div class="bg-apple-surface rounded-2xl p-4 sm:p-5 border border-apple-border/60 space-y-3">
-                <div class="flex items-center justify-between gap-3">
-                    <div>
-                        <h2 class="text-sm font-semibold text-apple-text">סניפט סימביוטי לבניית אפליקציות חדשות</h2>
-                        <p class="text-xs text-apple-secondary mt-0.5">כולל אוטומטית את אובייקט ההצפנה (<span class="font-mono">SALTED_VAULT</span>) של הפרויקט האחרון שנבנה או נבחר.</p>
-                    </div>
-                    <button type="button" id="copy-snippet-btn" class="bg-apple-blue hover:bg-apple-blueHover text-white text-xs font-medium px-4 py-2 rounded-full transition-colors whitespace-nowrap">
-                        העתק סניפט
-                    </button>
-                </div>
-                <pre id="symbiotic-snippet-code" dir="ltr" class="bg-white border border-apple-border/60 rounded-xl p-3 text-[11px] font-mono text-apple-text overflow-x-auto max-h-48 leading-relaxed"></pre>
             </div>
         </section>
 
@@ -288,6 +300,7 @@
             const githubTokenInput = document.getElementById('github-token');
             const verifyTokenBtn = document.getElementById('verify-token-btn');
             const workerBaseUrlInput = document.getElementById('worker-base-url');
+            const testWorkerBtn = document.getElementById('test-worker-btn');
             const templateRepoInput = document.getElementById('template-repo');
             const frontendTemplateRepoInput = document.getElementById('frontend-template-repo');
 
@@ -297,10 +310,12 @@
             const reposVisibilityFilter = document.getElementById('repos-visibility-filter');
             const reposListContainer = document.getElementById('repos-list-container');
 
-            const copySnippetBtn = document.getElementById('copy-snippet-btn');
-            const symbioticSnippetCode = document.getElementById('symbiotic-snippet-code');
-
             const logsErrorBadge = document.getElementById('logs-error-badge');
+            const logsMenuDot = document.getElementById('logs-menu-dot');
+            const hamburgerMenuBtn = document.getElementById('hamburger-menu-btn');
+            const hamburgerMenuPanel = document.getElementById('hamburger-menu-panel');
+            const hamburgerIconOpen = document.getElementById('hamburger-icon-open');
+            const hamburgerIconClose = document.getElementById('hamburger-icon-close');
             const logsEnvSummary = document.getElementById('logs-env-summary');
             const logsListContainer = document.getElementById('logs-list-container');
             const copyAllLogsBtn = document.getElementById('copy-all-logs-btn');
@@ -352,9 +367,9 @@
                 };
                 appDiagnosticLogs.unshift(entry);
                 if (appDiagnosticLogs.length > 80) appDiagnosticLogs.pop();
-
-                if (level === 'error' && logsErrorBadge) {
-                    logsErrorBadge.classList.remove('hidden');
+                if (level === 'error') {
+                    if (logsErrorBadge) logsErrorBadge.classList.remove('hidden');
+                    if (logsMenuDot) logsMenuDot.classList.remove('hidden');
                 }
                 renderEnvironmentSummary();
                 renderDiagnosticLogs();
@@ -424,6 +439,7 @@
                 clearLogsBtn.addEventListener('click', () => {
                     appDiagnosticLogs.length = 0;
                     if (logsErrorBadge) logsErrorBadge.classList.add('hidden');
+                    if (logsMenuDot) logsMenuDot.classList.add('hidden');
                     renderDiagnosticLogs();
                 });
             }
@@ -499,6 +515,7 @@
 
             // Initialize Liquid Sphere Engine
             let PALETTE = [...SPHERE_PALETTES.initial];
+            let targetSpinSpeed = 1.0;
             (() => {
                 const c = liquidSphereCanvas;
                 if (!c) return;
@@ -507,7 +524,7 @@
                 const octx = off.getContext('2d');
                 const swirl = 0.65, autoSpin = true;
                 let rgbs = [], dirs = [], yaw = 0.4, pitch = -0.2, vy = 0, vp = 0;
-                let drag = false, moved = false, sx = 0, sy = 0, lx = 0, ly = 0, t = 0, lastTouchEndTime = 0;
+                let drag = false, moved = false, sx = 0, sy = 0, lx = 0, ly = 0, t = 0, lastTouchEndTime = 0, spinFactor = 1.0;
 
                 const hex2rgb = (h) => {
                     const n = parseInt(h.replace('#', ''), 16);
@@ -585,9 +602,10 @@
                 c.addEventListener('touchcancel', () => { drag = false; });
 
                 (function loop() {
-                    t += 0.025;
+                    spinFactor += (targetSpinSpeed - spinFactor) * 0.06;
+                    t += 0.025 * spinFactor;
                     if (!drag) {
-                        yaw += (autoSpin ? 0.024 : 0) + vy;
+                        yaw += (autoSpin ? 0.024 * spinFactor : 0) + vy;
                         pitch = autoSpin ? Math.sin(t * 0.55) * 0.24 + vp : Math.max(-1.45, Math.min(1.45, pitch + vp));
                         vy *= 0.92;
                         vp *= 0.92;
@@ -637,6 +655,7 @@
             })();
 
             function updateSphereState(state) {
+                targetSpinSpeed = state === 'building' ? 3.2 : 1.0;
                 const palette = SPHERE_PALETTES[state] || SPHERE_PALETTES.initial;
                 if (typeof window.setSpherePalette === 'function') {
                     window.setSpherePalette(palette);
@@ -650,31 +669,57 @@
                     appHeader.style.borderColor = headerTheme.border;
                 }
             }
-            updateSphereState('initial');
 
+            // Awaken Blurred Interface on First Sphere Tap
             function awakenAppInterface() {
                 if (isAppAwake) return;
                 isAppAwake = true;
                 lastAwakenTimestamp = Date.now();
-                [appHeader, createRepoBtn].forEach((el) => {
-                    if (el) {
-                        el.classList.remove('blur-md', 'opacity-40', 'pointer-events-none', 'select-none');
-                    }
-                });
                 updateSphereState('ready');
+                [appHeader, createRepoBtn].forEach((el) => {
+                    if (!el) return;
+                    el.classList.remove('blur-md', 'opacity-40', 'pointer-events-none', 'select-none');
+                });
             }
 
-            // Generate 11-char Base64URL string (A-Z, a-z, 0-9, _, -)
+            // Generate 11-char Base64url Project ID
             function generateRandomBase64Id(length = 11) {
-                const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_-';
+                const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
                 const bytes = new Uint8Array(length);
                 crypto.getRandomValues(bytes);
-                let result = '';
+                let out = '';
                 for (let i = 0; i < length; i++) {
-                    result += alphabet[bytes[i] % alphabet.length];
+                    out += chars[bytes[i] % chars.length];
                 }
-                return result;
+                return out;
             }
+
+            // Hamburger Menu Toggle
+            function toggleHamburgerMenu(forceOpen) {
+                if (!hamburgerMenuPanel || !hamburgerMenuBtn) return;
+                const shouldOpen = typeof forceOpen === 'boolean'
+                    ? forceOpen
+                    : hamburgerMenuPanel.classList.contains('hidden');
+                hamburgerMenuPanel.classList.toggle('hidden', !shouldOpen);
+                hamburgerMenuBtn.setAttribute('aria-expanded', String(shouldOpen));
+                if (hamburgerIconOpen) hamburgerIconOpen.classList.toggle('hidden', shouldOpen);
+                if (hamburgerIconClose) hamburgerIconClose.classList.toggle('hidden', !shouldOpen);
+            }
+
+            if (hamburgerMenuBtn) {
+                hamburgerMenuBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    toggleHamburgerMenu();
+                });
+            }
+
+            document.addEventListener('click', (e) => {
+                if (hamburgerMenuPanel && !hamburgerMenuPanel.classList.contains('hidden') &&
+                    !hamburgerMenuPanel.contains(e.target) &&
+                    !hamburgerMenuBtn.contains(e.target)) {
+                    toggleHamburgerMenu(false);
+                }
+            });
 
             // Tab Navigation
             document.querySelectorAll('.nav-tab-btn').forEach((btn) => {
@@ -682,20 +727,23 @@
                     const targetTab = btn.dataset.tab;
                     document.querySelectorAll('.nav-tab-btn').forEach((b) => {
                         b.classList.remove('active', 'bg-white', 'text-zinc-950', 'shadow-sm');
-                        b.classList.add('text-white/70');
+                        b.classList.add('text-white/80');
                     });
                     btn.classList.add('active', 'bg-white', 'text-zinc-950', 'shadow-sm');
-                    btn.classList.remove('text-white/70');
+                    btn.classList.remove('text-white/80');
 
                     document.querySelectorAll('.tab-panel').forEach((panel) => {
                         panel.classList.toggle('hidden', panel.id !== `tab-${targetTab}`);
                     });
+
+                    toggleHamburgerMenu(false);
 
                     if (targetTab === 'repos' && authenticatedOwner) {
                         fetchAccountRepositories();
                     }
                     if (targetTab === 'logs') {
                         if (logsErrorBadge) logsErrorBadge.classList.add('hidden');
+                        if (logsMenuDot) logsMenuDot.classList.add('hidden');
                         renderEnvironmentSummary();
                         renderDiagnosticLogs();
                     }
@@ -750,6 +798,7 @@
                 activeEncryptedVault = null;
                 appDiagnosticLogs.length = 0;
                 if (logsErrorBadge) logsErrorBadge.classList.add('hidden');
+                if (logsMenuDot) logsMenuDot.classList.add('hidden');
                 githubTokenInput.value = '';
                 quickTokenInput.value = '';
                 connectionDot.className = 'w-2.5 h-2.5 rounded-full bg-red-500 transition-colors';
@@ -871,29 +920,64 @@
                 await verifyGitHubToken(token);
             });
 
-            // Save & Update Symbiotic Snippet
+            if (testWorkerBtn) {
+                testWorkerBtn.addEventListener('click', async () => {
+                    const workerBase = (workerBaseUrlInput.value || '').trim().replace(/\/+$/, '');
+                    if (!workerBase) {
+                        showToast('יש להזין כתובת Worker', 'error');
+                        return;
+                    }
+                    testWorkerBtn.disabled = true;
+                    const originalLabel = testWorkerBtn.textContent;
+                    testWorkerBtn.textContent = 'בודק...';
+                    try {
+                        const res = await fetch(`${workerBase}/ping`, { method: 'GET', mode: 'cors' });
+                        const data = await res.json().catch(() => ({}));
+                        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                        addDiagnosticLog('success', 'Worker /ping Health Check OK', { workerBase, response: data });
+                        showToast('ה-Worker מחובר ופעיל ✓', 'success');
+                    } catch (err) {
+                        addDiagnosticLog('error', 'Worker /ping Health Check Failed', {
+                            workerBase,
+                            errorName: err?.name || 'Error',
+                            errorMessage: err?.message || String(err)
+                        });
+                        showToast('ה-Worker לא זמין בכתובת זו', 'error');
+                    } finally {
+                        testWorkerBtn.disabled = false;
+                        testWorkerBtn.textContent = originalLabel;
+                    }
+                });
+            }
+
             function getSymbioticSnippetText() {
-                const vaultJson = activeEncryptedVault
-                    ? JSON.stringify(activeEncryptedVault)
-                    : '{"salt":"...","iv":"...","cipher":"..."}';
-                return `// VaultDB Symbiotic Connector (AES-GCM + Cloudflare Proxy)
-const SALTED_VAULT = ${vaultJson};
-async function unlockVault(pass) {
-  const enc = new TextEncoder(), dec = new TextDecoder();
-  const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
-  const keyMat = await crypto.subtle.importKey("raw", enc.encode(pass), "PBKDF2", false, ["deriveKey"]);
-  const key = await crypto.subtle.deriveKey(
-    { name: "PBKDF2", salt: b64(SALTED_VAULT.salt), iterations: 100000, hash: "SHA-256" },
-    keyMat, { name: "AES-GCM", length: 256 }, false, ["decrypt"]
-  );
-  const plain = await crypto.subtle.decrypt({ name: "AES-GCM", iv: b64(SALTED_VAULT.iv) }, key, b64(SALTED_VAULT.cipher));
-  return dec.decode(plain); // Worker Endpoint URL
-}`;
+                const vaultLiteral = JSON.stringify(
+                    activeEncryptedVault || {
+                        salt: "REPLACE_WITH_SALT",
+                        iv: "REPLACE_WITH_IV",
+                        cipher: "REPLACE_WITH_CIPHER"
+                    }
+                );
+                return [
+                    `const SALTED_VAULT = ${vaultLiteral};`,
+                    `async function unlockVaultEndpoint(pass) {`,
+                    `  const enc = new TextEncoder(), dec = new TextDecoder();`,
+                    `  const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));`,
+                    `  const keyMat = await crypto.subtle.importKey("raw", enc.encode(pass), "PBKDF2", false, ["deriveKey"]);`,
+                    `  const key = await crypto.subtle.deriveKey(`,
+                    `    { name: "PBKDF2", salt: b64(SALTED_VAULT.salt), iterations: 100000, hash: "SHA-256" },`,
+                    `    keyMat, { name: "AES-GCM", length: 256 }, false, ["decrypt"]`,
+                    `  );`,
+                    `  const plain = await crypto.subtle.decrypt({ name: "AES-GCM", iv: b64(SALTED_VAULT.iv) }, key, b64(SALTED_VAULT.cipher));`,
+                    `  return dec.decode(plain);`,
+                    `}`
+                ].join('\n');
             }
 
             function refreshSnippetDisplay() {
-                if (symbioticSnippetCode) {
-                    symbioticSnippetCode.textContent = getSymbioticSnippetText();
+                const snippetEl = document.getElementById('symbiotic-snippet-code');
+                if (snippetEl) {
+                    snippetEl.textContent = getSymbioticSnippetText();
                 }
             }
 
@@ -913,9 +997,12 @@ async function unlockVault(pass) {
                 }
             }
 
-            copySnippetBtn.addEventListener('click', () => {
-                copyTextToClipboard(getSymbioticSnippetText(), 'הסניפט הועתק ללוח');
-            });
+            const copySnippetBtnEl = document.getElementById('copy-snippet-btn');
+            if (copySnippetBtnEl) {
+                copySnippetBtnEl.addEventListener('click', () => {
+                    copyTextToClipboard(getSymbioticSnippetText(), 'הסניפט הועתק ללוח');
+                });
+            }
 
             // Encrypt Worker Endpoint with Salted AES-GCM
             async function encryptEndpointVault(endpointUrl, password) {
@@ -958,55 +1045,50 @@ async function unlockVault(pass) {
                 return new TextDecoder('utf-8').decode(bytes);
             }
 
-            // Generate Repo from Template via Worker /gh-generate or Direct GitHub API
+            // Generate Repo from Template via Cloudflare Worker Proxy (with automatic direct GitHub fallback)
             async function generateRepoFromTemplate(token, owner, templateRepo, newRepoName, isPrivate) {
-                const workerBase = (workerBaseUrlInput.value || '').trim().replace(/\/+$/, '');
-                const payload = {
-                    owner,
+                const description = isPrivate ? 'Encrypted JSON Database' : 'Protected Frontend App';
+                const workerBase = (workerBaseUrlInput.value || 'https://spring-poetry-11f4.avivyl1234.workers.dev').trim().replace(/\/+$/, '');
+                const proxyUrl = `${workerBase}/gh-generate`;
+
+                let res = null;
+                let viaWorker = false;
+
+                addDiagnosticLog('info', `Requesting Worker /gh-generate for ${newRepoName}`, {
+                    url: proxyUrl,
                     templateRepo,
-                    name: newRepoName,
-                    private: isPrivate,
-                    description: isPrivate ? 'Encrypted JSON Database' : 'Protected Frontend App'
-                };
+                    isPrivate
+                });
 
-                let res;
-                let usedWorker = false;
-                if (workerBase) {
-                    try {
-                        addDiagnosticLog('info', `Requesting Worker /gh-generate for ${newRepoName}`, {
-                            url: `${workerBase}/gh-generate`,
-                            templateRepo
-                        });
-                        res = await fetch(`${workerBase}/gh-generate`, {
-                            method: 'POST',
-                            headers: {
-                                'Authorization': `Bearer ${token}`,
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify(payload)
-                        });
-                        usedWorker = true;
-                    } catch (workerErr) {
-                        // Diagnostic probe on Worker /ping to pinpoint why CORS/fetch failed
-                        let pingReport = 'unreachable';
-                        try {
-                            const pingRes = await fetch(`${workerBase}/ping`, { method: 'GET', mode: 'cors' });
-                            const pingText = await pingRes.text();
-                            pingReport = `HTTP ${pingRes.status}: ${pingText.slice(0, 200)}`;
-                        } catch (pingErr) {
-                            pingReport = `GET /ping also failed (${pingErr?.message || String(pingErr)}) — likely CORS missing on Worker or Worker not deployed`;
-                        }
-
-                        addDiagnosticLog('error', `Worker /gh-generate Failed (CORS / Preflight / Network)`, {
-                            workerUrl: `${workerBase}/gh-generate`,
-                            workerError: workerErr?.message || String(workerErr),
-                            pingDiagnostic: pingReport,
-                            hint: 'ודא שקוד ה-worker.js המעודכן עבר Deploy ב-Cloudflare Workers וכולל Access-Control-Allow-Headers: Content-Type, Authorization'
-                        });
-                    }
+                try {
+                    res = await fetch(proxyUrl, {
+                        method: 'POST',
+                        mode: 'cors',
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            owner,
+                            templateRepo,
+                            name: newRepoName,
+                            private: isPrivate,
+                            description
+                        })
+                    });
+                    viaWorker = true;
+                } catch (proxyErr) {
+                    addDiagnosticLog('error', `Worker /gh-generate Network/CORS Error (${newRepoName})`, {
+                        proxyUrl,
+                        errorName: proxyErr?.name || 'Error',
+                        errorMessage: proxyErr?.message || String(proxyErr),
+                        fallback: 'Falling back to direct GitHub API /generate'
+                    });
                 }
 
-                if (!res) {
+                // Fallback to direct GitHub API if Worker failed on network/CORS or returned 404/500
+                if (!res || res.status >= 500) {
+                    viaWorker = false;
                     res = await fetch(`https://api.github.com/repos/${owner}/${templateRepo}/generate`, {
                         method: 'POST',
                         headers: {
@@ -1018,7 +1100,7 @@ async function unlockVault(pass) {
                             owner,
                             name: newRepoName,
                             private: isPrivate,
-                            description: payload.description
+                            description
                         })
                     });
                 }
@@ -1053,7 +1135,7 @@ async function unlockVault(pass) {
                                         owner,
                                         name: newRepoName,
                                         private: isPrivate,
-                                        description: payload.description
+                                        description
                                     })
                                 });
                             }
@@ -1074,7 +1156,7 @@ async function unlockVault(pass) {
                         owner,
                         templateRepo,
                         newRepoName,
-                        viaWorker: usedWorker
+                        viaWorker
                     });
                     throw new Error(`השם ${newRepoName} כבר תפוס (abort)`);
                 }
@@ -1084,7 +1166,7 @@ async function unlockVault(pass) {
                         status: res.status,
                         owner,
                         templateRepo,
-                        viaWorker: usedWorker,
+                        viaWorker,
                         response: errData
                     });
                     throw new Error(errData.message || `שגיאה ביצירת ${newRepoName}`);
@@ -1093,7 +1175,7 @@ async function unlockVault(pass) {
                     owner,
                     templateRepo,
                     isPrivate,
-                    viaWorker: usedWorker
+                    viaWorker
                 });
                 return await res.json();
             }
@@ -1118,7 +1200,7 @@ async function unlockVault(pass) {
                 const frontendRepo = `${cleanBase}_Frontend`;
                 const backendTemplate = (templateRepoInput.value || '_Template_Backend').trim();
                 const frontendTemplate = (frontendTemplateRepoInput.value || '_Template_Frontend').trim();
-                const workerBase = (workerBaseUrlInput.value || 'https://github-db-proxy.aviv-cyber.workers.dev').trim().replace(/\/+$/, '');
+                const workerBase = (workerBaseUrlInput.value || 'https://spring-poetry-11f4.avivyl1234.workers.dev').trim().replace(/\/+$/, '');
 
                 updateSphereState('building');
                 showToast(`מקים את ${cleanBase}...`, 'info');
@@ -1309,27 +1391,27 @@ async function unlockVault(pass) {
                     const isPinned = pinnedRepos.has(repo.name);
                     const liveUrl = `https://${authenticatedOwner.toLowerCase()}.github.io/${repo.name}/`;
                     return `
-                        <div class="rounded-2xl border ${isPinned ? 'bg-sky-50/70 border-sky-300' : 'bg-apple-surface/60 border-apple-border/60'} p-4 transition-all">
-                            <div class="flex flex-wrap items-center justify-between gap-3">
-                                <div class="flex items-center gap-2.5 min-w-0">
-                                    <button type="button" data-pin-repo="${repo.name}" title="${isPinned ? 'בטל נעיצה' : 'נעץ לראש הרשימה'}" class="p-1.5 rounded-full ${isPinned ? 'bg-sky-500 text-white' : 'bg-white text-apple-secondary hover:text-apple-text border border-apple-border/60'} transition-colors">
+                        <div class="rounded-2xl border ${isPinned ? 'bg-sky-50/70 border-sky-300' : 'bg-apple-surface/60 border-apple-border/60'} p-3.5 sm:p-4 transition-all">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                                <div class="flex items-center gap-2 min-w-0">
+                                    <button type="button" data-pin-repo="${repo.name}" title="${isPinned ? 'בטל נעיצה' : 'נעץ לראש הרשימה'}" class="p-2 sm:p-1.5 shrink-0 rounded-full ${isPinned ? 'bg-sky-500 text-white' : 'bg-white text-apple-secondary hover:text-apple-text border border-apple-border/60'} transition-colors">
                                         <svg class="w-3.5 h-3.5" fill="${isPinned ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>
                                         </svg>
                                     </button>
-                                    <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer" dir="ltr" class="font-mono text-sm font-semibold text-apple-text hover:text-apple-blue truncate">${repo.name}</a>
-                                    <span class="text-[10px] font-medium px-2 py-0.5 rounded-full ${repo.private ? 'bg-amber-100 text-amber-800' : 'bg-emerald-100 text-emerald-800'}">
+                                    <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer" dir="ltr" class="font-mono text-xs sm:text-sm font-semibold text-apple-text hover:text-apple-blue truncate min-w-0 flex-1">${repo.name}</a>
+                                    <span class="text-[10px] shrink-0 font-medium px-2 py-0.5 rounded-full ${repo.private ? 'bg-amber-100 text-amber-800' : 'bg-emerald-100 text-emerald-800'}">
                                         ${repo.private ? 'Private' : 'Public'}
                                     </span>
                                 </div>
 
-                                <div class="flex items-center gap-2">
+                                <div class="flex items-center justify-end gap-2 shrink-0">
                                     ${!repo.private ? `
-                                        <button type="button" data-edit-repo="${repo.name}" class="bg-white hover:bg-apple-surfaceHover text-apple-text text-xs font-medium px-3 py-1.5 rounded-full border border-apple-border/70 transition-colors">
+                                        <button type="button" data-edit-repo="${repo.name}" class="flex-1 sm:flex-initial bg-white hover:bg-apple-surfaceHover text-apple-text text-xs font-medium px-3.5 py-2 sm:py-1.5 rounded-full border border-apple-border/70 transition-colors">
                                             Edit
                                         </button>
                                     ` : ''}
-                                    <button type="button" data-delete-repo="${repo.name}" class="bg-red-50 hover:bg-red-100 text-red-600 text-xs font-medium px-3 py-1.5 rounded-full border border-red-200 transition-colors">
+                                    <button type="button" data-delete-repo="${repo.name}" class="flex-1 sm:flex-initial bg-red-50 hover:bg-red-100 text-red-600 text-xs font-medium px-3.5 py-2 sm:py-1.5 rounded-full border border-red-200 transition-colors">
                                         מחק
                                     </button>
                                 </div>
@@ -1341,9 +1423,9 @@ async function unlockVault(pass) {
                                         <a href="${liveUrl}" target="_blank" rel="noopener noreferrer" class="bg-apple-blue hover:bg-apple-blueHover text-white text-xs font-medium px-4 py-2 rounded-full text-center whitespace-nowrap transition-colors">
                                             פתח אתר חי ↗
                                         </a>
-                                        <input type="text" readonly dir="ltr" value="${liveUrl}" class="flex-1 bg-white border border-apple-border/70 rounded-full px-3.5 py-1.5 text-xs font-mono text-apple-text">
+                                        <input type="text" readonly dir="ltr" value="${liveUrl}" class="w-full sm:flex-1 min-w-0 bg-white border border-apple-border/70 rounded-full px-3.5 py-2 sm:py-1.5 text-xs font-mono text-apple-text">
                                     </div>
-                                    <div class="grid grid-cols-3 gap-2">
+                                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
                                         <a href="${repo.html_url}/settings/pages" target="_blank" rel="noopener noreferrer" class="bg-white hover:bg-apple-surfaceHover text-apple-text text-xs font-medium py-2 px-3 rounded-full border border-apple-border/70 text-center transition-colors">
                                             הגדרות Pages ↗
                                         </a>
@@ -1355,16 +1437,16 @@ async function unlockVault(pass) {
                                         </a>
                                     </div>
                                     <div class="bg-white rounded-2xl p-3 border border-apple-border/70 space-y-2">
-                                        <div class="flex items-center justify-between gap-2">
+                                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                                            <span class="text-[11px] text-apple-secondary">אובייקט ההצפנה של האפליקציה (SALTED_VAULT)</span>
                                             <div class="flex items-center gap-1.5">
-                                                <button type="button" data-inject-vault="${repo.name}" class="bg-sky-50 hover:bg-sky-100 text-apple-blue text-xs font-medium px-3 py-1 rounded-full transition-colors">
+                                                <button type="button" data-inject-vault="${repo.name}" class="flex-1 sm:flex-initial bg-sky-50 hover:bg-sky-100 text-apple-blue text-xs font-medium px-3 py-1.5 sm:py-1 rounded-full transition-colors">
                                                     הזרק לסניפט ✓
                                                 </button>
-                                                <button type="button" data-copy-vault="${repo.name}" class="bg-apple-surface hover:bg-apple-surfaceHover text-apple-text text-xs font-medium px-3 py-1 rounded-full transition-colors">
+                                                <button type="button" data-copy-vault="${repo.name}" class="flex-1 sm:flex-initial bg-apple-surface hover:bg-apple-surfaceHover text-apple-text text-xs font-medium px-3 py-1.5 sm:py-1 rounded-full transition-colors">
                                                     העתק אובייקט
                                                 </button>
                                             </div>
-                                            <span class="text-[11px] text-apple-secondary">אובייקט ההצפנה של האפליקציה (SALTED_VAULT)</span>
                                         </div>
                                         <input id="vault-input-${repo.name}" type="text" readonly dir="ltr" value="טוען אובייקט הצפנה..." class="w-full bg-apple-surface rounded-xl px-3 py-2 text-xs font-mono text-apple-text">
                                     </div>
