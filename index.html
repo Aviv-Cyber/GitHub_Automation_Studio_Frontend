@@ -259,6 +259,7 @@
                     <div class="flex flex-col sm:flex-row gap-2 pt-1">
                         <input type="text" id="palette-json-input" dir="ltr" class="flex-1 bg-[#0F0F0F] border border-zinc-800 rounded-2xl px-3.5 py-2 text-xs font-mono text-zinc-200 focus:outline-none focus:border-zinc-600 transition-colors">
                         <button type="button" id="apply-palette-json-btn" class="bg-zinc-800 hover:bg-zinc-700 text-white text-xs font-medium px-4 py-2 rounded-2xl border border-zinc-700 transition-colors whitespace-nowrap">החל מערך</button>
+                        <button type="button" id="save-palettes-github-btn" class="bg-apple-blue hover:bg-apple-blueHover text-white text-xs font-medium px-4 py-2 rounded-2xl transition-colors whitespace-nowrap">שמור קבוע</button>
                         <button type="button" id="copy-palette-json-btn" class="bg-zinc-900 hover:bg-zinc-800 text-zinc-300 text-xs font-medium px-4 py-2 rounded-2xl border border-zinc-800 transition-colors whitespace-nowrap">העתק</button>
                     </div>
                 </div>
@@ -511,10 +512,7 @@
                     );
                 } catch (err) {
                     addDiagnosticLog('error', `CF GitHub App Status Check Failed for @${owner}`, {
-                        owner,
-                        statusUrl,
-                        errorName: err?.name || 'Error',
-                        errorMessage: err?.message || String(err)
+                        message: err?.message || String(err)
                     });
                 }
             }
@@ -663,8 +661,12 @@
                     btn.classList.toggle('hover:text-white', !isActive);
                     btn.classList.toggle('hover:bg-white/10', !isActive);
                 });
-                if (tabName === 'repos' && authenticatedOwner && !allFetchedRepos.length) {
-                    fetchAccountRepositories();
+                if (tabName === 'repos' && authenticatedOwner) {
+                    if (!allFetchedRepos.length) {
+                        fetchAccountRepositories(true);
+                    } else {
+                        checkAllPublicPagesStatus(allFetchedRepos);
+                    }
                 }
                 if (tabName === 'logs') {
                     renderDiagnosticLogs();
@@ -738,8 +740,17 @@
                 }
             } catch (_) {}
 
-            function persistCustomPalettes() {
-                localStorage.setItem('gh_custom_sphere_palettes', JSON.stringify(SPHERE_PALETTES));
+            let paletteAutoSaveTimer = null;
+            function persistCustomPalettes(autoSyncToRepo = true) {
+                try {
+                    localStorage.setItem('gh_custom_sphere_palettes', JSON.stringify(SPHERE_PALETTES));
+                } catch (_) {}
+                if (autoSyncToRepo && authenticatedOwner) {
+                    clearTimeout(paletteAutoSaveTimer);
+                    paletteAutoSaveTimer = setTimeout(() => {
+                        savePrivateUserConfig(true);
+                    }, 900);
+                }
             }
 
             const SPHERE_GLOWS = {
@@ -1004,6 +1015,7 @@
             const SPHERE_INTRO_START_SCALE = 0.08;  // גודל התחלתי של הכדור בפתיחה (8% מהגודל המלא)
             let PALETTE = [...SPHERE_PALETTES.initial];
             let targetSpinSpeed = 1.0;
+            let colorChangeSpinBoost = 0;
             let burstParticles = [];
             let burstShockwaves = [];
             let burstPopImpulse = 0;
@@ -1042,6 +1054,7 @@
                 let rgbs = [], dirs = [], yaw = 0.4, pitch = -0.2, vy = 0, vp = 0;
                 let drag = false, moved = false, sx = 0, sy = 0, lx = 0, ly = 0, t = 0, lastTouchEndTime = 0, spinFactor = 1.0;
                 let breathPhase = 0, breathRateSmooth = 1.35, breathAmpSmooth = 0.036, currentBreathScale = 1.0;
+                let pressSquishScale = 1.0, pressSquishVelocity = 0;
                 const introStartTime = performance.now();
 
                 const hex2rgb = (h) => {
@@ -1140,6 +1153,7 @@
                     moved = false;
                     [sx, sy] = [lx, ly] = getPos(e);
                     vy = vp = 0;
+                    pressSquishVelocity -= 0.008;
                 };
 
                 const move = (e) => {
@@ -1181,7 +1195,8 @@
                 const baseL = [-0.45, -0.65, 0.72];
 
                 (function loop() {
-                    spinFactor += (targetSpinSpeed - spinFactor) * 0.06;
+                    colorChangeSpinBoost *= 0.92;
+                    spinFactor += (targetSpinSpeed + colorChangeSpinBoost - spinFactor) * 0.14;
                     t += 0.025 * spinFactor;
 
                     const lightTime = t * 0.42;
@@ -1212,7 +1227,13 @@
                     const introEased = 1 - Math.pow(1 - introLinear, 3);
                     const introScale = SPHERE_INTRO_START_SCALE + (1 - SPHERE_INTRO_START_SCALE) * introEased;
 
-                    c.style.transform = `scale(${(currentBreathScale * introScale).toFixed(4)})`;
+                    // Spring physics for tactile press squish feedback (deeper squish, smooth damping)
+                    const targetPressScale = drag ? 0.78 : 1.0;
+                    const springForce = (targetPressScale - pressSquishScale) * 0.042;
+                    pressSquishVelocity = (pressSquishVelocity + springForce) * 0.85;
+                    pressSquishScale += pressSquishVelocity;
+
+                    c.style.transform = `scale(${(currentBreathScale * introScale * pressSquishScale).toFixed(4)})`;
                     c.style.willChange = 'transform';
 
                     if (bCtx && sphereBurstCanvas) {
@@ -1260,7 +1281,7 @@
                     }
 
                     if (!drag) {
-                        yaw += vy + (autoSpin ? 0.004 * spinFactor : 0);
+                        yaw += vy + (autoSpin ? 0.004 * spinFactor : 0) + colorChangeSpinBoost * 0.045;
                         pitch = Math.max(-1.45, Math.min(1.45, pitch + vp));
                         vy *= 0.94;
                         vp *= 0.94;
@@ -1438,6 +1459,9 @@
                 if (typeof window.rebuildLiquidSphere === 'function') {
                     window.rebuildLiquidSphere();
                 }
+                if (prevState !== nextState) {
+                    colorChangeSpinBoost = 19.5;
+                }
                 if (nextState === 'success' && prevState !== 'success' && typeof window.triggerSphereSuccessBurst === 'function') {
                     window.triggerSphereSuccessBurst();
                 }
@@ -1463,6 +1487,7 @@
             const previewPaletteStateBtn = document.getElementById('preview-palette-state-btn');
             const resetPaletteStateBtn = document.getElementById('reset-palette-state-btn');
             const applyPaletteJsonBtn = document.getElementById('apply-palette-json-btn');
+            const savePalettesGithubBtn = document.getElementById('save-palettes-github-btn');
             const copyPaletteJsonBtn = document.getElementById('copy-palette-json-btn');
 
             function renderPaletteManager() {
@@ -1587,6 +1612,13 @@
                 });
             }
 
+            if (savePalettesGithubBtn) {
+                savePalettesGithubBtn.addEventListener('click', () => {
+                    clearTimeout(paletteAutoSaveTimer);
+                    savePrivateUserConfig(false);
+                });
+            }
+
             renderPaletteManager();
 
             const STUDIO_PRIVATE_CONFIG_REPO = 'GitHub_Automation_Studio_Backend';
@@ -1659,18 +1691,19 @@
                                     SPHERE_PALETTES[k] = activeObj.customPalettes[k];
                                 }
                             });
-                            persistCustomPalettes();
+                            persistCustomPalettes(false);
                             renderPaletteManager();
+                            updateSphereState(activeSphereState);
                         }
                         if (resolvedWorker) {
                             addDiagnosticLog('success', 'Loaded Config from Private Studio Backend', {
                                 repo: `${owner}/${STUDIO_PRIVATE_CONFIG_REPO}`,
                                 file: fileName,
-                                workerHost: resolvedWorker.replace(/^https?:\/\//, ''),
+                                workerHost: new URL(resolvedWorker).host,
                                 backendTemplateRepo: activeObj.backendTemplateRepo || '',
                                 frontendTemplateRepo: activeObj.frontendTemplateRepo || ''
                             });
-                            return { ok: true, workerUrl: resolvedWorker, fileName };
+                            return { ok: true, workerUrl: resolvedWorker };
                         }
                     }
                 } catch (_) {}
@@ -1681,11 +1714,11 @@
                 return { ok: false, workerUrl: '' };
             }
 
-            async function savePrivateUserConfig() {
+            async function savePrivateUserConfig(silent = false) {
                 const token = (githubTokenInput?.value || localStorage.getItem('gh_automation_pat') || '').trim();
-                const workerUrl = (workerBaseUrlInput?.value || '').trim().replace(/\/+$/, '');
+                const workerUrl = (workerBaseUrlInput?.value || localStorage.getItem('gh_worker_base_url') || '').trim().replace(/\/+$/, '');
                 if (!token || !authenticatedOwner) {
-                    showToast('יש להתחבר לפני שמירה במאגר הפרטי', 'error');
+                    if (!silent) showToast('יש להתחבר לפני שמירה במאגר הפרטי', 'error');
                     return;
                 }
                 localStorage.setItem('gh_worker_base_url', workerUrl);
@@ -1703,7 +1736,7 @@
                 try {
                     const fileUrl = `https://api.github.com/repos/${encodeURIComponent(authenticatedOwner)}/${STUDIO_PRIVATE_CONFIG_REPO}/contents/${encodeURIComponent('.studio-config.json')}`;
                     let sha = undefined;
-                    const existingRes = await fetch(fileUrl, {
+                    const existingRes = await fetch(`${fileUrl}?_t=${Date.now()}`, {
                         headers: { 'Authorization': `Bearer ${token}`, 'Accept': 'application/vnd.github+json' }
                     });
                     if (existingRes.ok) {
@@ -1727,15 +1760,19 @@
                         })
                     });
                     if (!putRes.ok) throw new Error('Failed to save .studio-config.json');
-                    if (workerUrl) updateSphereState('ready');
-                    showToast('ההגדרות והפאלטות נשמרו ב-.studio-config.json', 'success');
+                    if (workerUrl && activeSphereState === 'error') updateSphereState('ready');
+                    if (!silent) {
+                        showToast('ההגדרות והפאלטות נשמרו ב-.studio-config.json', 'success');
+                    }
                 } catch (err) {
-                    showToast(`שגיאה בשמירה: ${err.message}`, 'error');
+                    if (!silent) {
+                        showToast(`שגיאה בשמירה: ${err.message}`, 'error');
+                    }
                 }
             }
 
             if (saveWorkerConfigBtn) {
-                saveWorkerConfigBtn.addEventListener('click', savePrivateUserConfig);
+                saveWorkerConfigBtn.addEventListener('click', () => savePrivateUserConfig(false));
             }
 
             if (testWorkerBtn) {
