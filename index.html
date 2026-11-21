@@ -39,7 +39,7 @@
         }
     </script>
 </head>
-<body class="bg-black text-white font-sans antialiased min-h-screen flex flex-col selection:bg-apple-blue/30 selection:text-white">
+<body class="bg-[#0F0F0F] text-white font-sans antialiased min-h-screen flex flex-col selection:bg-apple-blue/30 selection:text-white">
     <!-- Top Navigation Bar (Dynamic Color Synced with Sphere) -->
     <header id="app-header" class="sticky top-0 z-30 bg-zinc-900/90 backdrop-blur-md border-b border-zinc-700/60 transition-all duration-700 blur-md opacity-40 pointer-events-none select-none">
         <div class="relative max-w-5xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between gap-3">
@@ -56,7 +56,7 @@
                 </button>
 
                 <!-- Expandable Menu Panel -->
-                <div id="hamburger-menu-panel" class="hidden absolute top-full right-0 mt-2.5 z-50 w-64 bg-zinc-950/95 backdrop-blur-xl border border-white/15 rounded-3xl p-2 shadow-2xl space-y-1">
+                <div id="hamburger-menu-panel" class="hidden absolute top-full right-0 mt-2.5 z-50 w-64 bg-[#0F0F0F]/95 backdrop-blur-xl border border-white/15 rounded-3xl p-2 shadow-2xl space-y-1">
                     <div id="hamburger-menu-content" class="space-y-1 transition-all duration-300">
                         <nav id="header-nav-pill" class="flex flex-col gap-1" aria-label="ניווט ראשי">
                             <button type="button" data-tab="create" class="nav-tab-btn active w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl bg-white text-zinc-950 font-medium text-sm shadow-sm transition-all text-right">
@@ -134,19 +134,19 @@
                 </div>
 
                 <!-- Password Step Triggered After Tapping Sphere -->
-                <form id="sphere-password-form" class="hidden absolute top-full mt-6 left-1/2 -translate-x-1/2 w-full max-w-xs flex items-center gap-2 bg-zinc-950/90 border border-zinc-800 rounded-full p-1.5 shadow-xl z-40">
+                <form id="sphere-password-form" class="hidden absolute top-full mt-6 left-1/2 -translate-x-1/2 w-full max-w-xs flex items-center gap-2 bg-[#0F0F0F]/90 border border-zinc-800 rounded-full p-1.5 shadow-xl z-40">
                     <input type="password" id="sphere-password-input" dir="ltr" class="flex-1 min-w-0 bg-zinc-900 border border-zinc-800 rounded-full px-3.5 py-2 text-xs font-mono text-white focus:outline-none focus:border-apple-blue transition-colors">
                 </form>
 
                 <!-- GitHub Token Step Triggered on Second Sphere Tap When Not Logged In -->
-                <form id="sphere-token-form" class="hidden absolute top-full mt-6 left-1/2 -translate-x-1/2 w-full max-w-xs flex items-center gap-2 bg-zinc-950/95 border border-zinc-700 rounded-full p-1.5 shadow-2xl z-40">
+                <form id="sphere-token-form" class="hidden absolute top-full mt-6 left-1/2 -translate-x-1/2 w-full max-w-xs flex items-center gap-2 bg-[#0F0F0F]/95 border border-zinc-700 rounded-full p-1.5 shadow-2xl z-40">
                     <input type="password" id="sphere-token-input" dir="ltr" class="flex-1 min-w-0 bg-zinc-900 border border-zinc-800 rounded-full px-3.5 py-2 text-xs font-mono text-white focus:outline-none focus:border-apple-blue transition-colors">
                 </form>
             </div>
         </section>
 
         <!-- TAB 2: REPOSITORIES MANAGER -->
-        <section id="tab-repos" class="tab-panel hidden space-y-5 bg-zinc-950 text-white rounded-3xl p-5 sm:p-8 shadow-2xl border border-zinc-800/80">
+        <section id="tab-repos" class="tab-panel hidden space-y-5 bg-[#0F0F0F] text-white rounded-3xl p-5 sm:p-8 shadow-2xl border border-zinc-800/80">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-zinc-800/80 pb-5">
                 <div>
                     <h1 id="repos-header-title" class="text-xl sm:text-2xl font-bold tracking-tight text-white">ניהול מאגרים</h1>
@@ -186,7 +186,7 @@
         </section>
 
         <!-- TAB 3: SETTINGS & ARCHITECTURE -->
-        <section id="tab-settings" class="tab-panel hidden space-y-6 bg-zinc-950 text-white rounded-3xl p-5 sm:p-8 shadow-2xl border border-zinc-800/80">
+        <section id="tab-settings" class="tab-panel hidden space-y-6 bg-[#0F0F0F] text-white rounded-3xl p-5 sm:p-8 shadow-2xl border border-zinc-800/80">
             <div class="border-b border-zinc-800/80 pb-5">
                 <h1 id="settings-header-title" class="text-xl sm:text-2xl font-bold tracking-tight text-white">הגדרות תשתית</h1>
                 <p id="settings-header-subtitle" class="text-xs sm:text-sm text-zinc-400 mt-1">הגדרת מאגרי המקור לשכפול וכתובת ה-Cloudflare Worker.</p>
@@ -257,7 +257,7 @@
 
                     <!-- JSON Array Quick Import / Export -->
                     <div class="flex flex-col sm:flex-row gap-2 pt-1">
-                        <input type="text" id="palette-json-input" dir="ltr" class="flex-1 bg-zinc-950 border border-zinc-800 rounded-2xl px-3.5 py-2 text-xs font-mono text-zinc-200 focus:outline-none focus:border-zinc-600 transition-colors">
+                        <input type="text" id="palette-json-input" dir="ltr" class="flex-1 bg-[#0F0F0F] border border-zinc-800 rounded-2xl px-3.5 py-2 text-xs font-mono text-zinc-200 focus:outline-none focus:border-zinc-600 transition-colors">
                         <button type="button" id="apply-palette-json-btn" class="bg-zinc-800 hover:bg-zinc-700 text-white text-xs font-medium px-4 py-2 rounded-2xl border border-zinc-700 transition-colors whitespace-nowrap">החל מערך</button>
                         <button type="button" id="copy-palette-json-btn" class="bg-zinc-900 hover:bg-zinc-800 text-zinc-300 text-xs font-medium px-4 py-2 rounded-2xl border border-zinc-800 transition-colors whitespace-nowrap">העתק</button>
                     </div>
@@ -266,7 +266,7 @@
         </section>
 
         <!-- TAB 4: DIAGNOSTICS & LOGS -->
-        <section id="tab-logs" class="tab-panel hidden space-y-5 bg-zinc-950 text-white rounded-3xl p-5 sm:p-8 shadow-2xl border border-zinc-800/80">
+        <section id="tab-logs" class="tab-panel hidden space-y-5 bg-[#0F0F0F] text-white rounded-3xl p-5 sm:p-8 shadow-2xl border border-zinc-800/80">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-zinc-800/80 pb-5">
                 <div>
                     <h1 id="logs-header-title" class="text-xl sm:text-2xl font-bold tracking-tight text-white">לוגים ואבחון תקלות (Diagnostics)</h1>
@@ -292,7 +292,7 @@
 
     <!-- Delete Confirmation Modal -->
     <div id="delete-repo-modal" class="hidden fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="bg-zinc-950 text-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-zinc-800 space-y-5 text-center">
+        <div class="bg-[#0F0F0F] text-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-zinc-800 space-y-5 text-center">
             <div class="flex flex-col items-center space-y-3">
                 <div class="w-16 h-16 mx-auto">
                     <canvas id="deleteModalSphere" style="width:100%;height:100%;display:block;background:transparent"></canvas>
@@ -447,7 +447,7 @@
                         item.level === 'success' ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30' :
                         'bg-sky-500/15 text-sky-300 border-sky-500/30';
                     const detailsText = item.details && Object.keys(item.details).length
-                        ? `<pre dir="ltr" class="mt-2 bg-zinc-950/90 border border-zinc-800/90 rounded-xl p-2.5 text-[11px] font-mono text-zinc-300 overflow-x-auto">${JSON.stringify(item.details, null, 2)}</pre>`
+                        ? `<pre dir="ltr" class="mt-2 bg-[#0F0F0F]/90 border border-zinc-800/90 rounded-xl p-2.5 text-[11px] font-mono text-zinc-300 overflow-x-auto">${JSON.stringify(item.details, null, 2)}</pre>`
                         : '';
                     return `
                         <div class="bg-zinc-900/80 border border-zinc-800 rounded-2xl p-3.5">
@@ -1000,6 +1000,8 @@
             }
 
             // Initialize Liquid Sphere Engine
+            const SPHERE_INTRO_DURATION_MS = 1000; // משך אנימציית הכניסה של הכדור במילישניות (1000 = שנייה אחת)
+            const SPHERE_INTRO_START_SCALE = 0.08;  // גודל התחלתי של הכדור בפתיחה (8% מהגודל המלא)
             let PALETTE = [...SPHERE_PALETTES.initial];
             let targetSpinSpeed = 1.0;
             let burstParticles = [];
@@ -1040,6 +1042,7 @@
                 let rgbs = [], dirs = [], yaw = 0.4, pitch = -0.2, vy = 0, vp = 0;
                 let drag = false, moved = false, sx = 0, sy = 0, lx = 0, ly = 0, t = 0, lastTouchEndTime = 0, spinFactor = 1.0;
                 let breathPhase = 0, breathRateSmooth = 1.35, breathAmpSmooth = 0.036, currentBreathScale = 1.0;
+                const introStartTime = performance.now();
 
                 const hex2rgb = (h) => {
                     const n = parseInt(h.replace('#', ''), 16);
@@ -1201,7 +1204,15 @@
                     const breathHarmonic = Math.sin(breathPhase * 2.0 - 0.8) * 0.25;
                     const targetBreathScale = 1 + (breathPrimary + breathHarmonic) * breathAmpSmooth + burstPopImpulse;
                     currentBreathScale += (targetBreathScale - currentBreathScale) * 0.18;
-                    c.style.transform = `scale(${currentBreathScale.toFixed(4)})`;
+
+                    const introElapsed = performance.now() - introStartTime;
+                    const introLinear = SPHERE_INTRO_DURATION_MS > 0
+                        ? Math.min(1, Math.max(0, introElapsed / SPHERE_INTRO_DURATION_MS))
+                        : 1;
+                    const introEased = 1 - Math.pow(1 - introLinear, 3);
+                    const introScale = SPHERE_INTRO_START_SCALE + (1 - SPHERE_INTRO_START_SCALE) * introEased;
+
+                    c.style.transform = `scale(${(currentBreathScale * introScale).toFixed(4)})`;
                     c.style.willChange = 'transform';
 
                     if (bCtx && sphereBurstCanvas) {
@@ -1473,7 +1484,7 @@
 
                 if (paletteSwatchesGrid) {
                     const swatchesHtml = currentList.map((hex, idx) => `
-                        <div class="inline-flex items-center gap-1.5 bg-zinc-950 border border-zinc-800 rounded-full px-2.5 py-1">
+                        <div class="inline-flex items-center gap-1.5 bg-[#0F0F0F] border border-zinc-800 rounded-full px-2.5 py-1">
                             <input type="color" data-swatch-idx="${idx}" value="${hex}" class="palette-color-picker w-5 h-5 rounded-full bg-transparent border-0 cursor-pointer p-0">
                             <span class="text-[11px] font-mono text-zinc-300">${hex.toUpperCase()}</span>
                             ${currentList.length > 1 ? `<button type="button" data-remove-idx="${idx}" class="remove-swatch-btn text-zinc-500 hover:text-red-400 text-xs px-1" title="הסר גוון">×</button>` : ''}
@@ -2012,7 +2023,7 @@
                             </div>
                         </div>
                         ${isExpanded ? `
-                        <div class="px-4 py-3.5 border-t border-zinc-800/90 bg-zinc-950/75 space-y-3">
+                        <div class="px-4 py-3.5 border-t border-zinc-800/90 bg-[#0F0F0F]/75 space-y-3">
                             <div class="flex flex-wrap items-center gap-2">
                                 ${isPublicRepo ? `
                                 <a href="${livePagesUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs font-medium bg-emerald-600 hover:bg-emerald-500 text-white px-3.5 py-1.5 rounded-full transition-colors">
