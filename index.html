@@ -1348,6 +1348,21 @@
                     octx.putImageData(img, 0, 0);
                     ctx.clearRect(0, 0, S, S);
                     ctx.drawImage(off, 0, 0, S, S);
+
+                    // Sync live Sphere frame to browser tab favicon (~6fps)
+                    if (!window.__lastFaviconSync || performance.now() - window.__lastFaviconSync > 160) {
+                        window.__lastFaviconSync = performance.now();
+                        try {
+                            let link = document.querySelector("link[rel~='icon']");
+                            if (!link) {
+                                link = document.createElement('link');
+                                link.rel = 'icon';
+                                link.type = 'image/png';
+                                document.head.appendChild(link);
+                            }
+                            link.href = off.toDataURL('image/png');
+                        } catch (_) {}
+                    }
                     requestAnimationFrame(loop);
                 })();
             })();
