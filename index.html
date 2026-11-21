@@ -160,99 +160,109 @@
         </section>
 
         <!-- TAB 2: REPOSITORIES MANAGER -->
-        <section id="tab-repos" class="tab-panel hidden space-y-6 bg-white text-apple-text rounded-3xl p-5 sm:p-8 shadow-sm border border-apple-border/60">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-apple-border/60 pb-5">
+        <section id="tab-repos" class="tab-panel hidden space-y-5 bg-zinc-950 text-white rounded-3xl p-5 sm:p-8 shadow-2xl border border-zinc-800/80">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-zinc-800/80 pb-5">
                 <div>
-                    <h1 class="text-xl sm:text-2xl font-bold tracking-tight">ניהול מאגרים בחשבון המחובר</h1>
-                    <p class="text-xs sm:text-sm text-apple-secondary mt-1">צפייה, פתיחה מהירה, עריכה ומחיקה של מאגרים פרטיים ופומביים ישירות מול GitHub API.</p>
+                    <h1 class="text-xl sm:text-2xl font-bold tracking-tight text-white">ניהול מאגרים</h1>
+                    <p class="text-xs sm:text-sm text-zinc-400 mt-1">צפייה, פתיחה מהירה ומחיקה ישירות מול GitHub.</p>
                 </div>
-                <div class="flex items-center gap-2.5">
-                    <span id="repos-count-badge" class="hidden text-xs font-medium bg-apple-surface text-apple-secondary px-3 py-1.5 rounded-full border border-apple-border/60">0 מאגרים</span>
-                    <button type="button" id="refresh-repos-btn" class="bg-apple-surface hover:bg-apple-surfaceHover text-apple-text text-xs font-medium px-4 py-2 rounded-full border border-apple-border/60 transition-colors">
-                        רענן רשימה
+                <div class="flex items-center gap-2">
+                    <span id="repos-count-badge" class="hidden text-xs font-medium bg-zinc-900 text-zinc-300 px-3 py-1.5 rounded-full border border-zinc-800">0 מאגרים</span>
+                    <button type="button" id="refresh-repos-btn" class="bg-zinc-900 hover:bg-zinc-800 text-white text-xs font-medium px-4 py-2 rounded-full border border-zinc-800 transition-colors">
+                        רענן
                     </button>
                 </div>
             </div>
 
             <!-- Search & Filter -->
-            <div class="flex flex-col sm:flex-row gap-3">
-                <input type="text" id="repos-search-input" placeholder="חפש מאגר לפי שם..." class="flex-1 bg-apple-surface border border-apple-border/60 rounded-2xl px-4 py-2.5 text-sm text-apple-text placeholder:text-apple-secondary focus:outline-none focus:ring-2 focus:ring-apple-blue/30">
-                <select id="repos-visibility-filter" class="bg-apple-surface border border-apple-border/60 rounded-2xl px-4 py-2.5 text-sm text-apple-text focus:outline-none focus:ring-2 focus:ring-apple-blue/30">
-                    <option value="all">כל המאגרים</option>
-                    <option value="private">פרטיים בלבד (Private)</option>
-                    <option value="public">פומביים בלבד (Public)</option>
-                </select>
+            <div class="flex flex-col sm:flex-row gap-2.5">
+                <input type="text" id="repos-search-input" placeholder="חיפוש מאגר..." class="flex-1 bg-zinc-900 border border-zinc-800 rounded-full px-4 py-2.5 text-sm text-white placeholder:text-zinc-500 focus:outline-none focus:border-zinc-600 transition-colors">
+                <div class="relative">
+                    <select id="repos-visibility-filter" class="w-full sm:w-44 appearance-none bg-zinc-900 border border-zinc-800 rounded-full pr-4 pl-9 py-2.5 text-sm text-white focus:outline-none focus:border-zinc-600 transition-colors cursor-pointer">
+                        <option value="all">כל המאגרים</option>
+                        <option value="private">פרטיים (Private)</option>
+                        <option value="public">פומביים (Public)</option>
+                    </select>
+                    <svg class="w-4 h-4 text-zinc-400 pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+                    </svg>
+                </div>
             </div>
 
             <!-- Repositories List -->
-            <div id="repos-list-container" class="space-y-3">
-                <div class="text-center py-10 text-sm text-apple-secondary bg-apple-surface/50 rounded-2xl border border-dashed border-apple-border">
-                    יש לאמת חיבור Master Token כדי לצפות במאגרים.
+            <div id="repos-list-container" class="space-y-2.5">
+                <div class="text-center py-10 text-sm text-zinc-500 bg-zinc-900/50 rounded-2xl border border-dashed border-zinc-800">
+                    יש להתחבר כדי לצפות במאגרים.
                 </div>
             </div>
         </section>
 
         <!-- TAB 3: SETTINGS & ARCHITECTURE -->
-        <section id="tab-settings" class="tab-panel hidden space-y-6 bg-white text-apple-text rounded-3xl p-5 sm:p-8 shadow-sm border border-apple-border/60">
-            <div class="border-b border-apple-border/60 pb-5">
-                <h1 class="text-xl sm:text-2xl font-bold tracking-tight">הגדרות תשתית וסניפט סימביוטי</h1>
-                <p class="text-xs sm:text-sm text-apple-secondary mt-1">הגדרת מאגרי המקור לשכפול, כתובת ה-Cloudflare Worker והעתקת סניפט ההזרקה לאפליקציות.</p>
+        <section id="tab-settings" class="tab-panel hidden space-y-6 bg-zinc-950 text-white rounded-3xl p-5 sm:p-8 shadow-2xl border border-zinc-800/80">
+            <div class="border-b border-zinc-800/80 pb-5">
+                <h1 class="text-xl sm:text-2xl font-bold tracking-tight text-white">הגדרות תשתית</h1>
+                <p class="text-xs sm:text-sm text-zinc-400 mt-1">הגדרת מאגרי המקור לשכפול וכתובת ה-Cloudflare Worker.</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                    <label for="github-token" class="block text-xs font-medium text-apple-secondary mb-1.5">GitHub Master Token (PAT)</label>
+                    <label for="github-token" class="block text-xs font-medium text-zinc-400 mb-1.5">GitHub Master Token (PAT)</label>
                     <div class="flex gap-2">
-                        <input type="password" id="github-token" dir="ltr" value="" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" class="flex-1 bg-apple-surface border border-apple-border/60 rounded-2xl px-4 py-2.5 text-xs font-mono text-apple-text focus:outline-none focus:ring-2 focus:ring-apple-blue/30">
+                        <input type="password" id="github-token" dir="ltr" value="" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" class="flex-1 bg-zinc-900 border border-zinc-800 rounded-2xl px-4 py-2.5 text-xs font-mono text-white placeholder:text-zinc-600 focus:outline-none focus:border-zinc-600 transition-colors">
                         <button type="button" id="verify-token-btn" class="bg-apple-blue hover:bg-apple-blueHover text-white text-xs font-medium px-4 py-2.5 rounded-2xl transition-colors whitespace-nowrap">אמת ושמור</button>
                     </div>
                 </div>
 
                 <div>
-                    <label for="worker-base-url" class="block text-xs font-medium text-apple-secondary mb-1.5">Cloudflare Worker Proxy URL</label>
+                    <label for="worker-base-url" class="block text-xs font-medium text-zinc-400 mb-1.5">Cloudflare Worker Proxy URL</label>
                     <div class="flex gap-2">
-                        <input type="url" id="worker-base-url" dir="ltr" value="https://spring-poetry-11f4.avivyl1234.workers.dev" class="flex-1 bg-apple-surface border border-apple-border/60 rounded-2xl px-4 py-2.5 text-xs font-mono text-apple-text focus:outline-none focus:ring-2 focus:ring-apple-blue/30">
-                        <button type="button" id="test-worker-btn" class="bg-apple-surface hover:bg-apple-surfaceHover text-apple-text text-xs font-medium px-3.5 py-2.5 rounded-2xl border border-apple-border/60 transition-colors whitespace-nowrap">בדוק Worker</button>
+                        <input type="url" id="worker-base-url" dir="ltr" value="" placeholder="https://your-worker.workers.dev" class="flex-1 bg-zinc-900 border border-zinc-800 rounded-2xl px-4 py-2.5 text-xs font-mono text-white placeholder:text-zinc-600 focus:outline-none focus:border-zinc-600 transition-colors">
+                        <button type="button" id="save-worker-config-btn" class="bg-zinc-800 hover:bg-zinc-700 text-white text-xs font-medium px-3.5 py-2.5 rounded-2xl border border-zinc-700 transition-colors whitespace-nowrap">שמור בפרטי</button>
+                        <button type="button" id="test-worker-btn" class="bg-zinc-900 hover:bg-zinc-800 text-white text-xs font-medium px-3.5 py-2.5 rounded-2xl border border-zinc-800 transition-colors whitespace-nowrap">בדוק</button>
+                    </div>
+                    <div id="github-app-install-banner" class="hidden mt-2 flex items-center justify-between gap-2 bg-zinc-900/90 border border-zinc-800 rounded-2xl px-3.5 py-2 text-xs">
+                        <span id="github-app-install-text" class="text-zinc-300"></span>
+                        <a id="github-app-install-link" href="https://github.com/apps" target="_blank" rel="noopener noreferrer" class="hidden bg-apple-blue hover:bg-apple-blueHover text-white text-[11px] font-medium px-3 py-1 rounded-full transition-colors whitespace-nowrap">התקן GitHub App ↗</a>
                     </div>
                 </div>
 
                 <div>
-                    <label for="template-repo" class="block text-xs font-medium text-apple-secondary mb-1.5">מאגר תבנית פרטי (Backend Template)</label>
-                    <input type="text" id="template-repo" dir="ltr" value="_Template_Backend" class="w-full bg-apple-surface border border-apple-border/60 rounded-2xl px-4 py-2.5 text-xs font-mono text-apple-text focus:outline-none focus:ring-2 focus:ring-apple-blue/30">
+                    <label for="template-repo" class="block text-xs font-medium text-zinc-400 mb-1.5">מאגר תבנית פרטי (Backend Template)</label>
+                    <input type="text" id="template-repo" dir="ltr" value="_Template_Backend" class="w-full bg-zinc-900 border border-zinc-800 rounded-2xl px-4 py-2.5 text-xs font-mono text-white placeholder:text-zinc-600 focus:outline-none focus:border-zinc-600 transition-colors">
                 </div>
 
                 <div>
-                    <label for="frontend-template-repo" class="block text-xs font-medium text-apple-secondary mb-1.5">מאגר תבנית פומבי (Frontend Template)</label>
-                    <input type="text" id="frontend-template-repo" dir="ltr" value="_Template_Frontend" class="w-full bg-apple-surface border border-apple-border/60 rounded-2xl px-4 py-2.5 text-xs font-mono text-apple-text focus:outline-none focus:ring-2 focus:ring-apple-blue/30">
+                    <label for="frontend-template-repo" class="block text-xs font-medium text-zinc-400 mb-1.5">מאגר תבנית פומבי (Frontend Template)</label>
+                    <input type="text" id="frontend-template-repo" dir="ltr" value="_Template_Frontend" class="w-full bg-zinc-900 border border-zinc-800 rounded-2xl px-4 py-2.5 text-xs font-mono text-white placeholder:text-zinc-600 focus:outline-none focus:border-zinc-600 transition-colors">
                 </div>
             </div>
         </section>
 
         <!-- TAB 4: DIAGNOSTIC LOGS -->
-        <section id="tab-logs" class="tab-panel hidden space-y-5 bg-white text-apple-text rounded-3xl p-5 sm:p-8 shadow-sm border border-apple-border/60">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-apple-border/60 pb-5">
+        <section id="tab-logs" class="tab-panel hidden space-y-5 bg-zinc-950 text-white rounded-3xl p-5 sm:p-8 shadow-2xl border border-zinc-800/80">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-800/80 pb-5">
                 <div>
-                    <h1 class="text-xl sm:text-2xl font-bold tracking-tight">לוגים ואבחון תקלות (Diagnostics)</h1>
-                    <p class="text-xs sm:text-sm text-apple-secondary mt-1">פירוט טכני מלא של בקשות API, שגיאות רשת, CORS והרשאות — מוכן להעתקה ושליחה לדיבאג.</p>
+                    <h1 class="text-xl sm:text-2xl font-bold tracking-tight text-white">לוגים ואבחון תקלות (Diagnostics)</h1>
+                    <p class="text-xs sm:text-sm text-zinc-400 mt-1">פירוט טכני מלא של בקשות API, שגיאות רשת, CORS והרשאות — מוכן להעתקה ושליחה לדיבאג.</p>
                 </div>
                 <div class="flex items-center gap-2">
                     <button type="button" id="copy-all-logs-btn" class="bg-apple-blue hover:bg-apple-blueHover text-white text-xs font-medium px-4 py-2 rounded-full transition-colors whitespace-nowrap">
                         העתק דוח מלא לדיבאג
                     </button>
-                    <button type="button" id="clear-logs-btn" class="bg-apple-surface hover:bg-apple-surfaceHover text-apple-text text-xs font-medium px-3.5 py-2 rounded-full border border-apple-border/60 transition-colors">
+                    <button type="button" id="clear-logs-btn" class="bg-zinc-900 hover:bg-zinc-800 text-white text-xs font-medium px-3.5 py-2 rounded-full border border-zinc-800 transition-colors">
                         נקה
                     </button>
                 </div>
             </div>
 
             <!-- Environment Summary -->
-            <div id="logs-env-summary" dir="ltr" class="bg-apple-surface rounded-2xl p-3.5 border border-apple-border/60 text-[11px] font-mono text-apple-secondary flex flex-wrap gap-x-5 gap-y-1">
+            <div id="logs-env-summary" dir="ltr" class="bg-zinc-900/90 rounded-2xl p-3.5 border border-zinc-800 text-[11px] font-mono text-zinc-400 flex flex-wrap gap-x-5 gap-y-1">
                 <span>Loading environment...</span>
             </div>
 
             <!-- Logs Entries List -->
             <div id="logs-list-container" class="space-y-2.5 max-h-[55vh] overflow-y-auto pr-1">
-                <div class="text-center py-8 text-xs text-apple-secondary bg-apple-surface/50 rounded-2xl border border-dashed border-apple-border">
+                <div class="text-center py-8 text-xs text-zinc-500 bg-zinc-900/50 rounded-2xl border border-dashed border-zinc-800">
                     עדיין לא נרשמו לוגים בסשן הנוכחי.
                 </div>
             </div>
@@ -261,19 +271,20 @@
     </main>
 
     <!-- Delete Confirmation Modal -->
-    <div id="delete-repo-modal" class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="bg-white text-apple-text rounded-3xl max-w-md w-full p-6 shadow-2xl border border-apple-border space-y-4">
-            <div class="space-y-1.5">
-                <h3 class="text-lg font-bold text-red-600">מחיקת מאגר לצמיתות</h3>
-                <p class="text-xs text-apple-secondary">פעולה זו תמחק את המאגר <span id="delete-modal-repo-name" class="font-mono font-semibold text-apple-text" dir="ltr"></span> ואת כל תוכנו מ-GitHub ללא אפשרות שחזור.</p>
+    <div id="delete-repo-modal" class="hidden fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-zinc-950 text-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-zinc-800 space-y-5 text-center">
+            <div class="flex flex-col items-center space-y-3">
+                <div class="w-16 h-16 mx-auto">
+                    <canvas id="deleteModalSphere" style="width:100%;height:100%;display:block;background:transparent"></canvas>
+                </div>
+                <h3 class="text-lg font-bold text-white">אתה בטוח שאתה רוצה למחוק?</h3>
+                <p class="text-xs text-zinc-400 leading-relaxed">
+                    המאגר <span id="delete-modal-repo-name" class="font-mono font-semibold text-white" dir="ltr"></span> יימחק לצמיתות.
+                </p>
             </div>
-            <div>
-                <label for="delete-confirm-input" class="block text-xs text-apple-secondary mb-1.5">הקלד את שם המאגר לאישור:</label>
-                <input type="text" id="delete-confirm-input" dir="ltr" placeholder="repo-name" class="w-full bg-apple-surface border border-apple-border rounded-2xl px-4 py-2.5 text-xs font-mono text-apple-text focus:outline-none focus:ring-2 focus:ring-red-500/30">
-            </div>
-            <div class="flex items-center justify-end gap-2 pt-2">
-                <button type="button" id="cancel-delete-repo-btn" class="bg-apple-surface hover:bg-apple-surfaceHover text-apple-text text-xs font-medium px-4 py-2 rounded-full transition-colors">ביטול</button>
-                <button type="button" id="confirm-delete-repo-btn" disabled class="bg-red-600 disabled:opacity-40 hover:bg-red-700 text-white text-xs font-medium px-4 py-2 rounded-full transition-colors">מחק מאגר</button>
+            <div class="flex items-center justify-center gap-2.5 pt-1">
+                    <button type="button" id="cancel-delete-repo-btn" class="flex-1 bg-zinc-800 hover:bg-zinc-700 text-white text-xs font-medium px-4 py-2.5 rounded-full border border-zinc-700 transition-colors">ביטול</button>
+                    <button type="button" id="confirm-delete-repo-btn" class="flex-1 bg-red-600 hover:bg-red-700 text-white text-xs font-medium px-4 py-2.5 rounded-full shadow-sm transition-colors">כן, מחק מאגר</button>
             </div>
         </div>
     </div>
@@ -283,6 +294,7 @@
             // Core DOM Elements
             const appHeader = document.getElementById('app-header');
             const liquidSphereCanvas = document.getElementById('liquidSphere');
+            const deleteModalSphereCanvas = document.getElementById('deleteModalSphere');
             const createRepoBtn = document.getElementById('create-repo-btn');
             const customBuildFields = document.getElementById('custom-build-fields');
             const repoNameInput = document.getElementById('repo-name');
@@ -300,6 +312,7 @@
             const githubTokenInput = document.getElementById('github-token');
             const verifyTokenBtn = document.getElementById('verify-token-btn');
             const workerBaseUrlInput = document.getElementById('worker-base-url');
+            const saveWorkerConfigBtn = document.getElementById('save-worker-config-btn');
             const testWorkerBtn = document.getElementById('test-worker-btn');
             const templateRepoInput = document.getElementById('template-repo');
             const frontendTemplateRepoInput = document.getElementById('frontend-template-repo');
@@ -323,7 +336,6 @@
 
             const deleteRepoModal = document.getElementById('delete-repo-modal');
             const deleteModalRepoName = document.getElementById('delete-modal-repo-name');
-            const deleteConfirmInput = document.getElementById('delete-confirm-input');
             const cancelDeleteRepoBtn = document.getElementById('cancel-delete-repo-btn');
             const confirmDeleteRepoBtn = document.getElementById('confirm-delete-repo-btn');
 
@@ -334,6 +346,7 @@
             // Application State
             let authenticatedOwner = '';
             let allFetchedRepos = [];
+            let isFetchingRepos = false;
             let pinnedRepos = new Set(JSON.parse(localStorage.getItem('gh_pinned_repos') || '[]'));
             let repoPendingDeletion = null;
             let activeEncryptedVault = null;
@@ -349,11 +362,11 @@
                 const online = navigator.onLine ? 'online' : 'OFFLINE';
                 const patLen = (localStorage.getItem('gh_automation_pat') || '').length;
                 logsEnvSummary.innerHTML = `
-                    <span>origin: <strong class="text-apple-text">${origin}</strong></span>
-                    <span>protocol: <strong class="text-apple-text">${protocol}</strong></span>
-                    <span>network: <strong class="${navigator.onLine ? 'text-emerald-600' : 'text-red-600'}">${online}</strong></span>
-                    <span>saved_token_len: <strong class="text-apple-text">${patLen}</strong></span>
-                    <span>owner: <strong class="text-apple-text">${authenticatedOwner || 'none'}</strong></span>
+                    <span>origin: <strong class="text-white">${origin}</strong></span>
+                    <span>protocol: <strong class="text-white">${protocol}</strong></span>
+                    <span>network: <strong class="${navigator.onLine ? 'text-emerald-400' : 'text-red-400'}">${online}</strong></span>
+                    <span>saved_token_len: <strong class="text-white">${patLen}</strong></span>
+                    <span>owner: <strong class="text-white">${authenticatedOwner || 'none'}</strong></span>
                 `;
             }
 
@@ -378,18 +391,18 @@
             function renderDiagnosticLogs() {
                 if (!logsListContainer) return;
                 if (!authenticatedOwner || !appDiagnosticLogs.length) {
-                    logsListContainer.innerHTML = `<div class="text-center py-8 text-xs text-apple-secondary bg-apple-surface/50 rounded-2xl border border-dashed border-apple-border">אין משתמש מחובר — הלוגים ריקים.</div>`;
+                    logsListContainer.innerHTML = `<div class="text-center py-8 text-xs text-zinc-500 bg-zinc-900/50 rounded-2xl border border-dashed border-zinc-800">אין משתמש מחובר — הלוגים ריקים.</div>`;
                     return;
                 }
 
                 logsListContainer.innerHTML = appDiagnosticLogs.map((item) => {
                     const badgeStyle =
-                        item.level === 'error' ? 'bg-red-100 text-red-700 border-red-200' :
-                        item.level === 'success' ? 'bg-emerald-100 text-emerald-700 border-emerald-200' :
-                        'bg-sky-100 text-sky-700 border-sky-200';
+                        item.level === 'error' ? 'bg-red-500/15 text-red-300 border-red-500/30' :
+                        item.level === 'success' ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30' :
+                        'bg-sky-500/15 text-sky-300 border-sky-500/30';
                     const cardBorder =
-                        item.level === 'error' ? 'border-red-200 bg-red-50/40' :
-                        'border-apple-border/60 bg-apple-surface/50';
+                        item.level === 'error' ? 'border-red-500/30 bg-red-950/20' :
+                        'border-zinc-800 bg-zinc-900/70';
                     const detailsStr = Object.keys(item.details || {}).length
                         ? JSON.stringify(item.details, null, 2)
                         : '';
@@ -399,11 +412,11 @@
                             <div class="flex items-center justify-between gap-2">
                                 <div class="flex items-center gap-2 min-w-0">
                                     <span class="text-[10px] font-mono font-semibold uppercase px-2 py-0.5 rounded-full border ${badgeStyle}">${item.level}</span>
-                                    <span class="text-xs font-semibold text-apple-text truncate">${item.title}</span>
+                                    <span class="text-xs font-semibold text-white truncate">${item.title}</span>
                                 </div>
-                                <span dir="ltr" class="text-[11px] font-mono text-apple-secondary shrink-0">${item.localTime}</span>
+                                <span dir="ltr" class="text-[11px] font-mono text-zinc-400 shrink-0">${item.localTime}</span>
                             </div>
-                            ${detailsStr ? `<pre dir="ltr" class="bg-white border border-apple-border/60 rounded-xl p-2.5 text-[11px] font-mono text-apple-text overflow-x-auto leading-relaxed">${detailsStr}</pre>` : ''}
+                            ${detailsStr ? `<pre dir="ltr" class="bg-zinc-950 border border-zinc-800/90 rounded-xl p-2.5 text-[11px] font-mono text-zinc-300 overflow-x-auto leading-relaxed">${detailsStr}</pre>` : ''}
                         </div>
                     `;
                 }).join('');
@@ -654,6 +667,90 @@
                 })();
             })();
 
+            // Mini Red Liquid Sphere inside Delete Confirmation Modal
+            (() => {
+                const c = deleteModalSphereCanvas;
+                if (!c) return;
+                const ctx = c.getContext('2d');
+                const off = document.createElement('canvas');
+                const octx = off.getContext('2d');
+                const redPalette = SPHERE_PALETTES.error;
+                const rgbs = redPalette.map((h) => {
+                    const n = parseInt(h.replace('#', ''), 16);
+                    return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+                });
+                const ga = Math.PI * (3 - Math.sqrt(5));
+                const dirs = rgbs.map((_, i) => {
+                    const y = rgbs.length > 1 ? 1 - (i / (rgbs.length - 1)) * 2 : 0;
+                    const r = Math.sqrt(Math.max(0, 1 - y * y));
+                    return [Math.cos(ga * i) * r, y, Math.sin(ga * i) * r];
+                });
+                c.style.filter = SPHERE_GLOWS.error;
+                let yaw = 0.6, t = 0;
+
+                const resize = () => {
+                    const r = c.getBoundingClientRect();
+                    const w = Math.max(64, (r.width || 64) | 0);
+                    const h = Math.max(64, (r.height || 64) | 0);
+                    c.width = w;
+                    c.height = h;
+                    off.width = Math.max(52, (w * 0.75) | 0);
+                    off.height = Math.max(52, (h * 0.75) | 0);
+                };
+                new ResizeObserver(resize).observe(c);
+                resize();
+
+                (function miniLoop() {
+                    if (deleteRepoModal && !deleteRepoModal.classList.contains('hidden')) {
+                        if (c.width < 10) resize();
+                        t += 0.04;
+                        yaw += 0.035;
+                        const pitch = Math.sin(t * 0.7) * 0.25;
+                        const w = off.width, h = off.height;
+                        const img = octx.createImageData(w, h), d = img.data;
+                        const cx = w * 0.5, cy = h * 0.5, invR = 1 / (Math.min(w, h) * 0.46);
+                        const cy1 = Math.cos(yaw), sy1 = Math.sin(yaw), cp1 = Math.cos(pitch), sp1 = Math.sin(pitch);
+                        const swirl = 0.65, sharp = 3.2 - swirl * 1.35, amp = 0.68 * swirl;
+
+                        for (let y = 0; y < h; y++) {
+                            const ny = (y - cy) * invR, ny2 = ny * ny;
+                            for (let x = 0; x < w; x++) {
+                                const nx = (x - cx) * invR, r2 = nx * nx + ny2;
+                                if (r2 > 1) continue;
+                                const nz = Math.sqrt(1 - r2);
+                                const x1 = nx * cy1 - nz * sy1, z1 = nx * sy1 + nz * cy1;
+                                const y2 = ny * cp1 - z1 * sp1, z2 = ny * sp1 + z1 * cp1;
+                                let fx = x1 + Math.sin(y2 * 2.4 + t * 1.3) * amp;
+                                let fy = y2 + Math.cos(z2 * 2.4 - t * 1.2) * amp;
+                                let fz = z2 + Math.sin(x1 * 2.4 + t * 1.1) * amp;
+                                const fl = Math.hypot(fx, fy, fz) || 1;
+                                fx /= fl; fy /= fl; fz /= fl;
+
+                                let ws = 0, br = 0, bg = 0, bb = 0;
+                                for (let i = 0; i < rgbs.length; i++) {
+                                    const wt = Math.exp((fx * dirs[i][0] + fy * dirs[i][1] + fz * dirs[i][2] - 1) * sharp);
+                                    ws += wt;
+                                    br += rgbs[i][0] * wt;
+                                    bg += rgbs[i][1] * wt;
+                                    bb += rgbs[i][2] * wt;
+                                }
+                                const diff = 0.45 + 0.65 * Math.max(0, -0.45 * nx - 0.55 * ny + 0.7 * nz);
+                                const spec = Math.pow(Math.max(0, -0.3 * nx - 0.38 * ny + 0.87 * nz), 36) * 165;
+                                const idx = (y * w + x) * 4;
+                                d[idx] = Math.min(255, (br / ws) * diff + spec);
+                                d[idx + 1] = Math.min(255, (bg / ws) * diff + spec);
+                                d[idx + 2] = Math.min(255, (bb / ws) * diff + spec);
+                                d[idx + 3] = Math.min(255, ((1 - r2) * 26 * 255) | 0);
+                            }
+                        }
+                        octx.putImageData(img, 0, 0);
+                        ctx.clearRect(0, 0, c.width, c.height);
+                        ctx.drawImage(off, 0, 0, c.width, c.height);
+                    }
+                    requestAnimationFrame(miniLoop);
+                })();
+            })();
+
             function updateSphereState(state) {
                 targetSpinSpeed = state === 'building' ? 3.2 : 1.0;
                 const palette = SPHERE_PALETTES[state] || SPHERE_PALETTES.initial;
@@ -793,6 +890,7 @@
             headerSignoutBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
                 localStorage.removeItem('gh_automation_pat');
+                localStorage.removeItem('gh_worker_base_url');
                 authenticatedOwner = '';
                 allFetchedRepos = [];
                 activeEncryptedVault = null;
@@ -801,18 +899,178 @@
                 if (logsMenuDot) logsMenuDot.classList.add('hidden');
                 githubTokenInput.value = '';
                 quickTokenInput.value = '';
+                workerBaseUrlInput.value = '';
                 connectionDot.className = 'w-2.5 h-2.5 rounded-full bg-red-500 transition-colors';
                 connectionStatus.textContent = 'התחבר';
+                connectionStatus.classList.remove('hidden');
                 headerUserAvatar.classList.add('hidden');
                 headerUserAvatar.src = '';
                 headerSignoutBtn.classList.add('hidden');
                 reposCountBadge.classList.add('hidden');
-                refreshSnippetDisplay();
-                renderRepositoriesList();
-                renderEnvironmentSummary();
                 renderDiagnosticLogs();
+                renderRepositoriesList();
                 showToast('התנתקת מהחשבון', 'info');
             });
+
+            // Sync Private Studio Config (.studio-config.json inside GitHub_Automation_Studio_Backend)
+            const STUDIO_PRIVATE_CONFIG_REPO = 'GitHub_Automation_Studio_Backend';
+
+            async function loadPrivateUserConfig(token, owner) {
+                const configUrl = `https://api.github.com/repos/${owner}/${STUDIO_PRIVATE_CONFIG_REPO}/contents/.studio-config.json`;
+                try {
+                    const res = await fetch(`${configUrl}?_t=${Date.now()}`, {
+                        cache: 'no-store',
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Accept': 'application/vnd.github+json'
+                        }
+                    });
+                    if (!res.ok) {
+                        addDiagnosticLog('info', `No Private .studio-config.json Found Yet in ${STUDIO_PRIVATE_CONFIG_REPO}`, {
+                            repo: `${owner}/${STUDIO_PRIVATE_CONFIG_REPO}`,
+                            status: res.status
+                        });
+                        return;
+                    }
+                    const fileData = await res.json();
+                    const parsed = JSON.parse(decodeUtf8Base64(fileData.content));
+                    const resolvedWorker = parsed?.tenants?.[owner]?.workerUrl || '';
+                    if (resolvedWorker) {
+                        workerBaseUrlInput.value = resolvedWorker.trim();
+                        localStorage.setItem('gh_worker_base_url', resolvedWorker.trim());
+                        addDiagnosticLog('success', 'Loaded Worker URL from Private Studio Backend', {
+                            repo: `${owner}/${STUDIO_PRIVATE_CONFIG_REPO}`,
+                            workerHost: new URL(resolvedWorker.trim()).host
+                        });
+                        await checkTenantGitHubAppStatus(resolvedWorker.trim(), owner);
+                    }
+                } catch (err) {
+                    addDiagnosticLog('error', 'Failed Reading Private .studio-config.json', {
+                        repo: `${owner}/${STUDIO_PRIVATE_CONFIG_REPO}`,
+                        errorMessage: err?.message || String(err)
+                    });
+                }
+            }
+
+            async function checkTenantGitHubAppStatus(workerBase, owner) {
+                const banner = document.getElementById('github-app-install-banner');
+                const bannerText = document.getElementById('github-app-install-text');
+                const installLink = document.getElementById('github-app-install-link');
+                if (!workerBase || !owner || !banner) return;
+
+                const statusUrl = `${workerBase.replace(/\/+$/, '')}/gh-app-status/${encodeURIComponent(owner)}`;
+                try {
+                    const res = await fetch(statusUrl, {
+                        method: 'GET',
+                        mode: 'cors'
+                    });
+                    const cfTelemetry = extractCloudflareTelemetry(res);
+                    if (!res.ok) {
+                        addDiagnosticLog('error', `CF /gh-app-status HTTP ${res.status}`, {
+                            status: res.status,
+                            cloudflare: cfTelemetry
+                        });
+                        return;
+                    }
+                    const statusData = await res.json();
+                    banner.classList.remove('hidden');
+                    if (statusData.installed) {
+                        bannerText.innerHTML = `<span class="text-emerald-400 font-medium">● GitHub App מותקן ופעיל</span> עבור <span dir="ltr" class="font-mono text-white">@${owner}</span> (ID: ${statusData.installationId})`;
+                        installLink.classList.add('hidden');
+                        addDiagnosticLog('success', `CF GitHub App Verified for @${owner}`, {
+                            ...statusData,
+                            cloudflare: cfTelemetry
+                        });
+                    } else {
+                        bannerText.innerHTML = `<span class="text-amber-400 font-medium">● נדרשת התקנת GitHub App</span> בחשבון <span dir="ltr" class="font-mono text-white">@${owner}</span> לגישה ל-DB הפרטי`;
+                        installLink.classList.remove('hidden');
+                        addDiagnosticLog('error', `CF GitHub App Not Installed for @${owner}`, {
+                            ...statusData,
+                            cloudflare: cfTelemetry
+                        });
+                    }
+                } catch (err) {
+                    addDiagnosticLog('error', 'CF Tenant GitHub App Status Fetch Failed', {
+                        owner,
+                        statusUrl,
+                        errorMessage: err?.message || String(err)
+                    });
+                }
+            }
+
+            async function savePrivateUserConfig() {
+                const token = (githubTokenInput.value || localStorage.getItem('gh_automation_pat') || '').trim();
+                const workerUrl = (workerBaseUrlInput.value || '').trim().replace(/\/+$/, '');
+                if (!token || !authenticatedOwner) {
+                    showToast('יש להתחבר תחילה כדי לשמור במאגר הפרטי', 'error');
+                    return;
+                }
+                if (!workerUrl) {
+                    showToast('יש להזין כתובת Worker לשמירה', 'error');
+                    return;
+                }
+
+                const configUrl = `https://api.github.com/repos/${authenticatedOwner}/${STUDIO_PRIVATE_CONFIG_REPO}/contents/.studio-config.json`;
+                try {
+                    let existingSha = undefined;
+                    let existingJson = { tenants: {} };
+                    const checkRes = await fetch(`${configUrl}?_t=${Date.now()}`, {
+                        cache: 'no-store',
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Accept': 'application/vnd.github+json'
+                        }
+                    });
+                    if (checkRes.ok) {
+                        const existing = await checkRes.json();
+                        existingSha = existing.sha;
+                        try {
+                            const parsed = JSON.parse(decodeUtf8Base64(existing.content));
+                            existingJson = { tenants: { ...(parsed.tenants || {}) } };
+                        } catch {}
+                    }
+
+                    existingJson.tenants[authenticatedOwner] = {
+                        ...(existingJson.tenants[authenticatedOwner] || {}),
+                        workerUrl,
+                        updatedAt: new Date().toISOString()
+                    };
+
+                    const putRes = await fetch(configUrl, {
+                        method: 'PUT',
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Accept': 'application/vnd.github+json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            message: 'Update private studio worker config',
+                            content: encodeUtf8Base64(JSON.stringify(existingJson, null, 2)),
+                            ...(existingSha ? { sha: existingSha } : {})
+                        })
+                    });
+                    if (!putRes.ok) {
+                        const errData = await putRes.json().catch(() => ({}));
+                        throw new Error(errData.message || `HTTP ${putRes.status}`);
+                    }
+                    localStorage.setItem('gh_worker_base_url', workerUrl);
+                    addDiagnosticLog('success', `Saved Worker URL to ${STUDIO_PRIVATE_CONFIG_REPO}/.studio-config.json`, {
+                        repo: `${authenticatedOwner}/${STUDIO_PRIVATE_CONFIG_REPO}`
+                    });
+                    showToast('נשמר במאגר הפרטי GitHub_Automation_Studio_Backend ✓', 'success');
+                    await checkTenantGitHubAppStatus(workerUrl, authenticatedOwner);
+                } catch (err) {
+                    addDiagnosticLog('error', 'Failed Saving Private .studio-config.json', {
+                        repo: `${authenticatedOwner}/${STUDIO_PRIVATE_CONFIG_REPO}`,
+                        errorMessage: err?.message || String(err)
+                    });
+                    showToast(`שגיאה בשמירה: ${err.message}`, 'error');
+                }
+            }
+
+            if (saveWorkerConfigBtn) {
+                saveWorkerConfigBtn.addEventListener('click', savePrivateUserConfig);
+            }
 
             // Verify GitHub Master Token
             async function verifyGitHubToken(rawToken, silent = false) {
@@ -883,42 +1141,45 @@
                     }
                     headerSignoutBtn.classList.remove('hidden');
                     if (!silent) showToast('מחובר לחשבון GitHub', 'success');
+                    await loadPrivateUserConfig(token, user.login);
                     await fetchAccountRepositories();
                     return true;
                 } catch (err) {
-                    authenticatedOwner = '';
                     connectionDot.className = 'w-2.5 h-2.5 rounded-full bg-red-500';
                     connectionStatus.textContent = 'התחבר';
                     connectionStatus.classList.remove('hidden');
-                    headerUserAvatar.classList.add('hidden');
-                    headerSignoutBtn.classList.add('hidden');
-                    reposCountBadge.classList.add('hidden');
-                    const isNetworkErr = err instanceof TypeError || /failed to fetch/i.test(err.message || '');
-                    addDiagnosticLog('error', 'Authentication Fetch Exception', {
+                    addDiagnosticLog('error', 'GitHub Authentication Request Failed', {
                         errorName: err?.name || 'Error',
                         errorMessage: err?.message || String(err),
-                        isNetworkOrCorsError: isNetworkErr,
-                        origin: window.location.origin,
-                        protocol: window.location.protocol,
-                        navigatorOnline: navigator.onLine
+                        online: navigator.onLine
                     });
-                    const displayMsg = isNetworkErr
-                        ? 'שגיאת רשת / חסימת חיבור ל-api.github.com (בדוק אינטרנט או תווים בטוקן)'
-                        : (err.message || 'שגיאה באימות הטוקן');
-                    if (!silent) showToast(displayMsg, 'error');
+                    if (!silent) showToast(err.message || 'שגיאה באימות טוקן', 'error');
                     return false;
                 }
             }
 
-            verifyTokenBtn.addEventListener('click', async () => {
-                const token = githubTokenInput.value.trim();
-                if (!token) {
-                    showToast('יש להזין GitHub Token', 'error');
-                    return;
+            verifyTokenBtn.addEventListener('click', () => verifyGitHubToken(githubTokenInput.value));
+
+            function extractCloudflareTelemetry(res) {
+                if (!res || !res.headers) return null;
+                const cfRay = res.headers.get('X-CF-Worker-Ray') || '';
+                const durationMs = res.headers.get('X-CF-Worker-Duration-Ms') || '';
+                const rawLogs = res.headers.get('X-CF-Worker-Logs') || '';
+                let workerSteps = [];
+                if (rawLogs) {
+                    try {
+                        workerSteps = JSON.parse(decodeURIComponent(rawLogs));
+                    } catch {
+                        workerSteps = [rawLogs];
+                    }
                 }
-                localStorage.setItem('gh_automation_pat', token);
-                await verifyGitHubToken(token);
-            });
+                if (!cfRay && !durationMs && !workerSteps.length) return null;
+                return {
+                    cfRay: cfRay || undefined,
+                    durationMs: durationMs ? Number(durationMs) : undefined,
+                    workerSteps
+                };
+            }
 
             if (testWorkerBtn) {
                 testWorkerBtn.addEventListener('click', async () => {
@@ -933,11 +1194,24 @@
                     try {
                         const res = await fetch(`${workerBase}/ping`, { method: 'GET', mode: 'cors' });
                         const data = await res.json().catch(() => ({}));
-                        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-                        addDiagnosticLog('success', 'Worker /ping Health Check OK', { workerBase, response: data });
+                        const cfTelemetry = extractCloudflareTelemetry(res);
+                        if (!res.ok) {
+                            addDiagnosticLog('error', `CF Worker /ping HTTP ${res.status}`, {
+                                workerBase,
+                                status: res.status,
+                                response: data,
+                                cloudflare: cfTelemetry
+                            });
+                            throw new Error(`HTTP ${res.status}`);
+                        }
+                        addDiagnosticLog('success', 'CF Worker /ping Health Check OK', {
+                            workerBase,
+                            response: data,
+                            cloudflare: cfTelemetry
+                        });
                         showToast('ה-Worker מחובר ופעיל ✓', 'success');
                     } catch (err) {
-                        addDiagnosticLog('error', 'Worker /ping Health Check Failed', {
+                        addDiagnosticLog('error', 'CF Worker /ping Health Check Failed', {
                             workerBase,
                             errorName: err?.name || 'Error',
                             errorMessage: err?.message || String(err)
@@ -1048,45 +1322,58 @@
             // Generate Repo from Template via Cloudflare Worker Proxy (with automatic direct GitHub fallback)
             async function generateRepoFromTemplate(token, owner, templateRepo, newRepoName, isPrivate) {
                 const description = isPrivate ? 'Encrypted JSON Database' : 'Protected Frontend App';
-                const workerBase = (workerBaseUrlInput.value || 'https://spring-poetry-11f4.avivyl1234.workers.dev').trim().replace(/\/+$/, '');
-                const proxyUrl = `${workerBase}/gh-generate`;
+                const workerBase = (workerBaseUrlInput.value || localStorage.getItem('gh_worker_base_url') || '').trim().replace(/\/+$/, '');
+                const proxyUrl = workerBase ? `${workerBase}/gh-generate` : '';
 
                 let res = null;
                 let viaWorker = false;
 
-                addDiagnosticLog('info', `Requesting Worker /gh-generate for ${newRepoName}`, {
-                    url: proxyUrl,
-                    templateRepo,
-                    isPrivate
-                });
+                if (proxyUrl) {
+                    addDiagnosticLog('info', `Requesting Worker /gh-generate for ${newRepoName}`, {
+                        url: proxyUrl,
+                        templateRepo,
+                        isPrivate
+                    });
 
-                try {
-                    res = await fetch(proxyUrl, {
-                        method: 'POST',
-                        mode: 'cors',
-                        headers: {
-                            'Authorization': `Bearer ${token}`,
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            owner,
-                            templateRepo,
-                            name: newRepoName,
-                            private: isPrivate,
-                            description
-                        })
-                    });
-                    viaWorker = true;
-                } catch (proxyErr) {
-                    addDiagnosticLog('error', `Worker /gh-generate Network/CORS Error (${newRepoName})`, {
-                        proxyUrl,
-                        errorName: proxyErr?.name || 'Error',
-                        errorMessage: proxyErr?.message || String(proxyErr),
-                        fallback: 'Falling back to direct GitHub API /generate'
-                    });
+                    try {
+                        res = await fetch(proxyUrl, {
+                            method: 'POST',
+                            mode: 'cors',
+                            headers: {
+                                'Authorization': `Bearer ${token}`,
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                owner,
+                                templateRepo,
+                                name: newRepoName,
+                                private: isPrivate,
+                                description
+                            })
+                        });
+                        viaWorker = true;
+                        const cfTelemetry = extractCloudflareTelemetry(res);
+                        addDiagnosticLog(
+                            res.ok ? 'success' : 'error',
+                            `CF Worker /gh-generate ${res.ok ? 'OK' : 'Failed'} (${newRepoName})`,
+                            {
+                                proxyUrl,
+                                status: res.status,
+                                ghRequestId: res.headers.get('x-github-request-id') || undefined,
+                                cloudflare: cfTelemetry
+                            }
+                        );
+                    } catch (proxyErr) {
+                        addDiagnosticLog('error', `CF Worker /gh-generate Network/CORS Error (${newRepoName})`, {
+                            proxyUrl,
+                            errorName: proxyErr?.name || 'Error',
+                            errorMessage: proxyErr?.message || String(proxyErr),
+                            fallback: 'Falling back to direct GitHub API /generate'
+                        });
+                    }
                 }
 
-                // Fallback to direct GitHub API if Worker failed on network/CORS or returned 404/500
+                // Fallback to direct GitHub API if Worker failed or is not configured
                 if (!res || res.status >= 500) {
                     viaWorker = false;
                     res = await fetch(`https://api.github.com/repos/${owner}/${templateRepo}/generate`, {
@@ -1200,7 +1487,12 @@
                 const frontendRepo = `${cleanBase}_Frontend`;
                 const backendTemplate = (templateRepoInput.value || '_Template_Backend').trim();
                 const frontendTemplate = (frontendTemplateRepoInput.value || '_Template_Frontend').trim();
-                const workerBase = (workerBaseUrlInput.value || 'https://spring-poetry-11f4.avivyl1234.workers.dev').trim().replace(/\/+$/, '');
+                const workerBase = (workerBaseUrlInput.value || localStorage.getItem('gh_worker_base_url') || '').trim().replace(/\/+$/, '');
+                if (!workerBase) {
+                    updateSphereState('error');
+                    showToast('חסרה כתובת Worker — הגדר ושמור בהגדרות תשתית', 'error');
+                    return;
+                }
 
                 updateSphereState('building');
                 showToast(`מקים את ${cleanBase}...`, 'info');
@@ -1225,8 +1517,8 @@
                     await generateRepoFromTemplate(token, authenticatedOwner, backendTemplate, backendRepo, true);
                     await generateRepoFromTemplate(token, authenticatedOwner, frontendTemplate, frontendRepo, false);
 
-                    // 2. Encrypt Endpoint & Inject into Frontend index.html (with brief wait for template files)
-                    const endpointUrl = `${workerBase}/${backendRepo}`;
+                    // 2. Encrypt Multi-Tenant Endpoint & Inject into Frontend index.html
+                    const endpointUrl = `${workerBase}/${authenticatedOwner}/${backendRepo}`;
                     const vaultObj = await encryptEndpointVault(endpointUrl, appPassword);
                     activeEncryptedVault = vaultObj;
                     refreshSnippetDisplay();
@@ -1275,8 +1567,10 @@
 
                     updateSphereState('success');
                     addDiagnosticLog('success', `Full-Stack Provisioning Completed: ${cleanBase}`, {
+                        owner: authenticatedOwner,
                         backendRepo,
                         frontendRepo,
+                        multiTenantEndpoint: endpointUrl,
                         liveUrl: `https://${authenticatedOwner.toLowerCase()}.github.io/${frontendRepo}/`
                     });
                     showToast(`הוקם בהצלחה: ${cleanBase}`, 'success');
@@ -1337,29 +1631,49 @@
             // Fetch & Render Account Repositories
             async function fetchAccountRepositories() {
                 const token = (githubTokenInput.value || localStorage.getItem('gh_automation_pat') || '').trim();
-                if (!token || !authenticatedOwner) return;
+                if (!token || !authenticatedOwner || isFetchingRepos) return;
 
-                reposListContainer.innerHTML = `<div class="text-center py-8 text-xs text-apple-secondary">טוען מאגרים...</div>`;
+                isFetchingRepos = true;
+                reposListContainer.innerHTML = `<div class="text-center py-8 text-xs text-zinc-400">טוען מאגרים...</div>`;
                 try {
-                    const res = await fetch('https://api.github.com/user/repos?per_page=100&sort=updated', {
+                    const res = await fetch(`https://api.github.com/user/repos?per_page=100&sort=updated&_t=${Date.now()}`, {
+                        cache: 'no-store',
                         headers: {
                             'Authorization': `Bearer ${token}`,
                             'Accept': 'application/vnd.github+json'
                         }
                     });
-                    if (!res.ok) throw new Error('שגיאה בטעינת המאגרים');
+                    if (!res.ok) {
+                        const errBody = await res.text().catch(() => '');
+                        addDiagnosticLog('error', `Fetch Repositories HTTP ${res.status}`, {
+                            status: res.status,
+                            statusText: res.statusText,
+                            responseBody: errBody.slice(0, 400)
+                        });
+                        throw new Error(`שגיאה בטעינת המאגרים (${res.status})`);
+                    }
                     allFetchedRepos = await res.json();
                     reposCountBadge.textContent = `${allFetchedRepos.length} מאגרים`;
                     reposCountBadge.classList.remove('hidden');
+                    addDiagnosticLog('info', `Loaded ${allFetchedRepos.length} Repositories`, {
+                        owner: authenticatedOwner,
+                        count: allFetchedRepos.length
+                    });
                     renderRepositoriesList();
                 } catch (err) {
-                    reposListContainer.innerHTML = `<div class="text-center py-8 text-xs text-red-500">${err.message}</div>`;
+                    addDiagnosticLog('error', 'Fetch Repositories Exception', {
+                        errorName: err?.name || 'Error',
+                        errorMessage: err?.message || String(err)
+                    });
+                    reposListContainer.innerHTML = `<div class="text-center py-8 text-xs text-red-400">${err.message}</div>`;
+                } finally {
+                    isFetchingRepos = false;
                 }
             }
 
             function renderRepositoriesList() {
                 if (!authenticatedOwner) {
-                    reposListContainer.innerHTML = `<div class="text-center py-10 text-sm text-apple-secondary bg-apple-surface/50 rounded-2xl border border-dashed border-apple-border">יש לאמת חיבור Master Token כדי לצפות במאגרים.</div>`;
+                    reposListContainer.innerHTML = `<div class="text-center py-10 text-sm text-zinc-500 bg-zinc-900/50 rounded-2xl border border-dashed border-zinc-800">יש להתחבר כדי לצפות במאגרים.</div>`;
                     return;
                 }
 
@@ -1383,7 +1697,7 @@
                 });
 
                 if (!filtered.length) {
-                    reposListContainer.innerHTML = `<div class="text-center py-8 text-xs text-apple-secondary bg-apple-surface/40 rounded-2xl">לא נמצאו מאגרים תואמים.</div>`;
+                    reposListContainer.innerHTML = `<div class="text-center py-8 text-xs text-zinc-500 bg-zinc-900/40 rounded-2xl border border-zinc-800/60">לא נמצאו מאגרים תואמים.</div>`;
                     return;
                 }
 
@@ -1391,64 +1705,64 @@
                     const isPinned = pinnedRepos.has(repo.name);
                     const liveUrl = `https://${authenticatedOwner.toLowerCase()}.github.io/${repo.name}/`;
                     return `
-                        <div class="rounded-2xl border ${isPinned ? 'bg-sky-50/70 border-sky-300' : 'bg-apple-surface/60 border-apple-border/60'} p-3.5 sm:p-4 transition-all">
+                        <div class="rounded-2xl border ${isPinned ? 'bg-zinc-900 border-sky-500/40' : 'bg-zinc-900/70 hover:bg-zinc-900 border-zinc-800/90'} p-3.5 sm:p-4 transition-all">
                             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                                <div class="flex items-center gap-2 min-w-0">
-                                    <button type="button" data-pin-repo="${repo.name}" title="${isPinned ? 'בטל נעיצה' : 'נעץ לראש הרשימה'}" class="p-2 sm:p-1.5 shrink-0 rounded-full ${isPinned ? 'bg-sky-500 text-white' : 'bg-white text-apple-secondary hover:text-apple-text border border-apple-border/60'} transition-colors">
+                                <div class="flex items-center gap-2.5 min-w-0">
+                                    <button type="button" data-pin-repo="${repo.name}" title="${isPinned ? 'בטל נעיצה' : 'נעץ לראש הרשימה'}" class="p-2 sm:p-1.5 shrink-0 rounded-full ${isPinned ? 'bg-sky-500 text-white' : 'bg-zinc-800/80 text-zinc-400 hover:text-white border border-zinc-700/70'} transition-colors">
                                         <svg class="w-3.5 h-3.5" fill="${isPinned ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>
                                         </svg>
                                     </button>
-                                    <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer" dir="ltr" class="font-mono text-xs sm:text-sm font-semibold text-apple-text hover:text-apple-blue truncate min-w-0 flex-1">${repo.name}</a>
-                                    <span class="text-[10px] shrink-0 font-medium px-2 py-0.5 rounded-full ${repo.private ? 'bg-amber-100 text-amber-800' : 'bg-emerald-100 text-emerald-800'}">
+                                    <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer" dir="ltr" class="font-mono text-xs sm:text-sm font-medium text-white hover:text-sky-400 truncate min-w-0 flex-1 transition-colors">${repo.name}</a>
+                                    <span class="text-[10px] shrink-0 font-medium px-2.5 py-0.5 rounded-full border ${repo.private ? 'bg-amber-500/10 text-amber-300 border-amber-500/25' : 'bg-emerald-500/10 text-emerald-300 border-emerald-500/25'}">
                                         ${repo.private ? 'Private' : 'Public'}
                                     </span>
                                 </div>
 
                                 <div class="flex items-center justify-end gap-2 shrink-0">
                                     ${!repo.private ? `
-                                        <button type="button" data-edit-repo="${repo.name}" class="flex-1 sm:flex-initial bg-white hover:bg-apple-surfaceHover text-apple-text text-xs font-medium px-3.5 py-2 sm:py-1.5 rounded-full border border-apple-border/70 transition-colors">
+                                        <button type="button" data-edit-repo="${repo.name}" class="flex-1 sm:flex-initial bg-zinc-800 hover:bg-zinc-700 text-white text-xs font-medium px-3.5 py-2 sm:py-1.5 rounded-full border border-zinc-700/80 transition-colors">
                                             Edit
                                         </button>
                                     ` : ''}
-                                    <button type="button" data-delete-repo="${repo.name}" class="flex-1 sm:flex-initial bg-red-50 hover:bg-red-100 text-red-600 text-xs font-medium px-3.5 py-2 sm:py-1.5 rounded-full border border-red-200 transition-colors">
+                                    <button type="button" data-delete-repo="${repo.name}" class="flex-1 sm:flex-initial bg-red-500/10 hover:bg-red-500/20 text-red-400 text-xs font-medium px-3.5 py-2 sm:py-1.5 rounded-full border border-red-500/25 transition-colors">
                                         מחק
                                     </button>
                                 </div>
                             </div>
 
                             ${!repo.private ? `
-                                <div id="edit-drawer-${repo.name}" class="hidden mt-4 pt-4 border-t border-apple-border/60 space-y-3">
+                                <div id="edit-drawer-${repo.name}" class="hidden mt-4 pt-4 border-t border-zinc-800 space-y-3">
                                     <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
                                         <a href="${liveUrl}" target="_blank" rel="noopener noreferrer" class="bg-apple-blue hover:bg-apple-blueHover text-white text-xs font-medium px-4 py-2 rounded-full text-center whitespace-nowrap transition-colors">
                                             פתח אתר חי ↗
                                         </a>
-                                        <input type="text" readonly dir="ltr" value="${liveUrl}" class="w-full sm:flex-1 min-w-0 bg-white border border-apple-border/70 rounded-full px-3.5 py-2 sm:py-1.5 text-xs font-mono text-apple-text">
+                                        <input type="text" readonly dir="ltr" value="${liveUrl}" class="w-full sm:flex-1 min-w-0 bg-zinc-950 border border-zinc-800 rounded-full px-3.5 py-2 sm:py-1.5 text-xs font-mono text-zinc-300">
                                     </div>
                                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                                        <a href="${repo.html_url}/settings/pages" target="_blank" rel="noopener noreferrer" class="bg-white hover:bg-apple-surfaceHover text-apple-text text-xs font-medium py-2 px-3 rounded-full border border-apple-border/70 text-center transition-colors">
+                                        <a href="${repo.html_url}/settings/pages" target="_blank" rel="noopener noreferrer" class="bg-zinc-800/80 hover:bg-zinc-800 text-zinc-200 text-xs font-medium py-2 px-3 rounded-full border border-zinc-700/70 text-center transition-colors">
                                             הגדרות Pages ↗
                                         </a>
-                                        <a href="${repo.html_url}/actions" target="_blank" rel="noopener noreferrer" class="bg-white hover:bg-apple-surfaceHover text-apple-text text-xs font-medium py-2 px-3 rounded-full border border-apple-border/70 text-center transition-colors">
+                                        <a href="${repo.html_url}/actions" target="_blank" rel="noopener noreferrer" class="bg-zinc-800/80 hover:bg-zinc-800 text-zinc-200 text-xs font-medium py-2 px-3 rounded-full border border-zinc-700/70 text-center transition-colors">
                                             Actions ↗
                                         </a>
-                                        <a href="${repo.html_url}/edit/main/index.html" target="_blank" rel="noopener noreferrer" class="bg-white hover:bg-apple-surfaceHover text-apple-text text-xs font-medium py-2 px-3 rounded-full border border-apple-border/70 text-center transition-colors">
+                                        <a href="${repo.html_url}/edit/main/index.html" target="_blank" rel="noopener noreferrer" class="bg-zinc-800/80 hover:bg-zinc-800 text-zinc-200 text-xs font-medium py-2 px-3 rounded-full border border-zinc-700/70 text-center transition-colors">
                                             ערוך index.html ↗
                                         </a>
                                     </div>
-                                    <div class="bg-white rounded-2xl p-3 border border-apple-border/70 space-y-2">
+                                    <div class="bg-zinc-950 rounded-2xl p-3 border border-zinc-800 space-y-2">
                                         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                                            <span class="text-[11px] text-apple-secondary">אובייקט ההצפנה של האפליקציה (SALTED_VAULT)</span>
+                                            <span class="text-[11px] text-zinc-400">אובייקט ההצפנה (SALTED_VAULT)</span>
                                             <div class="flex items-center gap-1.5">
-                                                <button type="button" data-inject-vault="${repo.name}" class="flex-1 sm:flex-initial bg-sky-50 hover:bg-sky-100 text-apple-blue text-xs font-medium px-3 py-1.5 sm:py-1 rounded-full transition-colors">
+                                                <button type="button" data-inject-vault="${repo.name}" class="flex-1 sm:flex-initial bg-sky-500/15 hover:bg-sky-500/25 text-sky-300 text-xs font-medium px-3 py-1.5 sm:py-1 rounded-full border border-sky-500/25 transition-colors">
                                                     הזרק לסניפט ✓
                                                 </button>
-                                                <button type="button" data-copy-vault="${repo.name}" class="flex-1 sm:flex-initial bg-apple-surface hover:bg-apple-surfaceHover text-apple-text text-xs font-medium px-3 py-1.5 sm:py-1 rounded-full transition-colors">
-                                                    העתק אובייקט
+                                                <button type="button" data-copy-vault="${repo.name}" class="flex-1 sm:flex-initial bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-medium px-3 py-1.5 sm:py-1 rounded-full transition-colors">
+                                                    העתק
                                                 </button>
                                             </div>
                                         </div>
-                                        <input id="vault-input-${repo.name}" type="text" readonly dir="ltr" value="טוען אובייקט הצפנה..." class="w-full bg-apple-surface rounded-xl px-3 py-2 text-xs font-mono text-apple-text">
+                                        <input id="vault-input-${repo.name}" type="text" readonly dir="ltr" value="טוען אובייקט הצפנה..." class="w-full bg-zinc-900 border border-zinc-800/80 rounded-xl px-3 py-2 text-xs font-mono text-zinc-300">
                                     </div>
                                 </div>
                             ` : ''}
@@ -1519,10 +1833,8 @@
                 if (delBtn) {
                     repoPendingDeletion = delBtn.dataset.deleteRepo;
                     deleteModalRepoName.textContent = repoPendingDeletion;
-                    deleteConfirmInput.value = '';
-                    confirmDeleteRepoBtn.disabled = true;
+                    confirmDeleteRepoBtn.disabled = false;
                     deleteRepoModal.classList.remove('hidden');
-                    deleteConfirmInput.focus();
                 }
             });
 
@@ -1531,10 +1843,6 @@
             reposVisibilityFilter.addEventListener('change', renderRepositoriesList);
 
             // Delete Repo Modal Logic
-            deleteConfirmInput.addEventListener('input', () => {
-                confirmDeleteRepoBtn.disabled = deleteConfirmInput.value.trim() !== repoPendingDeletion;
-            });
-
             cancelDeleteRepoBtn.addEventListener('click', () => {
                 deleteRepoModal.classList.add('hidden');
                 repoPendingDeletion = null;
@@ -1542,33 +1850,87 @@
 
             confirmDeleteRepoBtn.addEventListener('click', async () => {
                 if (!repoPendingDeletion) return;
+                const targetRepo = repoPendingDeletion;
+                const deleteUrl = `https://api.github.com/repos/${authenticatedOwner}/${targetRepo}`;
                 const token = (githubTokenInput.value || localStorage.getItem('gh_automation_pat') || '').trim();
                 confirmDeleteRepoBtn.disabled = true;
+
+                addDiagnosticLog('info', `Requesting Repository Deletion: ${targetRepo}`, {
+                    endpoint: deleteUrl,
+                    owner: authenticatedOwner,
+                    repo: targetRepo
+                });
+
                 try {
-                    const res = await fetch(`https://api.github.com/repos/${authenticatedOwner}/${repoPendingDeletion}`, {
+                    const res = await fetch(deleteUrl, {
                         method: 'DELETE',
                         headers: {
                             'Authorization': `Bearer ${token}`,
                             'Accept': 'application/vnd.github+json'
                         }
                     });
-                    if (!res.ok && res.status !== 204) throw new Error('שגיאה במחיקת המאגר');
-                    showToast(`המאגר ${repoPendingDeletion} נמחק`, 'success');
+                    if (!res.ok && res.status !== 204) {
+                        const rawErr = await res.text().catch(() => '');
+                        let parsedErr = rawErr;
+                        try { parsedErr = JSON.parse(rawErr); } catch {}
+                        if (res.status === 404) {
+                            allFetchedRepos = allFetchedRepos.filter((r) => r.name !== targetRepo);
+                            pinnedRepos.delete(targetRepo);
+                            localStorage.setItem('gh_pinned_repos', JSON.stringify([...pinnedRepos]));
+                            reposCountBadge.textContent = `${allFetchedRepos.length} מאגרים`;
+                            renderRepositoriesList();
+                            deleteRepoModal.classList.add('hidden');
+                            repoPendingDeletion = null;
+                            addDiagnosticLog('info', `Repository Already Deleted (404 Synced): ${targetRepo}`, {
+                                endpoint: deleteUrl
+                            });
+                            showToast(`המאגר ${targetRepo} כבר נמחק`, 'info');
+                            return;
+                        }
+                        addDiagnosticLog('error', `Delete Repository Failed: ${targetRepo} (HTTP ${res.status})`, {
+                            endpoint: deleteUrl,
+                            status: res.status,
+                            statusText: res.statusText,
+                            oauthScopes: res.headers.get('x-oauth-scopes') || 'unknown',
+                            acceptedOauthScopes: res.headers.get('x-accepted-oauth-scopes') || 'unknown',
+                            response: parsedErr
+                        });
+                        throw new Error(parsedErr?.message ? `שגיאת מחיקה (${res.status}): ${parsedErr.message}` : `שגיאה במחיקת המאגר (${res.status})`);
+                    }
+                    allFetchedRepos = allFetchedRepos.filter((r) => r.name !== targetRepo);
+                    pinnedRepos.delete(targetRepo);
+                    localStorage.setItem('gh_pinned_repos', JSON.stringify([...pinnedRepos]));
+                    reposCountBadge.textContent = `${allFetchedRepos.length} מאגרים`;
+                    renderRepositoriesList();
+                    addDiagnosticLog('success', `Repository Deleted Permanently: ${targetRepo}`, {
+                        endpoint: deleteUrl,
+                        status: res.status
+                    });
+                    showToast(`המאגר ${targetRepo} נמחק`, 'success');
                     deleteRepoModal.classList.add('hidden');
                     repoPendingDeletion = null;
-                    await fetchAccountRepositories();
                 } catch (err) {
+                    if (!String(err.message || '').startsWith('שגיאת מחיקה')) {
+                        addDiagnosticLog('error', `Delete Repository Network/Fetch Exception: ${targetRepo}`, {
+                            endpoint: deleteUrl,
+                            errorName: err?.name || 'Error',
+                            errorMessage: err?.message || String(err)
+                        });
+                    }
                     showToast(err.message, 'error');
                     confirmDeleteRepoBtn.disabled = false;
                 }
             });
 
             // Initial Boot
-            const DEFAULT_GITHUB_TOKEN = '';
             renderEnvironmentSummary();
             renderDiagnosticLogs();
             refreshSnippetDisplay();
-            const activeToken = (localStorage.getItem('gh_automation_pat') || DEFAULT_GITHUB_TOKEN).trim();
+            const activeToken = (localStorage.getItem('gh_automation_pat') || '').trim();
+            const savedWorkerUrl = (localStorage.getItem('gh_worker_base_url') || '').trim();
+            if (activeToken && savedWorkerUrl) {
+                workerBaseUrlInput.value = savedWorkerUrl;
+            }
             if (activeToken) {
                 githubTokenInput.value = activeToken;
                 verifyGitHubToken(activeToken, true);
