@@ -101,94 +101,8 @@
     </script>
 </head>
 <body class="bg-[#0F0F0F] text-white font-sans antialiased min-h-screen w-full max-w-full overflow-x-hidden flex flex-col selection:bg-apple-blue/30 selection:text-white">
-    <!-- Top Navigation Bar (Dynamic Color Synced with Sphere) -->
-    <header id="app-header" class="sticky top-0 z-30 bg-zinc-900/90 backdrop-blur-md border-b border-zinc-700/60 transition-all duration-700 blur-md opacity-40 pointer-events-none select-none">
-        <div class="relative max-w-5xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between gap-3">
-            <!-- Right Side: Expandable Hamburger Menu Trigger & Drawer -->
-            <div class="relative flex items-center">
-                <button type="button" id="hamburger-menu-btn" aria-expanded="false" aria-controls="hamburger-menu-panel" title="תפריט ניווט" aria-label="תפריט ניווט" class="relative w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-black/25 hover:bg-black/40 border border-white/15 flex items-center justify-center text-white transition-all active:scale-95">
-                    <svg id="hamburger-icon-open" class="w-6 h-6 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 7h16M4 12h16M4 17h16"/>
-                    </svg>
-                    <svg id="hamburger-icon-close" class="hidden w-6 h-6 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
-                    </svg>
-                    <span id="logs-error-badge" class="hidden absolute top-1.5 right-1.5 w-2.5 h-2.5 rounded-full bg-red-500 ring-2 ring-zinc-900"></span>
-                </button>
-
-                <!-- Expandable Menu Panel -->
-                <div id="hamburger-menu-panel" class="hidden absolute top-full right-0 mt-2.5 z-50 w-64 bg-[#0F0F0F]/95 backdrop-blur-xl border border-white/15 rounded-3xl p-2 shadow-2xl space-y-1">
-                    <div id="hamburger-menu-content" class="space-y-1 transition-all duration-300">
-                        <nav id="header-nav-pill" class="flex flex-col gap-1" aria-label="ניווט ראשי">
-                            <button type="button" data-tab="create" class="nav-tab-btn active w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl bg-white text-zinc-950 font-medium text-sm shadow-sm transition-all text-right">
-                                <svg class="w-5 h-5 shrink-0 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-                                </svg>
-                                <span>מסך ראשי</span>
-                            </button>
-                            <button type="button" data-tab="repos" class="nav-tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-white/80 hover:text-white hover:bg-white/10 font-medium text-sm transition-all text-right">
-                                <svg class="w-5 h-5 shrink-0 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
-                                </svg>
-                                <span>ניהול מאגרים</span>
-                            </button>
-                            <button type="button" data-tab="logs" class="nav-tab-btn relative w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-white/80 hover:text-white hover:bg-white/10 font-medium text-sm transition-all text-right">
-                                <span class="flex items-center gap-3">
-                                    <svg class="w-5 h-5 shrink-0 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                                    </svg>
-                                    <span>לוגים (Diagnostics)</span>
-                                </span>
-                                <span id="logs-menu-dot" class="hidden w-2 h-2 rounded-full bg-red-500"></span>
-                            </button>
-                            <button type="button" data-tab="settings" class="nav-tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-white/80 hover:text-white hover:bg-white/10 font-medium text-sm transition-all text-right">
-                                <svg class="w-5 h-5 shrink-0 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                </svg>
-                                <span>הגדרות תשתית</span>
-                            </button>
-                            <button type="button" data-tab="docs" class="nav-tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-white/80 hover:text-white hover:bg-white/10 font-medium text-sm transition-all text-right">
-                                <svg class="w-5 h-5 shrink-0 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/>
-                                </svg>
-                                <span>Docs</span>
-                            </button>
-                        </nav>
-
-                        <div class="border-t border-white/10 pt-1 mt-1">
-                            <a href="https://dash.cloudflare.com" target="_blank" rel="noopener noreferrer" class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-white/80 hover:text-white hover:bg-white/10 font-medium text-sm transition-colors">
-                                <span class="flex items-center gap-3">
-                                    <svg class="w-5 h-5 shrink-0 text-[#F38020]" viewBox="0 0 24 24" fill="currentColor">
-                                        <path d="M16.5088 16.8447c.1475-.5068.0908-.9707-.1553-1.3154-.2246-.3164-.6045-.499-1.0615-.5205l-8.6592-.1123a.1559.1559 0 0 1-.1333-.0713c-.0283-.042-.0351-.0986-.021-.1553.0278-.084.1123-.1484.2036-.1562l8.7359-.1123c1.0351-.0489 2.1601-.8868 2.5537-1.9136l.499-1.3013c.0215-.0561.0293-.1128.0147-.168-.5625-2.5463-2.835-4.4453-5.5499-4.4453-2.5039 0-4.6284 1.6177-5.3876 3.8614-.4927-.3658-1.1187-.5625-1.794-.499-1.2026.119-2.1665 1.083-2.2861 2.2856-.0283.31-.0069.6128.0635.894C1.5683 13.171 0 14.7754 0 16.752c0 .1748.0142.3515.0352.5205.0141.083.0844.1474.1689.1474h15.9814c.0909 0 .1758-.0644.2032-.1552l.1201-.42zm2.7676-5.5635c-.0772 0-.1611 0-.2383.0112-.0566 0-.1055.0415-.127.0977l-.3378 1.1743c-.1475.5068-.0918.9707.1543 1.3164.2256.3164.6055.498 1.0625.5195l1.8437.1133c.0557 0 .1055.0263.1328.0703.0284.043.0352.1074.0215.1563-.0283.084-.1133.1484-.2041.1552l-1.9209.1123c-1.041.0489-2.1582.8868-2.5527 1.9141l-.1406.3584c-.0284.0713.0214.1416.0986.1416h6.5976c.0772 0 .1475-.0489.169-.126.1123-.4082.1758-.8379.1758-1.2803 0-2.6025-2.125-4.727-4.7344-4.727"/>
-                                    </svg>
-                                    <span>Cloudflare Workers</span>
-                                </span>
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Compact Log In Pill When Logged Out -->
-                    <button type="button" id="hamburger-logged-out-overlay" dir="ltr" class="hidden w-full py-2 px-4 rounded-full text-xs font-mono tracking-wider text-white/85 hover:text-white hover:bg-white/10 transition-colors items-center justify-center cursor-pointer">
-                        log in
-                    </button>
-                </div>
-            </div>
-
-            <!-- Left Side: Authenticated User Avatar & Sign-Out Pill -->
-            <div id="header-connection-pill" class="hidden items-center gap-2 bg-black/25 backdrop-blur-md border border-white/15 rounded-full px-2.5 py-1.5 shadow-sm">
-                <img id="header-user-avatar" src="" alt="User Avatar" class="hidden w-7 h-7 rounded-full object-cover border border-white/25">
-                <button type="button" id="header-signout-btn" title="התנתק" aria-label="התנתק" class="hidden p-1.5 rounded-full text-white/80 hover:text-red-300 hover:bg-white/10 transition-colors">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
-                    </svg>
-                </button>
-            </div>
-        </div>
-    </header>
-
     <!-- Main Container -->
-    <main class="flex-1 w-full max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-12 flex flex-col justify-center overflow-x-hidden">
+    <main class="flex-1 w-full max-w-5xl mx-auto px-4 sm:px-6 pt-8 sm:pt-12 pb-28 sm:pb-32 flex flex-col justify-center overflow-x-hidden">
 
         <!-- TAB 1: CREATE / SPHERE STUDIO -->
         <section id="tab-create" class="tab-panel relative flex flex-col items-center justify-center min-h-[340px]">
@@ -230,7 +144,14 @@
             <div id="repos-content-container" class="space-y-5 transition-all duration-700 blur-md opacity-40 pointer-events-none select-none">
                 <!-- Search & Filter -->
                 <div class="flex flex-col sm:flex-row gap-2.5">
-                    <input type="text" id="repos-search-input" placeholder="חיפוש לפי שם מאגר או כינוי (Alias)..." class="flex-1 bg-zinc-900 border border-zinc-800 rounded-full px-4 py-2.5 text-sm text-white focus:outline-none focus:border-zinc-600 transition-colors">
+                    <div class="relative flex-1">
+                        <input type="text" id="repos-search-input" placeholder="חיפוש לפי שם מאגר או כינוי (Alias)..." class="w-full bg-zinc-900 border border-zinc-800 rounded-full pr-4 pl-9 py-2.5 text-sm text-white focus:outline-none focus:border-zinc-600 transition-colors">
+                        <button type="button" id="clear-repos-search-btn" aria-label="נקה חיפוש" title="נקה חיפוש" class="hidden absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-zinc-800 hover:bg-zinc-700 text-zinc-400 hover:text-white flex items-center justify-center text-xs transition-colors">
+                            <svg class="w-3 h-3 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                        </button>
+                    </div>
                     <div class="relative">
                         <select id="repos-visibility-filter" class="w-full sm:w-44 appearance-none bg-zinc-900 border border-zinc-800 rounded-full pr-4 pl-9 py-2.5 text-sm text-white focus:outline-none focus:border-zinc-600 transition-colors cursor-pointer">
                             <option value="all">כל המאגרים</option>
@@ -274,6 +195,15 @@
                         <input type="url" id="worker-base-url" dir="ltr" value="" class="flex-1 bg-zinc-900 border border-zinc-800 rounded-2xl px-4 py-2.5 text-xs font-mono text-white focus:outline-none focus:border-zinc-600 transition-colors">
                         <button type="button" id="save-worker-config-btn" class="bg-zinc-800 hover:bg-zinc-700 text-white text-xs font-medium px-3.5 py-2.5 rounded-2xl border border-zinc-700 transition-colors whitespace-nowrap">שמור בפרטי</button>
                         <button type="button" id="test-worker-btn" class="bg-zinc-900 hover:bg-zinc-800 text-white text-xs font-medium px-3.5 py-2.5 rounded-2xl border border-zinc-800 transition-colors whitespace-nowrap">בדוק</button>
+                    </div>
+                    <div class="mt-2 flex items-center justify-between gap-2 bg-zinc-900/60 border border-zinc-800/80 rounded-2xl px-3.5 py-2">
+                        <span class="text-[11px] text-zinc-400">ניהול הסקריפט והמשתנים ב-Cloudflare:</span>
+                        <a href="https://dash.cloudflare.com" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-[11px] font-medium text-white/90 hover:text-white bg-zinc-800 hover:bg-zinc-700 px-3 py-1 rounded-full border border-zinc-700 transition-colors">
+                            <svg class="w-3.5 h-3.5 shrink-0 text-[#F38020]" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M16.5088 16.8447c.1475-.5068.0908-.9707-.1553-1.3154-.2246-.3164-.6045-.499-1.0615-.5205l-8.6592-.1123a.1559.1559 0 0 1-.1333-.0713c-.0283-.042-.0351-.0986-.021-.1553.0278-.084.1123-.1484.2036-.1562l8.7359-.1123c1.0351-.0489 2.1601-.8868 2.5537-1.9136l.499-1.3013c.0215-.0561.0293-.1128.0147-.168-.5625-2.5463-2.835-4.4453-5.5499-4.4453-2.5039 0-4.6284 1.6177-5.3876 3.8614-.4927-.3658-1.1187-.5625-1.794-.499-1.2026.119-2.1665 1.083-2.2861 2.2856-.0283.31-.0069.6128.0635.894C1.5683 13.171 0 14.7754 0 16.752c0 .1748.0142.3515.0352.5205.0141.083.0844.1474.1689.1474h15.9814c.0909 0 .1758-.0644.2032-.1552l.1201-.42zm2.7676-5.5635c-.0772 0-.1611 0-.2383.0112-.0566 0-.1055.0415-.127.0977l-.3378 1.1743c-.1475.5068-.0918.9707.1543 1.3164.2256.3164.6055.498 1.0625.5195l1.8437.1133c.0557 0 .1055.0263.1328.0703.0284.043.0352.1074.0215.1563-.0283.084-.1133.1484-.2041.1552l-1.9209.1123c-1.041.0489-2.1582.8868-2.5527 1.9141l-.1406.3584c-.0284.0713.0214.1416.0986.1416h6.5976c.0772 0 .1475-.0489.169-.126.1123-.4082.1758-.8379.1758-1.2803 0-2.6025-2.125-4.727-4.7344-4.727"/>
+                            </svg>
+                            <span>Cloudflare Workers ↗</span>
+                        </a>
                     </div>
                     <div id="github-app-install-banner" class="hidden mt-2 flex items-center justify-between gap-2 bg-zinc-900/90 border border-zinc-800 rounded-2xl px-3.5 py-2 text-xs">
                         <span id="github-app-install-text" class="text-zinc-300"></span>
@@ -402,6 +332,58 @@
 
     </main>
 
+    <!-- Instagram-Style Floating Bottom Dock Navigation -->
+    <div id="floating-bottom-dock" class="fixed bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 z-40 max-w-[94vw] transition-all duration-500">
+        <div id="dock-pill-shell" class="bg-zinc-900/85 backdrop-blur-2xl border border-white/15 rounded-full p-1.5 shadow-[0_12px_40px_rgba(0,0,0,0.75)] flex items-center justify-center transition-all duration-500">
+            <!-- Authenticated Navigation Icons + User Avatar Pill -->
+            <nav id="dock-nav-content" class="hidden items-center gap-1 sm:gap-1.5" aria-label="ניווט ראשי">
+                <button type="button" data-tab="create" title="מסך ראשי" aria-label="מסך ראשי" class="nav-tab-btn active w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-white text-zinc-950 shadow-sm flex items-center justify-center transition-all active:scale-95">
+                    <svg class="w-5 h-5 shrink-0 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                    </svg>
+                </button>
+                <button type="button" data-tab="repos" title="ניהול מאגרים" aria-label="ניהול מאגרים" class="nav-tab-btn w-11 h-11 sm:w-12 sm:h-12 rounded-full text-white/75 hover:text-white hover:bg-white/10 flex items-center justify-center transition-all active:scale-95">
+                    <svg class="w-5 h-5 shrink-0 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                    </svg>
+                </button>
+                <button type="button" data-tab="logs" title="לוגים (Diagnostics)" aria-label="לוגים" class="nav-tab-btn relative w-11 h-11 sm:w-12 sm:h-12 rounded-full text-white/75 hover:text-white hover:bg-white/10 flex items-center justify-center transition-all active:scale-95">
+                    <svg class="w-5 h-5 shrink-0 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                    </svg>
+                    <span id="logs-error-badge" class="hidden absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-red-500 ring-2 ring-zinc-900"></span>
+                </button>
+                <button type="button" data-tab="settings" title="הגדרות תשתית" aria-label="הגדרות תשתית" class="nav-tab-btn w-11 h-11 sm:w-12 sm:h-12 rounded-full text-white/75 hover:text-white hover:bg-white/10 flex items-center justify-center transition-all active:scale-95">
+                    <svg class="w-5 h-5 shrink-0 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    </svg>
+                </button>
+                <button type="button" data-tab="docs" title="Docs (README.md)" aria-label="Docs" class="nav-tab-btn w-11 h-11 sm:w-12 sm:h-12 rounded-full text-white/75 hover:text-white hover:bg-white/10 flex items-center justify-center transition-all active:scale-95">
+                    <svg class="w-5 h-5 shrink-0 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/>
+                    </svg>
+                </button>
+
+                <!-- User Profile Avatar & Sign-Out Trigger (Instagram Profile Slot) -->
+                <div id="dock-profile-wrapper" class="relative flex items-center gap-1 pr-1 mr-0.5 border-r border-white/15">
+                    <button type="button" id="dock-profile-btn" title="פרופיל והתנתקות" aria-label="פרופיל והתנתקות" class="relative w-10 h-10 sm:w-11 sm:h-11 rounded-full flex items-center justify-center hover:bg-white/10 transition-all active:scale-95">
+                        <img id="header-user-avatar" src="" alt="User Avatar" class="w-7 h-7 sm:w-8 sm:h-8 rounded-full object-cover border border-white/30">
+                        <span class="absolute bottom-1.5 right-1.5 w-2 h-2 rounded-full bg-emerald-400 ring-2 ring-zinc-900"></span>
+                    </button>
+                    <button type="button" id="header-signout-btn" title="התנתק" aria-label="התנתק" class="hidden px-3 py-1.5 rounded-full bg-red-500/20 hover:bg-red-500/30 border border-red-400/30 text-red-200 text-xs font-medium transition-all whitespace-nowrap">
+                        התנתק
+                    </button>
+                </div>
+            </nav>
+
+            <!-- Minimal Logged-Out Pill -->
+            <button type="button" id="dock-logged-out-btn" dir="ltr" class="flex items-center justify-center px-6 py-2.5 rounded-full text-xs font-mono tracking-wider text-white/90 hover:text-white hover:bg-white/10 transition-all active:scale-95 cursor-pointer">
+                log in
+            </button>
+        </div>
+    </div>
+
     <!-- Delete Confirmation Modal -->
     <div id="delete-repo-modal" class="hidden fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-[#0F0F0F] text-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-zinc-800 space-y-5 text-center">
@@ -423,7 +405,7 @@
     </div>
 
     <!-- Floating Toast Notification -->
-    <div id="toast-banner" class="hidden fixed bottom-5 left-1/2 -translate-x-1/2 z-50 bg-zinc-900/95 backdrop-blur-xl border border-zinc-700/80 text-white text-xs font-medium px-4 py-2.5 rounded-full shadow-2xl flex items-center gap-2.5">
+    <div id="toast-banner" class="hidden fixed bottom-24 left-1/2 -translate-x-1/2 z-50 bg-zinc-900/95 backdrop-blur-xl border border-zinc-700/80 text-white text-xs font-medium px-4 py-2.5 rounded-full shadow-2xl flex items-center gap-2.5">
         <span id="toast-dot" class="w-2 h-2 rounded-full bg-sky-400"></span>
         <span id="toast-text"></span>
     </div>
@@ -431,7 +413,10 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // Core DOM Elements
-            const appHeader = document.getElementById('app-header');
+            const dockPillShell = document.getElementById('dock-pill-shell');
+            const dockNavContent = document.getElementById('dock-nav-content');
+            const dockLoggedOutBtn = document.getElementById('dock-logged-out-btn');
+            const dockProfileBtn = document.getElementById('dock-profile-btn');
             const liquidSphereCanvas = document.getElementById('liquidSphere');
             const sphereBurstCanvas = document.getElementById('sphereBurstCanvas');
             const deleteModalSphereCanvas = document.getElementById('deleteModalSphere');
@@ -441,7 +426,6 @@
             const sphereTokenForm = document.getElementById('sphere-token-form');
             const sphereTokenInput = document.getElementById('sphere-token-input');
 
-            const headerConnectionPill = document.getElementById('header-connection-pill');
             const headerUserAvatar = document.getElementById('header-user-avatar');
             const headerSignoutBtn = document.getElementById('header-signout-btn');
 
@@ -459,6 +443,7 @@
             const reposCountBadge = document.getElementById('repos-count-badge');
             const refreshReposBtn = document.getElementById('refresh-repos-btn');
             const reposSearchInput = document.getElementById('repos-search-input');
+            const clearReposSearchBtn = document.getElementById('clear-repos-search-btn');
             const reposVisibilityFilter = document.getElementById('repos-visibility-filter');
             const reposListContainer = document.getElementById('repos-list-container');
             const reposHeaderTitle = document.getElementById('repos-header-title');
@@ -467,13 +452,6 @@
             const reposContentContainer = document.getElementById('repos-content-container');
 
             const logsErrorBadge = document.getElementById('logs-error-badge');
-            const logsMenuDot = document.getElementById('logs-menu-dot');
-            const hamburgerMenuBtn = document.getElementById('hamburger-menu-btn');
-            const hamburgerMenuPanel = document.getElementById('hamburger-menu-panel');
-            const hamburgerMenuContent = document.getElementById('hamburger-menu-content');
-            const hamburgerLoggedOutOverlay = document.getElementById('hamburger-logged-out-overlay');
-            const hamburgerIconOpen = document.getElementById('hamburger-icon-open');
-            const hamburgerIconClose = document.getElementById('hamburger-icon-close');
             const logsEnvSummary = document.getElementById('logs-env-summary');
             const logsListContainer = document.getElementById('logs-list-container');
             const logsHeaderTitle = document.getElementById('logs-header-title');
@@ -589,7 +567,6 @@
                 }
                 if (entry.level === 'error') {
                     if (logsErrorBadge) logsErrorBadge.classList.remove('hidden');
-                    if (logsMenuDot) logsMenuDot.classList.remove('hidden');
                 }
                 renderDiagnosticLogs();
             }
@@ -702,29 +679,31 @@
                 clearLogsBtn.addEventListener('click', () => {
                     appDiagnosticLogs.length = 0;
                     if (logsErrorBadge) logsErrorBadge.classList.add('hidden');
-                    if (logsMenuDot) logsMenuDot.classList.add('hidden');
                     renderDiagnosticLogs();
                     showToast('הלוגים נוקו', 'info');
                 });
             }
 
-            if (hamburgerMenuBtn) {
-                hamburgerMenuBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    const isCurrentlyHidden = hamburgerMenuPanel?.classList.contains('hidden');
-                    setHamburgerMenuOpen(Boolean(isCurrentlyHidden));
+            if (dockLoggedOutBtn) {
+                dockLoggedOutBtn.addEventListener('click', () => {
+                    switchActiveTab('create');
+                    awakenAppInterface();
                 });
             }
 
-            document.addEventListener('click', (e) => {
-                if (hamburgerMenuPanel && !hamburgerMenuPanel.classList.contains('hidden')) {
-                    if (!hamburgerMenuPanel.contains(e.target) && !hamburgerMenuBtn?.contains(e.target)) {
-                        setHamburgerMenuOpen(false);
+            if (dockProfileBtn && headerSignoutBtn) {
+                dockProfileBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    headerSignoutBtn.classList.toggle('hidden');
+                });
+                document.addEventListener('click', (e) => {
+                    if (!dockProfileBtn.contains(e.target) && !headerSignoutBtn.contains(e.target)) {
+                        headerSignoutBtn.classList.add('hidden');
                     }
-                }
-            });
+                });
+            }
 
-            // Hamburger Menu & Tab Switching
+            // Bottom Dock Tab Switching
             const tabPanels = document.querySelectorAll('.tab-panel');
             const navTabBtns = document.querySelectorAll('.nav-tab-btn');
 
@@ -733,28 +712,22 @@
                     const targetTab = btn.dataset.tab;
                     if (targetTab) {
                         switchActiveTab(targetTab);
-                        setHamburgerMenuOpen(false);
                     }
                 });
             });
 
             function syncSettingsBlurState() {
                 const isLoggedOut = !authenticatedOwner;
-                if (hamburgerMenuPanel) {
-                    hamburgerMenuPanel.classList.toggle('w-64', !isLoggedOut);
-                    hamburgerMenuPanel.classList.toggle('rounded-3xl', !isLoggedOut);
-                    hamburgerMenuPanel.classList.toggle('p-2', !isLoggedOut);
-                    hamburgerMenuPanel.classList.toggle('w-auto', isLoggedOut);
-                    hamburgerMenuPanel.classList.toggle('min-w-[96px]', isLoggedOut);
-                    hamburgerMenuPanel.classList.toggle('rounded-full', isLoggedOut);
-                    hamburgerMenuPanel.classList.toggle('p-1', isLoggedOut);
+                if (dockNavContent) {
+                    dockNavContent.classList.toggle('hidden', isLoggedOut);
+                    dockNavContent.classList.toggle('flex', !isLoggedOut);
                 }
-                if (hamburgerMenuContent) {
-                    hamburgerMenuContent.classList.toggle('hidden', isLoggedOut);
+                if (dockLoggedOutBtn) {
+                    dockLoggedOutBtn.classList.toggle('hidden', !isLoggedOut);
+                    dockLoggedOutBtn.classList.toggle('flex', isLoggedOut);
                 }
-                if (hamburgerLoggedOutOverlay) {
-                    hamburgerLoggedOutOverlay.classList.toggle('hidden', !isLoggedOut);
-                    hamburgerLoggedOutOverlay.classList.toggle('flex', isLoggedOut);
+                if (headerSignoutBtn && isLoggedOut) {
+                    headerSignoutBtn.classList.add('hidden');
                 }
                 const loginIconHtml = `<span class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-white/10 border border-white/15 text-white" aria-label="התחבר"><svg class="w-5 h-5 -rotate-45 translate-x-[1px] -translate-y-[1px]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg></span>`;
                 if (reposHeaderTitle) {
@@ -839,14 +812,6 @@
                 });
             }
 
-            function setHamburgerMenuOpen(open) {
-                if (!hamburgerMenuPanel || !hamburgerMenuBtn) return;
-                const shouldOpen = Boolean(open);
-                hamburgerMenuPanel.classList.toggle('hidden', !shouldOpen);
-                hamburgerMenuBtn.setAttribute('aria-expanded', String(shouldOpen));
-                if (hamburgerIconOpen) hamburgerIconOpen.classList.toggle('hidden', shouldOpen);
-                if (hamburgerIconClose) hamburgerIconClose.classList.toggle('hidden', !shouldOpen);
-            }
             function escapeHtmlText(str = '') {
                 return String(str || '')
                     .replace(/&/g, '&amp;')
@@ -1132,7 +1097,7 @@
                     btn.classList.toggle('bg-white', isActive);
                     btn.classList.toggle('text-zinc-950', isActive);
                     btn.classList.toggle('shadow-sm', isActive);
-                    btn.classList.toggle('text-white/80', !isActive);
+                    btn.classList.toggle('text-white/75', !isActive);
                     btn.classList.toggle('hover:text-white', !isActive);
                     btn.classList.toggle('hover:bg-white/10', !isActive);
                 });
@@ -1425,9 +1390,6 @@
                 isAppAwake = true;
                 lastAwakenTimestamp = Date.now();
                 updateSphereState(authenticatedOwner ? 'ready' : 'awake');
-                if (appHeader) {
-                    appHeader.classList.remove('blur-md', 'opacity-40', 'pointer-events-none', 'select-none');
-                }
                 if (!authenticatedOwner) {
                     openQuickTokenPopoverForApiKey();
                 }
@@ -1932,9 +1894,8 @@
                     sphereAwakenHint.classList.toggle('hidden', !showAwakenHint);
                     sphereAwakenHint.style.color = SPHERE_ACCENT_COLORS[nextState] || '#BDCFF3';
                 }
-                if (appHeader && HEADER_THEMES[nextState]) {
-                    appHeader.style.background = HEADER_THEMES[nextState].bg;
-                    appHeader.style.borderColor = HEADER_THEMES[nextState].border;
+                if (dockPillShell && HEADER_THEMES[nextState]) {
+                    dockPillShell.style.borderColor = HEADER_THEMES[nextState].border;
                 }
             }
 
@@ -2267,19 +2228,11 @@
 
                     if (sphereTokenForm) sphereTokenForm.classList.add('hidden');
                     if (sphereTokenInput) sphereTokenInput.value = '';
-                    if (appHeader) {
-                        appHeader.classList.remove('blur-md', 'opacity-40', 'pointer-events-none', 'select-none');
-                    }
-                    if (headerConnectionPill) {
-                        headerConnectionPill.classList.remove('hidden');
-                        headerConnectionPill.classList.add('flex');
-                    }
                     if (headerUserAvatar && userData.avatar_url) {
                         headerUserAvatar.src = userData.avatar_url;
-                        headerUserAvatar.classList.remove('hidden');
                     }
                     if (headerSignoutBtn) {
-                        headerSignoutBtn.classList.remove('hidden');
+                        headerSignoutBtn.classList.add('hidden');
                     }
 
                     updateSphereState('ready');
@@ -2338,21 +2291,12 @@
                     if (sphereTokenInput) sphereTokenInput.value = '';
                     if (spherePasswordForm) spherePasswordForm.classList.add('hidden');
                     if (spherePasswordInput) spherePasswordInput.value = '';
-                    if (headerConnectionPill) {
-                        headerConnectionPill.classList.add('hidden');
-                        headerConnectionPill.classList.remove('flex');
-                    }
                     if (headerUserAvatar) {
                         headerUserAvatar.src = '';
-                        headerUserAvatar.classList.add('hidden');
                     }
                     if (headerSignoutBtn) {
                         headerSignoutBtn.classList.add('hidden');
                     }
-                    if (appHeader) {
-                        appHeader.classList.add('blur-md', 'opacity-40', 'pointer-events-none', 'select-none');
-                    }
-                    setHamburgerMenuOpen(false);
                     switchActiveTab('create');
                     updateSphereState('initial');
                     syncSettingsBlurState();
@@ -3134,7 +3078,21 @@
             }
 
             if (reposSearchInput) {
-                reposSearchInput.addEventListener('input', () => renderRepositoriesList());
+                reposSearchInput.addEventListener('input', () => {
+                    if (clearReposSearchBtn) {
+                        clearReposSearchBtn.classList.toggle('hidden', !reposSearchInput.value.length);
+                    }
+                    renderRepositoriesList();
+                });
+            }
+
+            if (clearReposSearchBtn && reposSearchInput) {
+                clearReposSearchBtn.addEventListener('click', () => {
+                    reposSearchInput.value = '';
+                    clearReposSearchBtn.classList.add('hidden');
+                    renderRepositoriesList();
+                    reposSearchInput.focus();
+                });
             }
 
             if (reposVisibilityFilter) {
