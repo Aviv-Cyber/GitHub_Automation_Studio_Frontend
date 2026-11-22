@@ -1654,15 +1654,13 @@
                 sphereRebirthProgress = 0;
                 sphereRebirthTargetState = nextAwakeState;
 
-                // Focus immediately inside the user gesture stack so iOS Safari opens the keyboard right away
-                if (!authenticatedOwner) {
-                    openQuickTokenPopoverForApiKey();
-                }
-
                 sphereRebirthOnComplete = () => {
                     isAppAwake = true;
                     lastAwakenTimestamp = Date.now();
                     updateSphereState(nextAwakeState, { skipSpinBoost: true });
+                    if (!authenticatedOwner) {
+                        openQuickTokenPopoverForApiKey();
+                    }
                 };
             }
 
@@ -1794,14 +1792,6 @@
                             updateSphereState('error');
                             if (spherePasswordInput) spherePasswordInput.focus();
                         }
-                    } else if (spherePasswordForm) {
-                        spherePasswordForm.classList.remove('hidden');
-                        if (spherePasswordInput) {
-                            spherePasswordInput.value = '';
-                            setTimeout(() => {
-                                try { spherePasswordInput.focus(); } catch (_) {}
-                            }, 30);
-                        }
                     }
                 };
 
@@ -1899,7 +1889,7 @@
                         : 1;
                     const introEase = 1 - Math.pow(1 - introLinear, 3);
                     const introScale = SPHERE_INTRO_START_SCALE + (1 - SPHERE_INTRO_START_SCALE) * introEase;
-                    // Shrink deeply while spinning, start expanding back, and swap state smoothly during expansion
+                    // Shrink smoothly from current scale, expand back, and swap state once complete without size jumps
                     if (isSphereRebirthing) {
                         const shrunkTargetScale = 0.58;
                         if (sphereRebirthPhase === 'imploding') {
@@ -1910,7 +1900,6 @@
                             colorChangeSpinBoost = 1.45 * p;
                             if (sphereRebirthProgress >= 1) {
                                 rebirthScale = shrunkTargetScale;
-                                rebirthStartScale = shrunkTargetScale;
                                 sphereRebirthPhase = 'spawning';
                                 sphereRebirthProgress = 0;
                             }
@@ -1921,22 +1910,21 @@
                             rebirthScale = shrunkTargetScale + (1.0 - shrunkTargetScale) * easeExpand;
                             colorChangeSpinBoost = 1.15 * (1 - p);
 
-                            if (p >= 0.45 && typeof sphereRebirthOnComplete === 'function') {
-                                const cb = sphereRebirthOnComplete;
-                                sphereRebirthOnComplete = null;
-                                cb();
-                            }
-
                             if (sphereRebirthProgress >= 1) {
                                 isSphereRebirthing = false;
                                 sphereRebirthPhase = 'idle';
                                 sphereRebirthProgress = 0;
                                 rebirthScale = 1.0;
                                 rebirthStartScale = 1.0;
+                                if (typeof sphereRebirthOnComplete === 'function') {
+                                    const cb = sphereRebirthOnComplete;
+                                    sphereRebirthOnComplete = null;
+                                    cb();
+                                }
                             }
                         }
                     } else {
-                        rebirthScale += (1.0 - rebirthScale) * 0.06;
+                        rebirthScale += (1.0 - rebirthScale) * 0.08;
                         rebirthStartScale = rebirthScale;
                     }
 
@@ -2197,6 +2185,19 @@
                 }
                 if (prevState !== nextState && !opts.skipSpinBoost && !isSphereRebirthing) {
                     colorChangeSpinBoost = 4.5;
+                }
+                if (prevState !== nextState && spherePasswordForm) {
+                    if (nextState === 'ready') {
+                        spherePasswordForm.classList.remove('hidden');
+                        if (spherePasswordInput) {
+                            spherePasswordInput.value = '';
+                            setTimeout(() => {
+                                try { spherePasswordInput.focus(); } catch (_) {}
+                            }, 30);
+                        }
+                    } else if (nextState !== 'error') {
+                        spherePasswordForm.classList.add('hidden');
+                    }
                 }
                 if (nextState === 'success' && prevState !== 'success' && typeof window.triggerSphereSuccessBurst === 'function') {
                     window.triggerSphereSuccessBurst();
