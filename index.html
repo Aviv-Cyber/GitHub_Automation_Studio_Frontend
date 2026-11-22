@@ -139,13 +139,14 @@
             <div class="flex-1 min-h-0 flex flex-col bg-[#0F0F0F] text-white rounded-3xl p-4 sm:p-7 shadow-2xl border border-zinc-800/80 overflow-hidden">
             <div class="shrink-0 flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-zinc-800/80 pb-4">
                 <div class="min-w-0">
-                    <h1 id="repos-header-title" class="text-xl sm:text-2xl font-bold tracking-tight text-white">ניהול מאגרים</h1>
-                    <p id="repos-header-subtitle" class="text-xs sm:text-sm text-zinc-400 mt-1">צפייה, פתיחה מהירה ומחיקה ישירות מול GitHub.</p>
+                    <h1 id="repos-header-title" class="text-xl sm:text-2xl font-bold tracking-tight text-white">מאגרים</h1>
                 </div>
                 <div id="repos-actions-container" class="flex flex-wrap items-center gap-2 transition-all duration-700 blur-md opacity-40 pointer-events-none select-none">
                     <span id="repos-count-badge" class="hidden text-xs font-medium bg-zinc-900 text-zinc-300 px-3 py-1.5 rounded-full border border-zinc-800">0 מאגרים</span>
-                    <button type="button" id="refresh-repos-btn" class="bg-zinc-900 hover:bg-zinc-800 text-white text-xs font-medium px-4 py-2 rounded-full border border-zinc-800 transition-colors">
-                        רענן
+                    <button type="button" id="refresh-repos-btn" title="רענן מאגרים" aria-label="רענן מאגרים" class="w-9 h-9 bg-zinc-900 hover:bg-zinc-800 text-white rounded-full border border-zinc-800 flex items-center justify-center transition-colors active:scale-95">
+                        <svg id="refresh-repos-icon" class="w-4 h-4 shrink-0 pointer-events-none transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                        </svg>
                     </button>
                 </div>
             </div>
@@ -154,7 +155,10 @@
                 <!-- Search & Filter -->
                 <div class="shrink-0 flex flex-col sm:flex-row gap-2.5">
                     <div class="relative flex-1 min-w-0">
-                        <input type="text" id="repos-search-input" placeholder="חיפוש לפי שם מאגר או כינוי (Alias)..." class="w-full min-w-0 bg-zinc-900 border border-zinc-800 rounded-full pr-4 pl-9 py-2.5 text-sm text-white focus:outline-none focus:border-zinc-600 transition-colors">
+                        <svg class="w-4 h-4 text-zinc-300 pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z"/>
+                        </svg>
+                        <input type="text" id="repos-search-input" placeholder="" class="w-full min-w-0 bg-zinc-900 border border-zinc-800 rounded-full pr-10 pl-9 py-2.5 text-sm text-white focus:outline-none focus:border-zinc-600 transition-colors">
                         <button type="button" id="clear-repos-search-btn" aria-label="נקה חיפוש" title="נקה חיפוש" class="hidden absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-zinc-800 hover:bg-zinc-700 text-zinc-400 hover:text-white flex items-center justify-center text-xs transition-colors">
                             <svg class="w-3 h-3 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
@@ -393,8 +397,10 @@
                         <img id="header-user-avatar" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Ccircle cx='20' cy='20' r='20' fill='%2327272A'/%3E%3Ccircle cx='20' cy='15' r='6' fill='%2371717A'/%3E%3Cpath d='M9 33c2.5-6 19.5-6 22 0' fill='%2371717A'/%3E%3C/svg%3E" alt="User Avatar" class="w-8 h-8 sm:w-9 sm:h-9 rounded-full object-cover border border-white/40">
                         <span class="absolute bottom-1.5 right-1.5 w-2.5 h-2.5 rounded-full bg-emerald-400 ring-2 ring-black/60"></span>
                     </button>
-                    <button type="button" id="header-signout-btn" title="התנתק" aria-label="התנתק" class="hidden px-3 py-1.5 rounded-full bg-red-500/25 hover:bg-red-500/35 border border-red-400/35 text-red-100 text-xs font-medium transition-all whitespace-nowrap">
-                        התנתק
+                    <button type="button" id="header-signout-btn" title="התנתק" aria-label="התנתק" class="hidden w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-red-500/20 hover:bg-red-500/35 border border-red-400/35 text-red-200 flex items-center justify-center transition-all active:scale-95">
+                        <svg class="w-5 h-5 shrink-0 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2.1" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"/>
+                        </svg>
                     </button>
                 </div>
             </nav>
@@ -432,6 +438,43 @@
         <span id="toast-text"></span>
     </div>
 
+    <!-- Delete Repository / Pair Confirmation Modal -->
+    <div id="delete-repo-modal" class="hidden fixed inset-0 z-50 bg-black/75 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="w-full max-w-sm bg-[#0F0F0F] border border-zinc-800 rounded-3xl p-6 shadow-2xl text-center space-y-4">
+            <div class="w-14 h-14 mx-auto flex items-center justify-center">
+                <canvas id="deleteModalSphere" style="width:100%;height:100%;display:block;background:transparent"></canvas>
+            </div>
+            <div class="space-y-1.5">
+                <h3 class="text-base font-bold text-white">אישור מחיקת מאגר</h3>
+                <p class="text-xs text-zinc-400">פעולה זו תמחק לצמיתות את המאגר הבא מ-GitHub:</p>
+                <div id="delete-modal-repo-name" dir="ltr" class="font-mono text-xs text-red-300 bg-red-500/10 border border-red-500/25 rounded-2xl px-3 py-2 break-all"></div>
+            </div>
+            <div class="flex items-center justify-center gap-2 pt-1">
+                <button type="button" id="cancel-delete-repo-btn" class="flex-1 bg-zinc-900 hover:bg-zinc-800 text-zinc-300 text-xs font-medium py-2.5 px-4 rounded-full border border-zinc-800 transition-colors">ביטול</button>
+                <button type="button" id="confirm-delete-repo-btn" class="flex-1 bg-red-600 hover:bg-red-500 text-white text-xs font-semibold py-2.5 px-4 rounded-full transition-colors">כן, מחק מאגר</button>
+                <button type="button" id="confirm-delete-pair-btn" class="hidden flex-1 bg-rose-600 hover:bg-rose-500 text-white text-xs font-semibold py-2.5 px-4 rounded-full transition-colors">כן, מחק זוג</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toggle Live Site (GitHub Pages On/Off) Confirmation Modal -->
+    <div id="toggle-pages-modal" class="hidden fixed inset-0 z-50 bg-black/75 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="w-full max-w-sm bg-[#0F0F0F] border border-zinc-800 rounded-3xl p-6 shadow-2xl text-center space-y-4">
+            <div class="w-14 h-14 mx-auto flex items-center justify-center">
+                <canvas id="togglePagesModalSphere" style="width:100%;height:100%;display:block;background:transparent"></canvas>
+            </div>
+            <div class="space-y-1.5">
+                <h3 id="toggle-pages-modal-title" class="text-base font-bold text-white">אישור שינוי סטטוס אתר חי</h3>
+                <p id="toggle-pages-modal-desc" class="text-xs text-zinc-400">האם ברצונך להדליק או לכבות את האתר החי עבור המאגר הבא?</p>
+                <div id="toggle-pages-modal-repo-name" dir="ltr" class="font-mono text-xs text-sky-300 bg-sky-500/10 border border-sky-500/25 rounded-2xl px-3 py-2 break-all"></div>
+            </div>
+            <div class="flex items-center justify-center gap-2 pt-1">
+                <button type="button" id="cancel-toggle-pages-btn" class="flex-1 bg-zinc-900 hover:bg-zinc-800 text-zinc-300 text-xs font-medium py-2.5 px-4 rounded-full border border-zinc-800 transition-colors">ביטול</button>
+                <button type="button" id="confirm-toggle-pages-btn" class="flex-1 bg-apple-blue hover:bg-apple-blueHover text-white text-xs font-semibold py-2.5 px-4 rounded-full transition-colors">אישור</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // Core DOM Elements
@@ -446,7 +489,16 @@
             const sphereInitialHalo = document.getElementById('sphere-initial-halo');
             const liquidSphereCanvas = document.getElementById('liquidSphere');
             const sphereBurstCanvas = document.getElementById('sphereBurstCanvas');
+            const deleteRepoModal = document.getElementById('delete-repo-modal');
+            const deleteModalRepoName = document.getElementById('delete-modal-repo-name');
             const deleteModalSphereCanvas = document.getElementById('deleteModalSphere');
+            const togglePagesModal = document.getElementById('toggle-pages-modal');
+            const togglePagesModalTitle = document.getElementById('toggle-pages-modal-title');
+            const togglePagesModalDesc = document.getElementById('toggle-pages-modal-desc');
+            const togglePagesModalRepoName = document.getElementById('toggle-pages-modal-repo-name');
+            const togglePagesModalSphereCanvas = document.getElementById('togglePagesModalSphere');
+            const cancelTogglePagesBtn = document.getElementById('cancel-toggle-pages-btn');
+            const confirmTogglePagesBtn = document.getElementById('confirm-toggle-pages-btn');
             const spherePasswordForm = document.getElementById('sphere-password-form');
             const spherePasswordInput = document.getElementById('sphere-password-input');
             const sphereTokenForm = document.getElementById('sphere-token-form');
@@ -468,12 +520,12 @@
 
             const reposCountBadge = document.getElementById('repos-count-badge');
             const refreshReposBtn = document.getElementById('refresh-repos-btn');
+            const refreshReposIcon = document.getElementById('refresh-repos-icon');
             const reposSearchInput = document.getElementById('repos-search-input');
             const clearReposSearchBtn = document.getElementById('clear-repos-search-btn');
             const reposVisibilityFilter = document.getElementById('repos-visibility-filter');
             const reposListContainer = document.getElementById('repos-list-container');
             const reposHeaderTitle = document.getElementById('repos-header-title');
-            const reposHeaderSubtitle = document.getElementById('repos-header-subtitle');
             const reposActionsContainer = document.getElementById('repos-actions-container');
             const reposContentContainer = document.getElementById('repos-content-container');
 
@@ -562,8 +614,11 @@
             let isFetchingRepos = false;
             let repoPendingDeletion = null;
             let deletePairMode = false;
+            let repoPendingPagesToggle = null;
+            let pagesToggleTargetAction = 'enable'; // 'enable' | 'disable'
             let expandedRepoName = '';
             const repoLiveStatusMap = {};
+            const repoPagesEnabledAtMap = {};
             let repoAliasesMap = (() => {
                 try {
                     return JSON.parse(localStorage.getItem('gh_repo_aliases') || '{}') || {};
@@ -617,92 +672,69 @@
             function renderDiagnosticLogs() {
                 renderEnvironmentSummary();
                 if (!logsListContainer) return;
-                if (!authenticatedOwner) {
-                    logsListContainer.innerHTML = `<div class="text-center py-8 text-xs text-zinc-500 bg-zinc-900/50 rounded-2xl border border-dashed border-zinc-800">אין משתמש מחובר — הלוגים ריקים.</div>`;
-                    return;
-                }
                 if (!appDiagnosticLogs.length) {
-                    logsListContainer.innerHTML = `<div class="text-center py-8 text-xs text-zinc-500 bg-zinc-900/50 rounded-2xl border border-dashed border-zinc-800">עדיין לא נרשמו לוגים בסשן הנוכחי.</div>`;
+                    logsListContainer.innerHTML = `<div class="text-center py-8 text-xs text-zinc-500 bg-zinc-900/50 rounded-2xl border border-dashed border-zinc-800">אין לוגים מתועדים עדיין.</div>`;
                     return;
                 }
-                logsListContainer.innerHTML = appDiagnosticLogs.map((item) => {
+                logsListContainer.innerHTML = appDiagnosticLogs.map((entry) => {
                     const badgeClass =
-                        item.level === 'error' ? 'bg-red-500/15 text-red-300 border-red-500/30' :
-                        item.level === 'success' ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30' :
-                        'bg-sky-500/15 text-sky-300 border-sky-500/30';
-                    const detailsText = item.details && Object.keys(item.details).length
-                        ? `<pre dir="ltr" class="mt-2 bg-[#0F0F0F]/90 border border-zinc-800/90 rounded-xl p-2.5 text-[11px] font-mono text-zinc-300 overflow-x-auto">${JSON.stringify(item.details, null, 2)}</pre>`
+                        entry.level === 'error'
+                            ? 'bg-red-500/15 text-red-300 border-red-500/30'
+                            : entry.level === 'success'
+                                ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30'
+                                : 'bg-sky-500/15 text-sky-300 border-sky-500/30';
+                    const detailsJson = entry.details && Object.keys(entry.details).length
+                        ? JSON.stringify(entry.details, null, 2)
                         : '';
                     return `
-                        <div class="bg-zinc-900/80 border border-zinc-800 rounded-2xl p-3.5">
-                            <div class="flex flex-wrap items-center justify-between gap-2">
-                                <span class="text-xs font-semibold text-white">${item.title}</span>
-                                <span class="text-[10px] font-mono px-2.5 py-0.5 rounded-full border ${badgeClass}">${item.level.toUpperCase()}</span>
+                        <div dir="ltr" class="bg-zinc-900/80 border border-zinc-800 rounded-2xl p-3.5 space-y-2 text-left">
+                            <div class="flex items-center justify-between gap-2">
+                                <span class="text-xs font-semibold text-white truncate">${escapeHtmlText(entry.title)}</span>
+                                <span class="text-[10px] font-mono px-2 py-0.5 rounded-full border shrink-0 ${badgeClass}">${escapeHtmlText(entry.level.toUpperCase())}</span>
                             </div>
-                            <div class="text-[11px] font-mono text-zinc-500 mt-1" dir="ltr">${item.time}</div>
-                            ${detailsText}
+                            <div class="text-[10px] font-mono text-zinc-500">${escapeHtmlText(entry.time)}</div>
+                            ${detailsJson ? `<pre class="bg-zinc-950 border border-zinc-800/80 rounded-xl p-2.5 text-[11px] font-mono text-zinc-300 overflow-x-auto leading-relaxed">${escapeHtmlText(detailsJson)}</pre>` : ''}
                         </div>
                     `;
                 }).join('');
             }
 
-            function buildDebugReportText() {
-                const workerUrl = (workerBaseUrlInput?.value || localStorage.getItem('gh_worker_base_url') || '').trim();
-                const headerLines = [
-                    '=== GitHub Automation Studio Debug Report ===',
-                    `Timestamp: ${new Date().toISOString()}`,
-                    `URL: ${window.location.href}`,
-                    `Origin: ${window.location.origin}`,
-                    `UserAgent: ${navigator.userAgent}`,
-                    `Navigator Online: ${navigator.onLine}`,
-                    `Authenticated Owner: ${authenticatedOwner || 'none'}`,
-                    `Worker URL: ${workerUrl || 'none'}`,
-                    '============================================='
-                ].join('\n');
-
-                const entriesText = appDiagnosticLogs.map((entry) => {
-                    const meta = entry.details ? `\n${JSON.stringify(entry.details, null, 2)}` : '';
-                    return `[${entry.time}] [${entry.level.toUpperCase()}] ${entry.title}${meta}`;
-                }).join('\n\n---------------------------------------------\n\n');
-
-                return `${headerLines}\n\n${entriesText}`;
-            }
-
-            async function checkTenantGitHubAppStatus(workerBase, owner) {
-                const cleanBase = String(workerBase || '').trim().replace(/\/+$/, '');
-                if (!cleanBase || !owner) return;
-                const statusUrl = `${cleanBase}/gh-app-status/${encodeURIComponent(owner)}`;
+            async function checkTenantGitHubAppStatus(workerUrl, owner) {
+                const banner = document.getElementById('github-app-install-banner');
+                const textEl = document.getElementById('github-app-install-text');
+                const linkEl = document.getElementById('github-app-install-link');
+                const base = String(workerUrl || '').trim().replace(/\/+$/, '');
+                if (!base || !owner || !banner || !textEl) return;
                 try {
-                    const res = await fetch(`${statusUrl}?_t=${Date.now()}`, {
+                    const res = await fetch(`${base}/gh-app-status/${encodeURIComponent(owner)}?_t=${Date.now()}`, {
                         mode: 'cors',
                         cache: 'no-store'
                     });
                     const data = await res.json().catch(() => ({}));
-                    const cfTelemetry = extractCloudflareTelemetry(res);
-                    addDiagnosticLog(
-                        res.ok && data.installed ? 'success' : 'error',
-                        data.installed
-                            ? `CF GitHub App Verified for @${owner}`
-                            : `CF GitHub App Not Installed for @${owner}`,
-                        {
-                            installed: Boolean(data.installed),
-                            owner,
-                            installationId: data.installationId || undefined,
-                            reason: data.reason || undefined,
-                            cfRay: data.cfRay || cfTelemetry?.cfRay,
-                            cloudflare: cfTelemetry
-                        }
-                    );
+                    banner.classList.remove('hidden');
+                    if (res.ok && data.installed) {
+                        textEl.textContent = `GitHub App מותקן ופעיל עבור @${owner} (ID: ${data.installationId || 'OK'})`;
+                        if (linkEl) linkEl.classList.add('hidden');
+                    } else {
+                        textEl.textContent = `GitHub App אינו מותקן עבור @${owner}: ${data.reason || `HTTP ${res.status}`}`;
+                        if (linkEl) linkEl.classList.remove('hidden');
+                    }
                 } catch (err) {
-                    addDiagnosticLog('error', `CF GitHub App Status Check Failed for @${owner}`, {
-                        message: err?.message || String(err)
-                    });
+                    banner.classList.remove('hidden');
+                    textEl.textContent = `שגיאה בבדיקת חיבור GitHub App: ${err?.message || err}`;
+                    if (linkEl) linkEl.classList.remove('hidden');
                 }
             }
 
             if (copyAllLogsBtn) {
                 copyAllLogsBtn.addEventListener('click', () => {
-                    copyTextToClipboard(buildDebugReportText(), 'דוח הדיבאג הועתק ללוח');
+                    const report = JSON.stringify({
+                        generatedAt: new Date().toISOString(),
+                        origin: window.location.origin,
+                        owner: authenticatedOwner || null,
+                        logs: appDiagnosticLogs
+                    }, null, 2);
+                    copyTextToClipboard(report, 'דוח הלוגים המלא הועתק ללוח');
                 });
             }
 
@@ -716,23 +748,134 @@
             }
 
             if (dockProfileBtn && headerSignoutBtn) {
-                dockProfileBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
+                dockProfileBtn.addEventListener('click', () => {
                     headerSignoutBtn.classList.toggle('hidden');
+                    requestAnimationFrame(() => moveDockSlidingIndicator());
                 });
-                document.addEventListener('click', (e) => {
-                    if (!dockProfileBtn.contains(e.target) && !headerSignoutBtn.contains(e.target)) {
-                        headerSignoutBtn.classList.add('hidden');
+            }
+
+            // Bottom Dock Tab Switching & Interactive Slide/Scrub Gesture
+            const tabPanels = document.querySelectorAll('.tab-panel');
+            const navTabBtns = document.querySelectorAll('.nav-tab-btn');
+            let isDockSliding = false;
+            let dockSlideMoved = false;
+            let dockSlideStartX = 0;
+            let lastHoveredSlideBtn = null;
+
+            function getDockButtonAtClientX(clientX) {
+                let closestBtn = null;
+                let minDistance = Infinity;
+                navTabBtns.forEach((btn) => {
+                    const rect = btn.getBoundingClientRect();
+                    if (rect.width === 0) return;
+                    const centerX = rect.left + rect.width / 2;
+                    const dist = Math.abs(clientX - centerX);
+                    if (dist < minDistance) {
+                        minDistance = dist;
+                        closestBtn = btn;
+                    }
+                });
+                return closestBtn;
+            }
+
+            function handleDockSlideStart(clientX) {
+                if (!authenticatedOwner || !dockNavContent) return;
+                isDockSliding = true;
+                dockSlideMoved = false;
+                dockSlideStartX = clientX;
+                lastHoveredSlideBtn = getDockButtonAtClientX(clientX);
+            }
+
+            function handleDockSlideMove(clientX, e) {
+                if (!isDockSliding || !dockNavContent || !dockActiveIndicator) return;
+                if (Math.abs(clientX - dockSlideStartX) > 6) {
+                    dockSlideMoved = true;
+                }
+                if (!dockSlideMoved) return;
+                if (e && e.cancelable) e.preventDefault();
+
+                const navRect = dockNavContent.getBoundingClientRect();
+                const indicatorW = dockActiveIndicator.offsetWidth || 48;
+                const minLeft = 0;
+                const maxLeft = Math.max(0, navRect.width - indicatorW);
+                const rawLeft = clientX - navRect.left - indicatorW / 2;
+                const clampedLeft = Math.max(minLeft, Math.min(maxLeft, rawLeft));
+
+                dockActiveIndicator.style.transition = 'none';
+                dockActiveIndicator.style.transform = `translate3d(${clampedLeft}px, ${dockActiveIndicator.offsetTop || 0}px, 0) scale(1.06)`;
+
+                const hoveredBtn = getDockButtonAtClientX(clientX);
+                if (hoveredBtn && hoveredBtn !== lastHoveredSlideBtn) {
+                    lastHoveredSlideBtn = hoveredBtn;
+                    navTabBtns.forEach((b) => {
+                        const isHovered = b === hoveredBtn;
+                        b.classList.toggle('text-white', isHovered);
+                        b.classList.toggle('text-white/75', !isHovered);
+                    });
+                }
+            }
+
+            function handleDockSlideEnd() {
+                if (!isDockSliding) return;
+                const wasDragged = dockSlideMoved;
+                const targetBtn = lastHoveredSlideBtn;
+                isDockSliding = false;
+                dockSlideMoved = false;
+
+                if (dockActiveIndicator) {
+                    dockActiveIndicator.style.transition = '';
+                }
+
+                if (wasDragged && targetBtn && targetBtn.dataset.tab) {
+                    switchActiveTab(targetBtn.dataset.tab);
+                } else {
+                    moveDockSlidingIndicator();
+                }
+            }
+
+            if (dockNavContent) {
+                dockNavContent.addEventListener('touchstart', (e) => {
+                    if (e.touches && e.touches.length === 1) {
+                        handleDockSlideStart(e.touches[0].clientX);
+                    }
+                }, { passive: true });
+
+                dockNavContent.addEventListener('touchmove', (e) => {
+                    if (e.touches && e.touches.length === 1) {
+                        handleDockSlideMove(e.touches[0].clientX, e);
+                    }
+                }, { passive: false });
+
+                dockNavContent.addEventListener('touchend', () => {
+                    handleDockSlideEnd();
+                });
+
+                dockNavContent.addEventListener('touchcancel', () => {
+                    handleDockSlideEnd();
+                });
+
+                dockNavContent.addEventListener('mousedown', (e) => {
+                    if (e.button === 0) {
+                        handleDockSlideStart(e.clientX);
+                    }
+                });
+
+                window.addEventListener('mousemove', (e) => {
+                    if (isDockSliding) {
+                        handleDockSlideMove(e.clientX, e);
+                    }
+                });
+
+                window.addEventListener('mouseup', () => {
+                    if (isDockSliding) {
+                        handleDockSlideEnd();
                     }
                 });
             }
 
-            // Bottom Dock Tab Switching
-            const tabPanels = document.querySelectorAll('.tab-panel');
-            const navTabBtns = document.querySelectorAll('.nav-tab-btn');
-
             navTabBtns.forEach((btn) => {
                 btn.addEventListener('click', () => {
+                    if (dockSlideMoved) return;
                     const targetTab = btn.dataset.tab;
                     if (targetTab) {
                         switchActiveTab(targetTab);
@@ -782,14 +925,8 @@
                     if (isLoggedOut) {
                         reposHeaderTitle.innerHTML = loginIconHtml;
                     } else {
-                        reposHeaderTitle.textContent = 'ניהול מאגרים';
+                        reposHeaderTitle.textContent = 'מאגרים';
                     }
-                }
-                if (reposHeaderSubtitle) {
-                    reposHeaderSubtitle.textContent = isLoggedOut
-                        ? ''
-                        : 'צפייה, פתיחה מהירה ומחיקה ישירות מול GitHub.';
-                    reposHeaderSubtitle.classList.toggle('hidden', isLoggedOut);
                 }
                 [reposActionsContainer, reposContentContainer].forEach((el) => {
                     if (!el) return;
@@ -1150,21 +1287,25 @@
             }
 
             window.addEventListener('resize', () => moveDockSlidingIndicator());
+            if (dockNavContent && typeof ResizeObserver !== 'undefined') {
+                new ResizeObserver(() => moveDockSlidingIndicator()).observe(dockNavContent);
+            }
 
             function switchActiveTab(tabName) {
-                if (!tabName) return;
                 tabPanels.forEach((panel) => {
                     panel.classList.toggle('hidden', panel.id !== `tab-${tabName}`);
                 });
-                let activeBtnEl = null;
+                let activeBtn = null;
                 navTabBtns.forEach((btn) => {
                     const isActive = btn.dataset.tab === tabName;
-                    if (isActive) activeBtnEl = btn;
                     btn.classList.toggle('active', isActive);
                     btn.classList.toggle('text-white', isActive);
                     btn.classList.toggle('text-white/75', !isActive);
+                    if (isActive) activeBtn = btn;
                 });
-                moveDockSlidingIndicator(activeBtnEl);
+                if (activeBtn) {
+                    requestAnimationFrame(() => moveDockSlidingIndicator(activeBtn));
+                }
                 if (tabName === 'repos' && authenticatedOwner) {
                     if (!allFetchedRepos.length) {
                         fetchAccountRepositories(true);
@@ -1905,6 +2046,10 @@
                 deleteModalSphereCanvas,
                 () => SPHERE_PALETTES.error
             );
+            registerMiniSphere(
+                togglePagesModalSphereCanvas,
+                () => pagesToggleTargetAction === 'disable' ? SPHERE_PALETTES.error : SPHERE_PALETTES.success
+            );
 
             (function renderMiniSpheresLoop() {
                 const hex2rgb = (h) => {
@@ -2359,7 +2504,7 @@
                         checkTenantGitHubAppStatus(activeWorker, authenticatedOwner);
                     }
                     loadArchitectureReadmeFromBackend(false);
-                    fetchAccountRepositories();
+                    fetchAccountRepositories(true);
                     return true;
                 } catch (err) {
                     authenticatedOwner = '';
@@ -2411,386 +2556,578 @@
             }
 
             async function checkLivePagesStatusForRepo(owner, repoName) {
-                const pagesUrl = `https://${String(owner || '').toLowerCase()}.github.io/${encodeURIComponent(repoName)}/`;
-                const cacheBustUrl = `${pagesUrl}?_t=${Date.now()}&_r=${Math.random().toString(36).slice(2, 8)}`;
+                const token = (githubTokenInput?.value || localStorage.getItem('gh_automation_pat') || '').trim();
+                if (!token || !owner || !repoName) return 'offline';
+
+                const ghHeaders = {
+                    'Authorization': `Bearer ${token}`,
+                    'Accept': 'application/vnd.github+json'
+                };
 
                 try {
-                    const res = await fetch(cacheBustUrl, {
-                        mode: 'cors',
-                        cache: 'no-store'
-                    });
-                    if (res.status === 404) return 'offline';
-                    if (res.ok || (res.status >= 200 && res.status < 400)) return 'live';
-                    return 'offline';
-                } catch (_) {
-                    const token = (githubTokenInput?.value || localStorage.getItem('gh_automation_pat') || '').trim();
-                    if (token && owner && repoName) {
-                        try {
-                            const apiRes = await fetch(
-                                `https://api.github.com/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repoName)}/pages?_t=${Date.now()}`,
-                                {
-                                    headers: {
-                                        'Authorization': `Bearer ${token}`,
-                                        'Accept': 'application/vnd.github+json'
-                                    },
-                                    cache: 'no-store'
-                                }
-                            );
-                            if (apiRes.status === 404) return 'offline';
-                            if (apiRes.ok) {
-                                const pageInfo = await apiRes.json().catch(() => ({}));
-                                if (pageInfo && (pageInfo.status === 'built' || pageInfo.html_url)) {
-                                    return pageInfo.status === 'building' ? 'offline' : 'live';
-                                }
-                            }
-                        } catch (__) {}
+                    const apiRes = await fetch(
+                        `https://api.github.com/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repoName)}/pages?_t=${Date.now()}`,
+                        { headers: ghHeaders, cache: 'no-store' }
+                    );
+                    if (apiRes.status === 404) return 'offline';
+                    if (!apiRes.ok) return 'offline';
+
+                    const pageInfo = await apiRes.json().catch(() => ({}));
+                    if (pageInfo?.status === 'building') {
+                        return 'deploying';
                     }
+
+                    let latestPagesRun = null;
+                    // Check GitHub Actions workflows / pages-build-deployment runs to detect active deploy
+                    try {
+                        const runsRes = await fetch(
+                            `https://api.github.com/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repoName)}/actions/runs?per_page=10&_t=${Date.now()}`,
+                            { headers: ghHeaders, cache: 'no-store' }
+                        );
+                        if (runsRes.ok) {
+                            const runsData = await runsRes.json().catch(() => ({}));
+                            const runs = Array.isArray(runsData.workflow_runs) ? runsData.workflow_runs : [];
+                            const pagesRuns = runs.filter((r) => {
+                                const name = String(r?.name || '').toLowerCase();
+                                const wfPath = String(r?.path || '').toLowerCase();
+                                return name.includes('pages') || wfPath.includes('pages') || r?.event === 'dynamic';
+                            });
+                            const activeDeployRun = pagesRuns.find((r) =>
+                                r?.status === 'queued' || r?.status === 'in_progress' || r?.status === 'waiting' || r?.status === 'requested'
+                            );
+                            if (activeDeployRun) {
+                                return 'deploying';
+                            }
+                            latestPagesRun = pagesRuns[0] || null;
+                            if (latestPagesRun && latestPagesRun.status === 'completed' && latestPagesRun.conclusion && latestPagesRun.conclusion !== 'success') {
+                                return 'offline';
+                            }
+                        }
+                    } catch (_) {}
+
+                    // Also check GitHub Pages deployments API if available
+                    try {
+                        const depRes = await fetch(
+                            `https://api.github.com/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repoName)}/pages/deployments?per_page=3&_t=${Date.now()}`,
+                            { headers: ghHeaders, cache: 'no-store' }
+                        );
+                        if (depRes.ok) {
+                            const depList = await depRes.json().catch(() => ([]));
+                            const latestDep = Array.isArray(depList) ? depList[0] : null;
+                            if (latestDep && (latestDep.status === 'queued' || latestDep.status === 'in_progress' || latestDep.status === 'pending')) {
+                                return 'deploying';
+                            }
+                        }
+                    } catch (_) {}
+
+                    const enabledAt = repoPagesEnabledAtMap[repoName] || 0;
+                    if (enabledAt > 0) {
+                        const runStartedAt = latestPagesRun?.created_at ? Date.parse(latestPagesRun.created_at) : 0;
+                        const runCompletedSuccess = Boolean(
+                            latestPagesRun &&
+                            latestPagesRun.status === 'completed' &&
+                            latestPagesRun.conclusion === 'success' &&
+                            runStartedAt >= enabledAt - 5000
+                        );
+                        const graceElapsed = Date.now() - enabledAt;
+                        if (!runCompletedSuccess && graceElapsed < 30000) {
+                            return 'deploying';
+                        }
+                        delete repoPagesEnabledAtMap[repoName];
+                    }
+
+                    if (pageInfo && (pageInfo.status === 'built' || pageInfo.html_url || pageInfo.url)) {
+                        return 'live';
+                    }
+                    return 'deploying';
+                } catch (_) {
                     return 'offline';
                 }
             }
 
-            async function checkAllPublicPagesStatus(reposList) {
-                if (!authenticatedOwner || !Array.isArray(reposList) || !reposList.length) return;
-                const publicFrontendRepos = reposList.filter((r) => !r.private && !/_Backend$/i.test(r.name));
-                if (!publicFrontendRepos.length) return;
+            const activeDeployWatchers = {};
+            function monitorRepoUntilDeployed(owner, repoName) {
+                if (!owner || !repoName) return;
+                const key = `${owner}/${repoName}`;
+                if (activeDeployWatchers[key]) {
+                    clearInterval(activeDeployWatchers[key]);
+                    delete activeDeployWatchers[key];
+                }
 
-                publicFrontendRepos.forEach((r) => {
-                    repoLiveStatusMap[r.name] = 'checking';
+                let checks = 0;
+                const maxChecks = 24; // up to ~2 minutes (every 5s)
+                activeDeployWatchers[key] = setInterval(async () => {
+                    checks += 1;
+                    if (!authenticatedOwner) {
+                        clearInterval(activeDeployWatchers[key]);
+                        delete activeDeployWatchers[key];
+                        return;
+                    }
+                    const nextStatus = await checkLivePagesStatusForRepo(owner, repoName);
+                    repoLiveStatusMap[repoName] = nextStatus;
+                    renderRepositoriesList();
+
+                    if (nextStatus === 'live' || nextStatus === 'offline' || checks >= maxChecks) {
+                        clearInterval(activeDeployWatchers[key]);
+                        delete activeDeployWatchers[key];
+                        if (nextStatus === 'live') {
+                            showToast(`האתר החי של ${repoName} עלה ל-LIVE!`, 'success');
+                        }
+                    }
+                }, 5000);
+            }
+
+            async function checkAllPublicPagesStatus(reposList = []) {
+                const publicRepos = (reposList || []).filter((r) => !r.private);
+                if (!publicRepos.length || !authenticatedOwner) return;
+
+                publicRepos.forEach((r) => {
+                    if (!repoLiveStatusMap[r.name]) {
+                        repoLiveStatusMap[r.name] = 'checking';
+                    }
                 });
                 renderRepositoriesList();
 
-                await Promise.all(publicFrontendRepos.map(async (r) => {
-                    const status = await checkLivePagesStatusForRepo(authenticatedOwner, r.name);
-                    repoLiveStatusMap[r.name] = status;
-                }));
-
-                renderRepositoriesList();
+                await Promise.all(
+                    publicRepos.map(async (r) => {
+                        const status = await checkLivePagesStatusForRepo(authenticatedOwner, r.name);
+                        repoLiveStatusMap[r.name] = status;
+                        renderRepositoriesList();
+                    })
+                );
             }
 
-            async function fetchAccountRepositories(checkPagesOnRefresh = false) {
+            async function fetchAccountRepositories(checkPagesOnRefresh = true, isManualRefresh = false) {
                 const token = (githubTokenInput?.value || localStorage.getItem('gh_automation_pat') || '').trim();
-                if (!token || !authenticatedOwner || isFetchingRepos) return;
+                if (!token || !authenticatedOwner) {
+                    showToast('יש להתחבר לחשבון GitHub תחילה', 'error');
+                    return;
+                }
+                if (isFetchingRepos) return;
                 isFetchingRepos = true;
+                const refreshStartTime = performance.now();
+                const minRefreshDurationMs = isManualRefresh ? 2200 : 300;
+
+                if (refreshReposBtn) {
+                    refreshReposBtn.disabled = true;
+                    refreshReposBtn.classList.add('opacity-75', 'cursor-wait');
+                }
+                if (refreshReposIcon) {
+                    refreshReposIcon.classList.add('animate-spin');
+                }
+                if (isManualRefresh) {
+                    showToast('מרענן מאגרים ובודק סטטוס אתרים...', 'info');
+                }
+
                 try {
                     const res = await fetch(`https://api.github.com/user/repos?per_page=100&sort=updated&affiliation=owner&_t=${Date.now()}`, {
                         headers: {
                             'Authorization': `Bearer ${token}`,
                             'Accept': 'application/vnd.github+json'
-                        }
+                        },
+                        cache: 'no-store'
                     });
                     if (!res.ok) throw new Error(`HTTP ${res.status}`);
                     allFetchedRepos = await res.json();
                     if (reposCountBadge) {
                         reposCountBadge.textContent = `${allFetchedRepos.length} מאגרים`;
-                        reposCountBadge.classList.remove('hidden');
                     }
-                    addDiagnosticLog('info', `Loaded ${allFetchedRepos.length} Repositories`, {
-                        owner: authenticatedOwner,
-                        count: allFetchedRepos.length
-                    });
                     renderRepositoriesList();
                     if (checkPagesOnRefresh) {
                         await checkAllPublicPagesStatus(allFetchedRepos);
                     }
                 } catch (err) {
                     addDiagnosticLog('error', 'Failed to Load Repositories', { message: err.message });
+                    showToast(`שגיאה ברענון המאגרים: ${err.message}`, 'error');
                 } finally {
+                    const elapsed = performance.now() - refreshStartTime;
+                    if (elapsed < minRefreshDurationMs) {
+                        await new Promise((resolve) => setTimeout(resolve, minRefreshDurationMs - elapsed));
+                    }
+                    if (refreshReposIcon) {
+                        refreshReposIcon.classList.remove('animate-spin');
+                    }
+                    if (refreshReposBtn) {
+                        refreshReposBtn.disabled = false;
+                        refreshReposBtn.classList.remove('opacity-75', 'cursor-wait');
+                    }
                     isFetchingRepos = false;
                 }
+            }
+
+            if (refreshReposBtn) {
+                refreshReposBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    fetchAccountRepositories(true, true);
+                });
+            }
+
+            if (cancelTogglePagesBtn) {
+                cancelTogglePagesBtn.addEventListener('click', () => {
+                    repoPendingPagesToggle = null;
+                    if (togglePagesModal) togglePagesModal.classList.add('hidden');
+                });
+            }
+
+            async function executeToggleLivePagesFlow() {
+                const token = (githubTokenInput?.value || localStorage.getItem('gh_automation_pat') || '').trim();
+                const target = repoPendingPagesToggle;
+                const action = pagesToggleTargetAction;
+                if (!target?.repoName || !authenticatedOwner || !token) return;
+
+                if (confirmTogglePagesBtn) confirmTogglePagesBtn.disabled = true;
+                if (cancelTogglePagesBtn) cancelTogglePagesBtn.disabled = true;
+
+                const { repoName, branch } = target;
+                const pagesApiUrl = `https://api.github.com/repos/${encodeURIComponent(authenticatedOwner)}/${encodeURIComponent(repoName)}/pages`;
+                const ghHeaders = {
+                    'Authorization': `Bearer ${token}`,
+                    'Accept': 'application/vnd.github+json',
+                    'Content-Type': 'application/json'
+                };
+
+                try {
+                    repoLiveStatusMap[repoName] = 'checking';
+                    renderRepositoriesList();
+
+                    if (action === 'disable') {
+                        const delRes = await fetch(pagesApiUrl, {
+                            method: 'DELETE',
+                            headers: ghHeaders
+                        });
+                        if (!delRes.ok && delRes.status !== 204 && delRes.status !== 404) {
+                            const errData = await delRes.json().catch(() => ({}));
+                            throw new Error(errData.message || `HTTP ${delRes.status}`);
+                        }
+
+                        // GitHub Pages DELETE can return 202/204 while teardown finishes; poll briefly until 404 or timeout
+                        let confirmedOffline = false;
+                        for (let attempt = 0; attempt < 5; attempt++) {
+                            await new Promise((resolve) => setTimeout(resolve, 650));
+                            const verifyRes = await fetch(`${pagesApiUrl}?_t=${Date.now()}&_a=${attempt}`, {
+                                headers: ghHeaders,
+                                cache: 'no-store'
+                            });
+                            if (verifyRes.status === 404) {
+                                confirmedOffline = true;
+                                break;
+                            }
+                        }
+
+                        repoLiveStatusMap[repoName] = 'offline';
+                        renderRepositoriesList();
+                        addDiagnosticLog('success', `Disabled GitHub Pages for ${authenticatedOwner}/${repoName}`, {
+                            repo: repoName,
+                            confirmedOffline
+                        });
+                        showToast(
+                            confirmedOffline
+                                ? `האתר החי של ${repoName} כובה בהצלחה`
+                                : `בקשת הכיבוי עבור ${repoName} נשלחה ל-GitHub (הסרה סופית בעוד שניות ספורות)`,
+                            'success'
+                        );
+                    } else {
+                        const payload = {
+                            build_type: 'legacy',
+                            source: {
+                                branch: branch || 'main',
+                                path: '/'
+                            }
+                        };
+                        let enableRes = await fetch(pagesApiUrl, {
+                            method: 'POST',
+                            headers: ghHeaders,
+                            body: JSON.stringify(payload)
+                        });
+                        if (enableRes.status === 409) {
+                            enableRes = await fetch(pagesApiUrl, {
+                                method: 'PUT',
+                                headers: ghHeaders,
+                                body: JSON.stringify(payload)
+                            });
+                        }
+                        const enableData = await enableRes.json().catch(() => ({}));
+                        if (!enableRes.ok) {
+                            throw new Error(enableData.message || `HTTP ${enableRes.status}`);
+                        }
+                        repoPagesEnabledAtMap[repoName] = Date.now();
+                        repoLiveStatusMap[repoName] = 'deploying';
+                        renderRepositoriesList();
+                        monitorRepoUntilDeployed(authenticatedOwner, repoName);
+                        addDiagnosticLog('success', `Triggered GitHub Pages Deploy for ${authenticatedOwner}/${repoName}`, {
+                            repo: repoName,
+                            branch: branch || 'main',
+                            htmlUrl: enableData.html_url || ''
+                        });
+                        showToast(`האתר החי של ${repoName} הודלק — ממתין לסיום ה-Deploy...`, 'info');
+                    }
+                } catch (err) {
+                    const fallbackStatus = await checkLivePagesStatusForRepo(authenticatedOwner, repoName);
+                    repoLiveStatusMap[repoName] = fallbackStatus;
+                    renderRepositoriesList();
+                    addDiagnosticLog('error', `Failed Toggling GitHub Pages for ${authenticatedOwner}/${repoName}`, {
+                        action,
+                        message: err?.message || String(err)
+                    });
+                    showToast(`שגיאה בשינוי סטטוס האתר החי: ${err?.message || err}`, 'error');
+                } finally {
+                    if (confirmTogglePagesBtn) confirmTogglePagesBtn.disabled = false;
+                    if (cancelTogglePagesBtn) cancelTogglePagesBtn.disabled = false;
+                    repoPendingPagesToggle = null;
+                    if (togglePagesModal) togglePagesModal.classList.add('hidden');
+                }
+            }
+
+            if (confirmTogglePagesBtn) {
+                confirmTogglePagesBtn.addEventListener('click', () => {
+                    executeToggleLivePagesFlow();
+                });
             }
 
             function renderRepositoriesList() {
                 if (!reposListContainer) return;
                 clearRepoStatusMiniSpheres();
-                if (!authenticatedOwner) {
-                    reposListContainer.innerHTML = `<div class="text-center py-10 text-sm text-zinc-500 bg-zinc-900/50 rounded-2xl border border-dashed border-zinc-800">יש להתחבר כדי לצפות במאגרים.</div>`;
-                    return;
-                }
-                const q = (reposSearchInput?.value || '').trim().toLowerCase();
-                const vis = reposVisibilityFilter?.value || 'all';
-                const filtered = allFetchedRepos.filter((r) => {
-                    if (vis === 'private' && !r.private) return false;
-                    if (vis === 'public' && r.private) return false;
-                    const aliasLower = getRepoAlias(r.name).toLowerCase();
-                    if (q && !r.name.toLowerCase().includes(q) && !aliasLower.includes(q)) return false;
-                    return true;
+
+                const query = String(reposSearchInput?.value || '').trim().toLowerCase();
+                const visFilter = String(reposVisibilityFilter?.value || 'all');
+
+                const filtered = (allFetchedRepos || []).filter((repo) => {
+                    if (!repo || !repo.name) return false;
+                    if (visFilter === 'private' && !repo.private) return false;
+                    if (visFilter === 'public' && repo.private) return false;
+                    if (!query) return true;
+                    const alias = String(getRepoAlias(repo.name) || '').toLowerCase();
+                    const slug = String(getProjectBaseSlug(repo.name) || '').toLowerCase();
+                    return (
+                        String(repo.name).toLowerCase().includes(query) ||
+                        alias.includes(query) ||
+                        slug.includes(query) ||
+                        String(repo.description || '').toLowerCase().includes(query)
+                    );
                 });
 
                 if (!filtered.length) {
-                    reposListContainer.innerHTML = `<div class="text-center py-8 text-xs text-zinc-500 bg-zinc-900/50 rounded-2xl border border-dashed border-zinc-800">לא נמצאו מאגרים תואמים.</div>`;
+                    reposListContainer.innerHTML = `
+                        <div class="text-center py-10 text-sm text-zinc-500 bg-zinc-900/50 rounded-2xl border border-dashed border-zinc-800">
+                            ${allFetchedRepos.length ? 'לא נמצאו מאגרים התואמים לסינון.' : 'אין מאגרים בחשבון.'}
+                        </div>
+                    `;
                     return;
                 }
 
-                const ownerSlug = String(authenticatedOwner || '').toLowerCase();
                 reposListContainer.innerHTML = filtered.map((repo) => {
-                    const isExpanded = expandedRepoName === repo.name;
-                    const isPublicRepo = !repo.private;
-                    const isBackendRepo = /_Backend$/i.test(repo.name) || Boolean(repo.private);
-                    const liveStatus = repoLiveStatusMap[repo.name] || '';
-                    const livePagesUrl = `https://${ownerSlug}.github.io/${encodeURIComponent(repo.name)}/`;
-                    const defaultBranch = encodeURIComponent(repo.default_branch || 'main');
-                    const editIndexHtmlUrl = `https://github.com/${encodeURIComponent(authenticatedOwner)}/${encodeURIComponent(repo.name)}/edit/${defaultBranch}/index.html`;
-                    const repoAlias = getRepoAlias(repo.name);
-                    const roleTag = /_Backend$/i.test(repo.name) ? 'Backend' : (/_Frontend$/i.test(repo.name) ? 'Frontend' : '');
-                    const hasProjectPair = /_(Backend|Frontend)$/i.test(repo.name);
+                    const repoName = repo.name;
+                    const isPrivate = Boolean(repo.private);
+                    const isExpanded = expandedRepoName === repoName;
+                    const aliasVal = getRepoAlias(repoName);
+                    const liveStatus = !isPrivate ? (repoLiveStatusMap[repoName] || 'checking') : null;
+                    const pagesUrl = `https://${String(authenticatedOwner || '').toLowerCase()}.github.io/${encodeURIComponent(repoName)}/`;
+                    const isPagesLive = liveStatus === 'live';
+
+                    const statusBadgeHtml = !isPrivate
+                        ? `<span class="inline-flex items-center gap-1.5 text-[11px] font-mono px-2.5 py-0.5 rounded-full border ${
+                            liveStatus === 'live'
+                                ? 'bg-emerald-500/10 text-emerald-300 border-emerald-500/30'
+                                : liveStatus === 'offline'
+                                    ? 'bg-red-500/10 text-red-300 border-red-500/30'
+                                    : 'bg-amber-500/10 text-amber-300 border-amber-500/30'
+                        }">
+                            <canvas data-status-repo="${escapeHtmlAttr(repoName)}" class="repo-live-status-sphere w-3.5 h-3.5 rounded-full shrink-0"></canvas>
+                            <span>${liveStatus === 'live' ? 'LIVE' : liveStatus === 'offline' ? 'OFFLINE' : liveStatus === 'deploying' ? 'DEPLOYING' : 'CHECKING'}</span>
+                        </span>`
+                        : '';
+
                     return `
-                    <div class="bg-zinc-900/80 hover:bg-zinc-900 border border-zinc-800 rounded-2xl transition-colors overflow-hidden">
-                        <div class="flex items-center justify-between gap-3 px-4 py-3">
-                            <div class="min-w-0 flex items-center gap-2.5 flex-wrap">
-                                <span class="text-[10px] font-mono px-2 py-0.5 rounded-full border shrink-0 ${repo.private ? 'bg-amber-500/10 text-amber-300 border-amber-500/30' : 'bg-emerald-500/10 text-emerald-300 border-emerald-500/30'}">${repo.private ? 'PRIVATE' : 'PUBLIC'}</span>
-                                ${isPublicRepo && liveStatus ? `
-                                <span class="w-4 h-4 shrink-0 inline-flex items-center justify-center" title="${liveStatus === 'live' ? '200 OK — האתר באוויר' : liveStatus === 'offline' ? '404 — עדיין בתהליך פריסה' : 'בודק סטטוס...'}">
-                                    <canvas data-live-status-canvas="${repo.name}" class="repo-live-status-sphere" style="width:100%;height:100%;display:block;background:transparent"></canvas>
-                                </span>
-                                ` : ''}
-                                <button type="button" data-edit-repo="${repo.name}" class="edit-repo-trigger min-w-0 flex items-center gap-2 flex-wrap text-right cursor-pointer transition-colors group">
-                                    ${repoAlias ? `
-                                    <span class="text-xs sm:text-sm font-semibold ${isExpanded ? 'text-sky-300' : 'text-white group-hover:text-sky-300'} truncate">${escapeHtmlAttr(repoAlias)}${roleTag ? ` <span class="text-[11px] font-normal text-zinc-400">(${roleTag})</span>` : ''}</span>
-                                    <span dir="ltr" class="font-mono text-[11px] text-zinc-400 bg-zinc-950/90 border border-zinc-800 px-2 py-0.5 rounded-full truncate">${repo.name}</span>
-                                    ` : `
-                                    <span dir="ltr" class="font-mono text-xs sm:text-sm font-medium ${isExpanded ? 'text-sky-300' : 'text-white group-hover:text-sky-400'} truncate text-left">${repo.name}</span>
-                                    `}
-                                </button>
-                            </div>
-                            <div class="flex items-center gap-2 shrink-0">
-                                ${hasProjectPair ? `<button type="button" data-delete-pair="${repo.name}" class="delete-pair-trigger text-xs text-rose-300 hover:text-rose-200 px-2.5 py-1.5 rounded-full bg-rose-500/15 hover:bg-rose-500/25 border border-rose-500/30 transition-colors">מחק זוג</button>` : ''}
-                                <button type="button" data-delete-repo="${repo.name}" class="delete-repo-trigger text-xs text-red-400 hover:text-red-300 px-2.5 py-1.5 rounded-full bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 transition-colors">מחק</button>
-                            </div>
-                        </div>
-                        ${isExpanded ? `
-                        <div class="px-4 py-3.5 border-t border-zinc-800/90 bg-[#0F0F0F]/75 space-y-3">
-                            <!-- Simple Persistent Alias Editor -->
-                            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 bg-zinc-900/70 border border-zinc-800/90 rounded-2xl p-2">
-                                <input type="text" data-alias-input="${repo.name}" value="${escapeHtmlAttr(repoAlias)}" placeholder="כינוי / שם קריא לפרויקט (Alias)..." class="flex-1 bg-zinc-950 border border-zinc-800 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-sky-500 transition-colors">
-                                <div class="flex items-center gap-1.5 shrink-0">
-                                    <button type="button" data-save-alias="${repo.name}" data-pair-mode="${hasProjectPair ? '1' : '0'}" class="save-alias-btn text-xs font-medium bg-sky-600 hover:bg-sky-500 text-white px-3.5 py-1.5 rounded-xl transition-colors">
-                                        ${hasProjectPair ? 'שמור כינוי לזוג' : 'שמור כינוי'}
-                                    </button>
-                                    ${repoAlias ? `<button type="button" data-clear-alias="${repo.name}" data-pair-mode="${hasProjectPair ? '1' : '0'}" class="clear-alias-btn text-xs text-zinc-400 hover:text-red-300 px-2.5 py-1.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 transition-colors">נקה</button>` : ''}
+                        <div class="bg-zinc-900/80 border border-zinc-800 rounded-2xl p-3.5 sm:p-4 space-y-3 transition-colors">
+                            <div class="flex items-start justify-between gap-3 cursor-pointer select-none" data-toggle-repo="${escapeHtmlAttr(repoName)}">
+                                <div class="min-w-0 flex-1 space-y-1">
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <span dir="ltr" class="font-mono text-sm font-semibold text-white break-all">${escapeHtmlText(repoName)}</span>
+                                        ${aliasVal ? `<span class="text-xs font-medium text-sky-300 bg-sky-500/10 border border-sky-500/25 px-2.5 py-0.5 rounded-full">${escapeHtmlText(aliasVal)}</span>` : ''}
+                                        <span class="text-[10px] font-mono px-2 py-0.5 rounded-full border ${
+                                            isPrivate
+                                                ? 'bg-zinc-800 text-zinc-300 border-zinc-700'
+                                                : 'bg-sky-500/10 text-sky-300 border-sky-500/30'
+                                        }">${isPrivate ? 'PRIVATE' : 'PUBLIC'}</span>
+                                        ${statusBadgeHtml}
+                                    </div>
+                                    ${repo.description ? `<p class="text-xs text-zinc-400 line-clamp-1">${escapeHtmlText(repo.description)}</p>` : ''}
                                 </div>
+                                <svg class="w-4 h-4 text-zinc-400 shrink-0 mt-1 transition-transform ${isExpanded ? 'rotate-180' : ''}" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+                                </svg>
                             </div>
-                            <div class="flex flex-wrap items-center gap-2">
-                                ${isPublicRepo ? `
-                                <a href="${livePagesUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs font-medium bg-emerald-600 hover:bg-emerald-500 text-white px-3.5 py-1.5 rounded-full transition-colors">
-                                    <span>לאתר החי</span>
-                                    <span>↗</span>
-                                </a>
-                                <a href="${editIndexHtmlUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs font-medium bg-indigo-600 hover:bg-indigo-500 text-white px-3.5 py-1.5 rounded-full transition-colors">
-                                    <span>עריכת index.html</span>
-                                    <span>↗</span>
-                                </a>
-                                ` : ''}
-                                ${isBackendRepo ? `
-                                <button type="button" data-copy-salted-snippet="${repo.name}" class="copy-salted-snippet-btn inline-flex items-center gap-1.5 text-xs font-medium bg-sky-600 hover:bg-sky-500 text-white px-3.5 py-1.5 rounded-full transition-colors">
-                                    <span>העתק סניפט Salted ל-AI</span>
-                                </button>
-                                ` : ''}
-                                <button type="button" data-toggle-datajson="${repo.name}" class="toggle-datajson-btn inline-flex items-center gap-1.5 text-xs font-medium bg-zinc-800 hover:bg-zinc-700 text-zinc-200 px-3.5 py-1.5 rounded-full border border-zinc-700 transition-colors">
-                                    <span>כתוב ל-data.json</span>
-                                </button>
-                                <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs font-medium bg-zinc-800 hover:bg-zinc-700 text-zinc-200 px-3.5 py-1.5 rounded-full border border-zinc-700 transition-colors">
-                                    <span>עריכה בגיטאהב</span>
-                                    <span>↗</span>
-                                </a>
-                            </div>
-                            ${isBackendRepo ? `
-                            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
-                                <input type="text" data-salt-seed-input="${repo.name}" value="${(repoSaltedValuesMap[repo.name] || repoSaltedValuesMap[getProjectBaseSlug(repo.name)] || saltedSecretSeed || '').replace(/"/g, '&quot;')}" placeholder="הזן סיסמה / Salt לאפליקציה..." dir="ltr" class="salt-seed-input flex-1 bg-zinc-900 border border-zinc-800 rounded-2xl px-3.5 py-2 text-xs font-mono text-white focus:outline-none focus:border-zinc-600">
-                            </div>
+
+                            ${isExpanded ? `
+                                <div class="pt-3 border-t border-zinc-800/80 space-y-3">
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        ${repo.html_url ? `<a href="${escapeHtmlAttr(repo.html_url)}" target="_blank" rel="noopener noreferrer" class="text-xs font-medium bg-zinc-800 hover:bg-zinc-700 text-white px-3 py-1.5 rounded-full border border-zinc-700 transition-colors">פתח ב-GitHub ↗</a>` : ''}
+                                        ${!isPrivate ? `<a href="${escapeHtmlAttr(pagesUrl)}" target="_blank" rel="noopener noreferrer" class="text-xs font-medium bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-200 px-3 py-1.5 rounded-full border border-emerald-500/30 transition-colors">מעבר לאתר חי ↗</a>` : ''}
+                                        ${!isPrivate ? `
+                                            <button type="button" data-toggle-pages-repo="${escapeHtmlAttr(repoName)}" data-toggle-pages-branch="${escapeHtmlAttr(repo.default_branch || 'main')}" data-toggle-pages-action="${isPagesLive ? 'disable' : 'enable'}" class="text-xs font-medium ${
+                                                isPagesLive
+                                                    ? 'bg-amber-500/15 hover:bg-amber-500/25 text-amber-200 border-amber-500/30'
+                                                    : 'bg-sky-500/15 hover:bg-sky-500/25 text-sky-200 border-sky-500/30'
+                                            } px-3 py-1.5 rounded-full border transition-colors">
+                                                ${isPagesLive ? 'כבה אתר חי' : 'הדלק אתר חי'}
+                                            </button>
+                                        ` : ''}
+                                        <button type="button" data-delete-repo-btn="${escapeHtmlAttr(repoName)}" class="text-xs font-medium bg-red-500/15 hover:bg-red-500/25 text-red-200 px-3 py-1.5 rounded-full border border-red-500/30 transition-colors mr-auto">
+                                            מחק מאגר
+                                        </button>
+                                    </div>
+
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                                        <div class="min-w-0">
+                                            <label class="block text-[11px] text-zinc-400 mb-1">שם תצוגה / כינוי (Alias)</label>
+                                            <div class="flex items-center gap-1.5">
+                                                <input type="text" data-alias-input="${escapeHtmlAttr(repoName)}" value="${escapeHtmlAttr(aliasVal)}" placeholder="הזן שם ידידותי..." class="flex-1 min-w-0 bg-zinc-950 border border-zinc-800 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-zinc-600">
+                                                <button type="button" data-save-alias-btn="${escapeHtmlAttr(repoName)}" class="bg-zinc-800 hover:bg-zinc-700 text-white text-xs font-medium px-3 py-1.5 rounded-xl border border-zinc-700 transition-colors shrink-0">שמור</button>
+                                            </div>
+                                        </div>
+                                        <div class="min-w-0">
+                                            <label class="block text-[11px] text-zinc-400 mb-1">Salted Hash (SHA-256)</label>
+                                            <div class="flex items-center gap-1.5">
+                                                <input type="text" dir="ltr" readonly data-salt-seed-input="${escapeHtmlAttr(repoName)}" value="${escapeHtmlAttr(repoSaltedValuesMap[repoName] || repoSaltedValuesMap[getProjectBaseSlug(repoName)] || '')}" class="flex-1 min-w-0 bg-zinc-950 border border-zinc-800 rounded-xl px-3 py-1.5 text-xs font-mono text-zinc-300 focus:outline-none">
+                                                <button type="button" data-copy-ai-snippet-btn="${escapeHtmlAttr(repoName)}" class="bg-zinc-800 hover:bg-zinc-700 text-sky-300 text-xs font-medium px-3 py-1.5 rounded-xl border border-zinc-700 transition-colors shrink-0">העתק AI</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="space-y-1.5">
+                                        <div class="flex items-center justify-between gap-2">
+                                            <span dir="ltr" class="text-[11px] font-mono text-zinc-400">data.json</span>
+                                            <div class="flex items-center gap-1.5">
+                                                <button type="button" data-load-data-btn="${escapeHtmlAttr(repoName)}" class="text-[11px] bg-zinc-800 hover:bg-zinc-700 text-zinc-200 px-2.5 py-1 rounded-lg border border-zinc-700 transition-colors">טען</button>
+                                                <button type="button" data-save-data-btn="${escapeHtmlAttr(repoName)}" class="text-[11px] bg-apple-blue hover:bg-apple-blueHover text-white px-2.5 py-1 rounded-lg transition-colors">שמור data.json</button>
+                                            </div>
+                                        </div>
+                                        <textarea dir="ltr" data-data-json-editor="${escapeHtmlAttr(repoName)}" rows="4" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-2.5 text-xs font-mono text-zinc-200 focus:outline-none focus:border-zinc-600"></textarea>
+                                    </div>
+                                </div>
                             ` : ''}
-                            <div id="datajson-panel-${repo.name}" class="hidden space-y-2 pt-1">
-                                <textarea id="datajson-editor-${repo.name}" rows="4" dir="ltr" class="w-full bg-zinc-900 border border-zinc-800 rounded-2xl p-3 text-xs font-mono text-zinc-200 focus:outline-none focus:border-zinc-600">[]</textarea>
-                                <div class="flex items-center justify-end gap-2">
-                                    <button type="button" data-load-datajson="${repo.name}" class="load-datajson-btn text-xs bg-zinc-800 hover:bg-zinc-700 text-zinc-200 px-3.5 py-1.5 rounded-full border border-zinc-700 transition-colors">טען data.json</button>
-                                    <button type="button" data-save-datajson="${repo.name}" class="save-datajson-btn text-xs font-medium bg-apple-blue hover:bg-apple-blueHover text-white px-4 py-1.5 rounded-full transition-colors">שמור data.json</button>
-                                </div>
-                            </div>
                         </div>
-                        ` : ''}
-                    </div>
-                `;
+                    `;
                 }).join('');
 
                 reposListContainer.querySelectorAll('.repo-live-status-sphere').forEach((canvasEl) => {
-                    const repoKey = canvasEl.dataset.liveStatusCanvas || '';
+                    const rName = canvasEl.getAttribute('data-status-repo') || '';
                     registerMiniSphere(canvasEl, () => {
-                        const st = repoLiveStatusMap[repoKey];
+                        const st = repoLiveStatusMap[rName] || 'checking';
                         if (st === 'live') return SPHERE_PALETTES.success;
                         if (st === 'offline') return SPHERE_PALETTES.error;
                         return SPHERE_PALETTES.building;
                     });
                 });
 
-                if (expandedRepoName) {
-                    refreshExpandedRepoSnippet(expandedRepoName);
-                }
-
-                reposListContainer.querySelectorAll('.edit-repo-trigger').forEach((btn) => {
-                    btn.addEventListener('click', () => {
-                        const targetName = btn.dataset.editRepo || '';
+                reposListContainer.querySelectorAll('[data-toggle-repo]').forEach((headerEl) => {
+                    headerEl.addEventListener('click', async () => {
+                        const targetName = headerEl.getAttribute('data-toggle-repo') || '';
                         expandedRepoName = expandedRepoName === targetName ? '' : targetName;
                         renderRepositoriesList();
-                    });
-                });
-
-                reposListContainer.querySelectorAll('.save-alias-btn').forEach((btn) => {
-                    btn.addEventListener('click', () => {
-                        const targetName = btn.dataset.saveAlias || '';
-                        const isPair = btn.dataset.pairMode === '1';
-                        const inp = reposListContainer.querySelector(`[data-alias-input="${targetName}"]`);
-                        const newAlias = (inp?.value || '').trim();
-                        setRepoAlias(targetName, newAlias, isPair);
-                        renderRepositoriesList();
-                        showToast(newAlias ? `הכינוי "${newAlias}" נשמר בהצלחה` : 'הכינוי הוסר', 'success');
-                    });
-                });
-
-                reposListContainer.querySelectorAll('.clear-alias-btn').forEach((btn) => {
-                    btn.addEventListener('click', () => {
-                        const targetName = btn.dataset.clearAlias || '';
-                        const isPair = btn.dataset.pairMode === '1';
-                        setRepoAlias(targetName, '', isPair);
-                        renderRepositoriesList();
-                        showToast('הכינוי הוסר', 'info');
-                    });
-                });
-
-                reposListContainer.querySelectorAll('.salt-seed-input').forEach((inp) => {
-                    inp.addEventListener('input', (e) => {
-                        const repoName = e.target.dataset.saltSeedInput || '';
-                        const val = e.target.value;
-                        saltedSecretSeed = val;
-                        localStorage.setItem('gh_app_salted_seed', saltedSecretSeed);
-                        if (/^[a-f0-9]{64}$/i.test(val.trim())) {
-                            const slug = getProjectBaseSlug(repoName);
-                            saveProvisionedSaltedValue(authenticatedOwner, slug, `${slug}_Backend`, `${slug}_Frontend`, val.trim());
-                        }
-                    });
-                });
-
-                reposListContainer.querySelectorAll('.copy-salted-snippet-btn').forEach((btn) => {
-                    btn.addEventListener('click', async () => {
-                        const repoName = btn.dataset.copySaltedSnippet || '';
-                        const seedInput = reposListContainer.querySelector(`[data-salt-seed-input="${repoName}"]`);
-                        const currentVal = (seedInput ? seedInput.value : saltedSecretSeed).trim();
-                        const workerUrl = (workerBaseUrlInput?.value || localStorage.getItem('gh_worker_base_url') || '').trim().replace(/\/+$/, '');
-                        let saltedHash = '';
-                        if (/^[a-f0-9]{64}$/i.test(currentVal)) {
-                            saltedHash = currentVal.toLowerCase();
-                            const slug = getProjectBaseSlug(repoName);
-                            saveProvisionedSaltedValue(authenticatedOwner, slug, `${slug}_Backend`, `${slug}_Frontend`, saltedHash);
-                        } else {
-                            saltedHash = await getOrCreateAppSaltedValue(authenticatedOwner, repoName, currentVal);
-                        }
-                        if (seedInput) {
-                            seedInput.value = saltedHash;
-                        }
-                        const snippet = buildSaltedAiIntegrationSnippet(authenticatedOwner, repoName, workerUrl, saltedHash);
-                        copyTextToClipboard(snippet, 'סניפט ה-Salted ל-AI הועתק ללוח');
-                        const labelEl = btn.querySelector('span');
-                        const originalLabel = labelEl ? labelEl.textContent : btn.textContent;
-                        if (labelEl) {
-                            labelEl.textContent = 'הועתק';
-                        } else {
-                            btn.textContent = 'הועתק';
-                        }
-                        setTimeout(() => {
-                            if (labelEl) {
-                                labelEl.textContent = originalLabel;
-                            } else {
-                                btn.textContent = originalLabel;
-                            }
-                        }, 1500);
-                    });
-                });
-
-                reposListContainer.querySelectorAll('.toggle-datajson-btn').forEach((btn) => {
-                    btn.addEventListener('click', async () => {
-                        const repoName = btn.dataset.toggleDatajson || '';
-                        const panel = document.getElementById(`datajson-panel-${repoName}`);
-                        const area = document.getElementById(`datajson-editor-${repoName}`);
-                        if (!panel || !area) return;
-                        const willShow = panel.classList.contains('hidden');
-                        panel.classList.toggle('hidden', !willShow);
-                        if (willShow) {
-                            try {
-                                area.value = await readRepoDataJson(repoName);
-                            } catch (_) {
-                                area.value = '[]';
+                        if (expandedRepoName === targetName) {
+                            await refreshExpandedRepoSnippet(targetName);
+                            const editorEl = reposListContainer.querySelector(`[data-data-json-editor="${targetName}"]`);
+                            if (editorEl && !editorEl.value) {
+                                try {
+                                    editorEl.value = await readRepoDataJson(targetName);
+                                } catch (_) {}
                             }
                         }
                     });
                 });
 
-                reposListContainer.querySelectorAll('.load-datajson-btn').forEach((btn) => {
-                    btn.addEventListener('click', async () => {
-                        const repoName = btn.dataset.loadDatajson || '';
-                        const area = document.getElementById(`datajson-editor-${repoName}`);
-                        if (!area) return;
+                reposListContainer.querySelectorAll('[data-save-alias-btn]').forEach((btn) => {
+                    btn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const rName = btn.getAttribute('data-save-alias-btn') || '';
+                        const inputEl = reposListContainer.querySelector(`[data-alias-input="${rName}"]`);
+                        setRepoAlias(rName, inputEl?.value || '', true);
+                        renderRepositoriesList();
+                        showToast('הכינוי נשמר בהצלחה', 'success');
+                    });
+                });
+
+                reposListContainer.querySelectorAll('[data-copy-ai-snippet-btn]').forEach((btn) => {
+                    btn.addEventListener('click', async (e) => {
+                        e.stopPropagation();
+                        const rName = btn.getAttribute('data-copy-ai-snippet-btn') || '';
+                        await refreshExpandedRepoSnippet(rName);
+                        const snippet = repoSaltedSnippetsCache[rName] || '';
+                        copyTextToClipboard(snippet, 'הנחיית החיבור ל-AI הועתקה');
+                    });
+                });
+
+                reposListContainer.querySelectorAll('[data-load-data-btn]').forEach((btn) => {
+                    btn.addEventListener('click', async (e) => {
+                        e.stopPropagation();
+                        const rName = btn.getAttribute('data-load-data-btn') || '';
+                        const editorEl = reposListContainer.querySelector(`[data-data-json-editor="${rName}"]`);
                         try {
-                            area.value = await readRepoDataJson(repoName);
-                            showToast('data.json נטען בהצלחה', 'success');
+                            const content = await readRepoDataJson(rName);
+                            if (editorEl) editorEl.value = content;
+                            showToast(`data.json נטען עבור ${rName}`, 'success');
                         } catch (err) {
-                            showToast(`שגיאה בטעינת data.json: ${err.message}`, 'error');
+                            showToast(`שגיאה בטעינת data.json: ${err?.message || err}`, 'error');
                         }
                     });
                 });
 
-                reposListContainer.querySelectorAll('.save-datajson-btn').forEach((btn) => {
-                    btn.addEventListener('click', async () => {
-                        const repoName = btn.dataset.saveDatajson || '';
-                        const area = document.getElementById(`datajson-editor-${repoName}`);
-                        if (!area) return;
+                reposListContainer.querySelectorAll('[data-save-data-btn]').forEach((btn) => {
+                    btn.addEventListener('click', async (e) => {
+                        e.stopPropagation();
+                        const rName = btn.getAttribute('data-save-data-btn') || '';
+                        const editorEl = reposListContainer.querySelector(`[data-data-json-editor="${rName}"]`);
                         try {
-                            await writeRepoDataJson(repoName, area.value);
-                            showToast('data.json נשמר בהצלחה', 'success');
+                            await writeRepoDataJson(rName, editorEl?.value || '[]');
+                            showToast(`data.json נשמר עבור ${rName}`, 'success');
                         } catch (err) {
-                            showToast(`שגיאה בכתיבה ל-data.json: ${err.message}`, 'error');
+                            showToast(`שגיאה בשמירת data.json: ${err?.message || err}`, 'error');
                         }
                     });
                 });
 
-                reposListContainer.querySelectorAll('.delete-repo-trigger').forEach((btn) => {
-                    btn.addEventListener('click', () => {
-                        repoPendingDeletion = btn.dataset.deleteRepo;
-                        deletePairMode = false;
+                reposListContainer.querySelectorAll('[data-toggle-pages-repo]').forEach((btn) => {
+                    btn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const rName = btn.getAttribute('data-toggle-pages-repo') || '';
+                        const rBranch = btn.getAttribute('data-toggle-pages-branch') || 'main';
+                        const action = btn.getAttribute('data-toggle-pages-action') || 'enable';
+                        repoPendingPagesToggle = { repoName: rName, branch: rBranch };
+                        pagesToggleTargetAction = action;
+                        if (togglePagesModalTitle) {
+                            togglePagesModalTitle.textContent = action === 'disable' ? 'אישור כיבוי אתר חי' : 'אישור הדלקת אתר חי';
+                        }
+                        if (togglePagesModalDesc) {
+                            togglePagesModalDesc.textContent = action === 'disable'
+                                ? 'פעולה זו תכבה את GitHub Pages עבור המאגר:'
+                                : 'פעולה זו תדליק את GitHub Pages עבור המאגר:';
+                        }
+                        if (togglePagesModalRepoName) {
+                            togglePagesModalRepoName.textContent = `${authenticatedOwner}/${rName}`;
+                        }
+                        if (confirmTogglePagesBtn) {
+                            confirmTogglePagesBtn.textContent = action === 'disable' ? 'כן, כבה אתר חי' : 'כן, הדלק אתר חי';
+                        }
+                        if (togglePagesModal) togglePagesModal.classList.remove('hidden');
+                    });
+                });
+
+                reposListContainer.querySelectorAll('[data-delete-repo-btn]').forEach((btn) => {
+                    btn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const rName = btn.getAttribute('data-delete-repo-btn') || '';
+                        repoPendingDeletion = rName;
+                        deletePairMode = /_(Backend|Frontend)$/i.test(rName);
                         if (deleteModalRepoName) {
-                            deleteModalRepoName.textContent = `${authenticatedOwner}/${repoPendingDeletion}`;
-                        }
-                        if (confirmDeleteRepoBtn) {
-                            confirmDeleteRepoBtn.classList.remove('hidden');
-                            confirmDeleteRepoBtn.textContent = 'כן, מחק מאגר';
+                            deleteModalRepoName.textContent = `${authenticatedOwner}/${rName}`;
                         }
                         if (confirmDeletePairBtn) {
-                            confirmDeletePairBtn.classList.add('hidden');
+                            confirmDeletePairBtn.classList.toggle('hidden', !deletePairMode);
                         }
                         if (deleteRepoModal) deleteRepoModal.classList.remove('hidden');
                     });
-                });
-
-                reposListContainer.querySelectorAll('.delete-pair-trigger').forEach((btn) => {
-                    btn.addEventListener('click', () => {
-                        repoPendingDeletion = btn.dataset.deleteRepo || btn.dataset.deletePair;
-                        deletePairMode = true;
-                        const slug = getProjectBaseSlug(repoPendingDeletion);
-                        if (deleteModalRepoName) {
-                            deleteModalRepoName.textContent = `${authenticatedOwner}/${slug}_Backend + Frontend`;
-                        }
-                        if (confirmDeleteRepoBtn) {
-                            confirmDeleteRepoBtn.classList.add('hidden');
-                        }
-                        if (confirmDeletePairBtn) {
-                            confirmDeletePairBtn.classList.remove('hidden');
-                            confirmDeletePairBtn.textContent = 'כן, מחק זוג';
-                        }
-                        if (deleteRepoModal) deleteRepoModal.classList.remove('hidden');
-                    });
-                });
-            }
-
-            if (refreshReposBtn) {
-                refreshReposBtn.addEventListener('click', () => {
-                    fetchAccountRepositories(true);
                 });
             }
 
