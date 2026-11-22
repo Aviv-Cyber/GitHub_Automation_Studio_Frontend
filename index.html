@@ -67,6 +67,11 @@
             max-width: 100%;
             overscroll-behavior-x: none;
         }
+        /* Smooth native iOS touch scrolling inside tab panels */
+        .ios-scroll-pane {
+            -webkit-overflow-scrolling: touch;
+            overscroll-behavior-y: contain;
+        }
         /* Prevent iOS/Mobile Safari auto-zoom on input focus */
         input, select, textarea {
             font-size: 16px !important;
@@ -169,7 +174,7 @@
                 </div>
 
                 <!-- Repositories List -->
-                <div id="repos-list-container" class="flex-1 min-h-0 overflow-y-auto overflow-x-hidden space-y-2.5">
+                <div id="repos-list-container" class="ios-scroll-pane flex-1 min-h-0 overflow-y-auto overflow-x-hidden space-y-2.5 pb-6">
                     <div class="text-center py-10 text-sm text-zinc-500 bg-zinc-900/50 rounded-2xl border border-dashed border-zinc-800">
                         יש להתחבר כדי לצפות במאגרים.
                     </div>
@@ -186,7 +191,7 @@
                 <p id="settings-header-subtitle" class="text-xs sm:text-sm text-zinc-400 mt-1">הגדרת מאגרי המקור לשכפול וכתובת ה-Cloudflare Worker.</p>
             </div>
 
-            <div id="settings-content-container" class="flex-1 min-h-0 overflow-y-auto overflow-x-hidden pt-4 grid grid-cols-1 md:grid-cols-2 gap-4 content-start transition-all duration-700 blur-md opacity-40 pointer-events-none select-none">
+            <div id="settings-content-container" class="ios-scroll-pane flex-1 min-h-0 overflow-y-auto overflow-x-hidden pt-4 pb-6 grid grid-cols-1 md:grid-cols-2 gap-4 content-start transition-all duration-700 blur-md opacity-40 pointer-events-none select-none">
                 <div class="min-w-0">
                     <label for="github-token" class="block text-xs font-medium text-zinc-400 mb-1.5">GitHub Master Token (PAT)</label>
                     <div class="flex flex-wrap sm:flex-nowrap gap-2">
@@ -294,7 +299,7 @@
 
             <div id="logs-content-container" class="flex-1 min-h-0 flex flex-col gap-4 pt-4 overflow-hidden transition-all duration-700 blur-md opacity-40 pointer-events-none select-none">
                 <div id="logs-env-summary" dir="ltr" class="shrink-0 flex flex-wrap gap-2 text-[11px] font-mono text-zinc-400 bg-zinc-900/90 border border-zinc-800 rounded-2xl px-3.5 py-2.5"></div>
-                <div id="logs-list-container" class="flex-1 min-h-0 overflow-y-auto overflow-x-hidden space-y-2.5"></div>
+                <div id="logs-list-container" class="ios-scroll-pane flex-1 min-h-0 overflow-y-auto overflow-x-hidden space-y-2.5 pb-6"></div>
             </div>
             </div>
         </section>
@@ -332,173 +337,16 @@
                             שמור שינויים ב-Backend
                         </button>
                     </div>
-                    <textarea id="docs-raw-markdown" dir="ltr" class="flex-1 min-h-0 w-full bg-zinc-950 border border-zinc-800 rounded-2xl p-4 text-xs font-mono text-zinc-200 focus:outline-none focus:border-zinc-600 leading-relaxed resize-none"></textarea>
+                    <textarea id="docs-raw-markdown" dir="ltr" class="ios-scroll-pane flex-1 min-h-0 w-full bg-zinc-950 border border-zinc-800 rounded-2xl p-4 text-xs font-mono text-zinc-200 focus:outline-none focus:border-zinc-600 leading-relaxed resize-none"></textarea>
                 </div>
 
                 <!-- Dynamically Rendered Markdown Container from Backend -->
-                <div id="docs-rendered-container" class="flex-1 min-h-0 overflow-y-auto overflow-x-hidden space-y-4">
+                <div id="docs-rendered-container" class="ios-scroll-pane flex-1 min-h-0 overflow-y-auto overflow-x-hidden space-y-4 pb-6">
                     <div class="text-center py-10 text-xs text-zinc-500 bg-zinc-900/50 rounded-2xl border border-dashed border-zinc-800">
                         טוען תיעוד מתוך GitHub_Automation_Studio_Backend/README.md...
                     </div>
                 </div>
             </div>
-            </div>
-        </section>
-
-        <!-- TAB 3: SETTINGS & ARCHITECTURE -->
-        <section id="tab-settings" class="tab-panel hidden h-[72vh] min-h-[480px] max-h-[720px] flex flex-col bg-[#0F0F0F] text-white rounded-3xl p-5 sm:p-8 shadow-2xl border border-zinc-800/80 overflow-hidden">
-            <div class="shrink-0 border-b border-zinc-800/80 pb-5">
-                <h1 id="settings-header-title" class="text-xl sm:text-2xl font-bold tracking-tight text-white">הגדרות תשתית</h1>
-                <p id="settings-header-subtitle" class="text-xs sm:text-sm text-zinc-400 mt-1">הגדרת מאגרי המקור לשכפול וכתובת ה-Cloudflare Worker.</p>
-            </div>
-
-            <div id="settings-content-container" class="flex-1 min-h-0 overflow-y-auto pr-1 pt-5 grid grid-cols-1 md:grid-cols-2 gap-4 content-start transition-all duration-700 blur-md opacity-40 pointer-events-none select-none">
-                <div>
-                    <label for="github-token" class="block text-xs font-medium text-zinc-400 mb-1.5">GitHub Master Token (PAT)</label>
-                    <div class="flex gap-2">
-                        <input type="password" id="github-token" dir="ltr" value="" class="flex-1 bg-zinc-900 border border-zinc-800 rounded-2xl px-4 py-2.5 text-xs font-mono text-white focus:outline-none focus:border-zinc-600 transition-colors">
-                        <button type="button" id="verify-token-btn" class="bg-apple-blue hover:bg-apple-blueHover text-white text-xs font-medium px-4 py-2.5 rounded-2xl transition-colors whitespace-nowrap">אמת ושמור</button>
-                    </div>
-                </div>
-
-                <div>
-                    <label for="worker-base-url" class="block text-xs font-medium text-zinc-400 mb-1.5">Cloudflare Worker Proxy URL</label>
-                    <div class="flex gap-2">
-                        <input type="url" id="worker-base-url" dir="ltr" value="" class="flex-1 bg-zinc-900 border border-zinc-800 rounded-2xl px-4 py-2.5 text-xs font-mono text-white focus:outline-none focus:border-zinc-600 transition-colors">
-                        <button type="button" id="save-worker-config-btn" class="bg-zinc-800 hover:bg-zinc-700 text-white text-xs font-medium px-3.5 py-2.5 rounded-2xl border border-zinc-700 transition-colors whitespace-nowrap">שמור בפרטי</button>
-                        <button type="button" id="test-worker-btn" class="bg-zinc-900 hover:bg-zinc-800 text-white text-xs font-medium px-3.5 py-2.5 rounded-2xl border border-zinc-800 transition-colors whitespace-nowrap">בדוק</button>
-                    </div>
-                    <div class="mt-2 flex items-center justify-between gap-2 bg-zinc-900/60 border border-zinc-800/80 rounded-2xl px-3.5 py-2">
-                        <span class="text-[11px] text-zinc-400">ניהול הסקריפט והמשתנים ב-Cloudflare:</span>
-                        <a href="https://dash.cloudflare.com" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-[11px] font-medium text-white/90 hover:text-white bg-zinc-800 hover:bg-zinc-700 px-3 py-1 rounded-full border border-zinc-700 transition-colors">
-                            <svg class="w-3.5 h-3.5 shrink-0 text-[#F38020]" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M16.5088 16.8447c.1475-.5068.0908-.9707-.1553-1.3154-.2246-.3164-.6045-.499-1.0615-.5205l-8.6592-.1123a.1559.1559 0 0 1-.1333-.0713c-.0283-.042-.0351-.0986-.021-.1553.0278-.084.1123-.1484.2036-.1562l8.7359-.1123c1.0351-.0489 2.1601-.8868 2.5537-1.9136l.499-1.3013c.0215-.0561.0293-.1128.0147-.168-.5625-2.5463-2.835-4.4453-5.5499-4.4453-2.5039 0-4.6284 1.6177-5.3876 3.8614-.4927-.3658-1.1187-.5625-1.794-.499-1.2026.119-2.1665 1.083-2.2861 2.2856-.0283.31-.0069.6128.0635.894C1.5683 13.171 0 14.7754 0 16.752c0 .1748.0142.3515.0352.5205.0141.083.0844.1474.1689.1474h15.9814c.0909 0 .1758-.0644.2032-.1552l.1201-.42zm2.7676-5.5635c-.0772 0-.1611 0-.2383.0112-.0566 0-.1055.0415-.127.0977l-.3378 1.1743c-.1475.5068-.0918.9707.1543 1.3164.2256.3164.6055.498 1.0625.5195l1.8437.1133c.0557 0 .1055.0263.1328.0703.0284.043.0352.1074.0215.1563-.0283.084-.1133.1484-.2041.1552l-1.9209.1123c-1.041.0489-2.1582.8868-2.5527 1.9141l-.1406.3584c-.0284.0713.0214.1416.0986.1416h6.5976c.0772 0 .1475-.0489.169-.126.1123-.4082.1758-.8379.1758-1.2803 0-2.6025-2.125-4.727-4.7344-4.727"/>
-                            </svg>
-                            <span>Cloudflare Workers ↗</span>
-                        </a>
-                    </div>
-                    <div id="github-app-install-banner" class="hidden mt-2 flex items-center justify-between gap-2 bg-zinc-900/90 border border-zinc-800 rounded-2xl px-3.5 py-2 text-xs">
-                        <span id="github-app-install-text" class="text-zinc-300"></span>
-                        <a id="github-app-install-link" href="https://github.com/apps" target="_blank" rel="noopener noreferrer" class="hidden bg-apple-blue hover:bg-apple-blueHover text-white text-[11px] font-medium px-3 py-1 rounded-full transition-colors whitespace-nowrap">התקן GitHub App ↗</a>
-                    </div>
-                </div>
-
-                <div>
-                    <label for="template-repo" class="block text-xs font-medium text-zinc-400 mb-1.5">מאגר תבנית פרטי (Backend Template)</label>
-                    <input type="text" id="template-repo" dir="ltr" value="" class="w-full bg-zinc-900 border border-zinc-800 rounded-2xl px-4 py-2.5 text-xs font-mono text-white focus:outline-none focus:border-zinc-600 transition-colors">
-                </div>
-
-                <div>
-                    <label for="frontend-template-repo" class="block text-xs font-medium text-zinc-400 mb-1.5">מאגר תבנית פומבי (Frontend Template)</label>
-                    <input type="text" id="frontend-template-repo" dir="ltr" value="" class="w-full bg-zinc-900 border border-zinc-800 rounded-2xl px-4 py-2.5 text-xs font-mono text-white focus:outline-none focus:border-zinc-600 transition-colors">
-                </div>
-
-                <!-- Color Palettes Studio Manager -->
-                <div class="md:col-span-2 bg-zinc-900/70 border border-zinc-800 rounded-3xl p-4 sm:p-5 space-y-4">
-                    <div class="flex flex-wrap items-center justify-between gap-3">
-                        <div class="flex items-center gap-3.5">
-                            <div class="w-12 h-12 shrink-0 flex items-center justify-center">
-                                <canvas id="palette-preview-sphere" style="width:100%;height:100%;display:block;background:transparent"></canvas>
-                            </div>
-                            <div>
-                                <h2 class="text-sm font-semibold text-white">ניהול פאלטות צבעים (Sphere & Header)</h2>
-                                <p class="text-xs text-zinc-400 mt-0.5">בחירת סטייט, עריכת גוונים ותצוגה חיה על הכדור.</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <button type="button" id="preview-palette-state-btn" class="bg-zinc-800 hover:bg-zinc-700 text-white text-xs font-medium px-3.5 py-2 rounded-full border border-zinc-700 transition-colors">תצוגה על הכדור</button>
-                            <button type="button" id="reset-palette-state-btn" class="bg-zinc-900 hover:bg-zinc-800 text-zinc-300 text-xs font-medium px-3.5 py-2 rounded-full border border-zinc-800 transition-colors">איפוס סטייט</button>
-                        </div>
-                    </div>
-
-                    <!-- State Selector Pills -->
-                    <div id="palette-state-pills" dir="ltr" class="flex flex-wrap gap-1.5">
-                        <button type="button" data-palette-state="initial" class="palette-state-pill px-3 py-1.5 rounded-full text-xs font-mono border border-zinc-700 bg-zinc-900 text-zinc-300 hover:text-white transition-colors">initial</button>
-                        <button type="button" data-palette-state="awake" class="palette-state-pill px-3 py-1.5 rounded-full text-xs font-mono border border-zinc-700 bg-zinc-900 text-zinc-300 hover:text-white transition-colors">awake</button>
-                        <button type="button" data-palette-state="ready" class="palette-state-pill px-3 py-1.5 rounded-full text-xs font-mono border border-white bg-white text-zinc-950 font-semibold transition-colors">ready</button>
-                        <button type="button" data-palette-state="building" class="palette-state-pill px-3 py-1.5 rounded-full text-xs font-mono border border-zinc-700 bg-zinc-900 text-zinc-300 hover:text-white transition-colors">building</button>
-                        <button type="button" data-palette-state="success" class="palette-state-pill px-3 py-1.5 rounded-full text-xs font-mono border border-zinc-700 bg-zinc-900 text-zinc-300 hover:text-white transition-colors">success</button>
-                        <button type="button" data-palette-state="error" class="palette-state-pill px-3 py-1.5 rounded-full text-xs font-mono border border-zinc-700 bg-zinc-900 text-zinc-300 hover:text-white transition-colors">error</button>
-                    </div>
-
-                    <!-- Active State Swatches Editor -->
-                    <div id="palette-swatches-grid" dir="ltr" class="flex flex-wrap items-center gap-2.5"></div>
-
-                    <!-- JSON Array Quick Import / Export -->
-                    <div class="flex flex-col sm:flex-row gap-2 pt-1">
-                        <input type="text" id="palette-json-input" dir="ltr" class="flex-1 bg-[#0F0F0F] border border-zinc-800 rounded-2xl px-3.5 py-2 text-xs font-mono text-zinc-200 focus:outline-none focus:border-zinc-600 transition-colors">
-                        <button type="button" id="apply-palette-json-btn" class="bg-zinc-800 hover:bg-zinc-700 text-white text-xs font-medium px-4 py-2 rounded-2xl border border-zinc-700 transition-colors whitespace-nowrap">החל מערך</button>
-                        <button type="button" id="save-palettes-github-btn" class="bg-apple-blue hover:bg-apple-blueHover text-white text-xs font-medium px-4 py-2 rounded-2xl transition-colors whitespace-nowrap">שמור קבוע</button>
-                        <button type="button" id="copy-palette-json-btn" class="bg-zinc-900 hover:bg-zinc-800 text-zinc-300 text-xs font-medium px-4 py-2 rounded-2xl border border-zinc-800 transition-colors whitespace-nowrap">העתק</button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- TAB 4: DIAGNOSTICS & LOGS -->
-        <section id="tab-logs" class="tab-panel hidden h-[72vh] min-h-[480px] max-h-[720px] flex flex-col bg-[#0F0F0F] text-white rounded-3xl p-5 sm:p-8 shadow-2xl border border-zinc-800/80 overflow-hidden">
-            <div class="shrink-0 flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-zinc-800/80 pb-5">
-                <div>
-                    <h1 id="logs-header-title" class="text-xl sm:text-2xl font-bold tracking-tight text-white">לוגים ואבחון תקלות (Diagnostics)</h1>
-                    <p id="logs-header-subtitle" class="text-xs sm:text-sm text-zinc-400 mt-1">פירוט טכני מלא של בקשות API, שגיאות רשת, CORS והרשאות — מוכן להעתקה ושליחה לדיבאג.</p>
-                </div>
-                <div id="logs-actions-container" class="flex items-center gap-2 transition-all duration-700 blur-md opacity-40 pointer-events-none select-none">
-                    <button type="button" id="copy-all-logs-btn" class="bg-apple-blue hover:bg-apple-blueHover text-white text-xs font-medium px-4 py-2 rounded-full transition-colors">
-                        העתק דוח מלא
-                    </button>
-                    <button type="button" id="clear-logs-btn" class="bg-zinc-900 hover:bg-zinc-800 text-zinc-300 text-xs font-medium px-4 py-2 rounded-full border border-zinc-800 transition-colors">
-                        נקה לוגים
-                    </button>
-                </div>
-            </div>
-
-            <div id="logs-content-container" class="flex-1 min-h-0 flex flex-col gap-4 pt-5 overflow-hidden transition-all duration-700 blur-md opacity-40 pointer-events-none select-none">
-                <div id="logs-env-summary" dir="ltr" class="shrink-0 flex flex-wrap gap-2 text-[11px] font-mono text-zinc-400 bg-zinc-900/90 border border-zinc-800 rounded-2xl px-3.5 py-2.5"></div>
-                <div id="logs-list-container" class="flex-1 min-h-0 overflow-y-auto pr-1 space-y-2.5"></div>
-            </div>
-        </section>
-
-        <!-- TAB 5: DOCS / AI ARCHITECTURE README.md -->
-        <section id="tab-docs" class="tab-panel hidden h-[72vh] min-h-[480px] max-h-[720px] flex flex-col bg-[#0F0F0F] text-white rounded-3xl p-5 sm:p-8 shadow-2xl border border-zinc-800/80 overflow-hidden">
-            <div class="shrink-0 flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-zinc-800/80 pb-5">
-                <div>
-                    <div class="flex items-center gap-2.5">
-                        <h1 id="docs-header-title" class="text-xl sm:text-2xl font-bold tracking-tight text-white">Docs (README.md)</h1>
-                        <span id="docs-sync-status-badge" dir="ltr" class="text-[11px] font-mono px-2.5 py-0.5 rounded-full bg-zinc-900 text-zinc-400 border border-zinc-800">GitHub_Automation_Studio_Backend</span>
-                    </div>
-                    <p id="docs-header-subtitle" class="text-xs sm:text-sm text-zinc-400 mt-1">נמשך דינמית מתוך <span dir="ltr" class="font-mono text-zinc-300">GitHub_Automation_Studio_Backend/README.md</span>.</p>
-                </div>
-                <div id="docs-actions-container" class="flex flex-wrap items-center gap-2 transition-all duration-700 blur-md opacity-40 pointer-events-none select-none">
-                    <button type="button" id="refresh-docs-btn" class="bg-zinc-900 hover:bg-zinc-800 text-zinc-200 text-xs font-medium px-3.5 py-2 rounded-full border border-zinc-800 transition-colors">
-                        רענן מה-Backend
-                    </button>
-                    <button type="button" id="toggle-docs-raw-btn" class="bg-zinc-900 hover:bg-zinc-800 text-zinc-200 text-xs font-medium px-3.5 py-2 rounded-full border border-zinc-800 transition-colors">
-                        ערוך Markdown
-                    </button>
-                    <button type="button" id="copy-docs-md-btn" class="bg-zinc-800 hover:bg-zinc-700 text-white text-xs font-medium px-3.5 py-2 rounded-full border border-zinc-700 transition-colors">
-                        העתק ל-AI
-                    </button>
-                </div>
-            </div>
-
-            <div id="docs-content-container" class="flex-1 min-h-0 flex flex-col gap-4 pt-5 overflow-hidden transition-all duration-700 blur-md opacity-40 pointer-events-none select-none">
-                <!-- Editable Raw Markdown View (Toggleable) -->
-                <div id="docs-raw-wrapper" class="hidden flex-1 min-h-0 flex flex-col gap-2.5">
-                    <div class="shrink-0 flex items-center justify-between text-xs text-zinc-400">
-                        <span dir="ltr" class="font-mono">GitHub_Automation_Studio_Backend/README.md</span>
-                        <button type="button" id="sync-docs-backend-btn" class="bg-apple-blue hover:bg-apple-blueHover text-white text-xs font-medium px-4 py-1.5 rounded-full transition-colors">
-                            שמור שינויים ב-Backend
-                        </button>
-                    </div>
-                    <textarea id="docs-raw-markdown" dir="ltr" class="flex-1 min-h-0 w-full bg-zinc-950 border border-zinc-800 rounded-2xl p-4 text-xs font-mono text-zinc-200 focus:outline-none focus:border-zinc-600 leading-relaxed resize-none"></textarea>
-                </div>
-
-                <!-- Dynamically Rendered Markdown Container from Backend -->
-                <div id="docs-rendered-container" class="flex-1 min-h-0 overflow-y-auto pr-1 space-y-4">
-                    <div class="text-center py-10 text-xs text-zinc-500 bg-zinc-900/50 rounded-2xl border border-dashed border-zinc-800">
-                        טוען תיעוד מתוך GitHub_Automation_Studio_Backend/README.md...
-                    </div>
-                </div>
             </div>
         </section>
 
