@@ -336,7 +336,7 @@
     </main>
 
     <!-- Instagram-Style Floating Bottom Dock Navigation (Hidden in initial dormant state, appears blurred in awake state) -->
-    <div id="floating-bottom-dock" class="hidden fixed bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 z-40 max-w-[94vw] transition-all duration-500">
+    <div id="floating-bottom-dock" class="hidden fixed bottom-7 sm:bottom-9 left-1/2 -translate-x-1/2 z-40 max-w-[94vw] transition-all duration-500">
         <div id="dock-pill-shell" class="relative bg-black/85 backdrop-blur-2xl border border-white/15 rounded-full p-1.5 shadow-[0_12px_40px_rgba(0,0,0,0.9)] flex items-center justify-center transition-all duration-500 overflow-hidden">
             <!-- Real Authenticated Navigation Icons + User Avatar Pill (Hidden until authenticated) -->
             <nav id="dock-nav-content" class="hidden items-center gap-1 sm:gap-1.5 transition-all duration-500" aria-label="ניווט ראשי">
@@ -1405,9 +1405,10 @@
                 sphereTokenForm.classList.remove('hidden');
                 if (sphereTokenInput) {
                     sphereTokenInput.value = '';
-                    setTimeout(() => {
-                        try { sphereTokenInput.focus(); } catch (_) {}
-                    }, 30);
+                    try {
+                        sphereTokenInput.focus({ preventScroll: true });
+                        sphereTokenInput.click();
+                    } catch (_) {}
                 }
             }
 
@@ -1418,13 +1419,16 @@
                 sphereRebirthPhase = 'imploding';
                 sphereRebirthProgress = 0;
                 sphereRebirthTargetState = nextAwakeState;
+
+                // Focus immediately inside the user gesture stack so iOS Safari opens the keyboard right away
+                if (!authenticatedOwner) {
+                    openQuickTokenPopoverForApiKey();
+                }
+
                 sphereRebirthOnComplete = () => {
                     isAppAwake = true;
                     lastAwakenTimestamp = Date.now();
                     updateSphereState(nextAwakeState, { skipSpinBoost: true });
-                    if (!authenticatedOwner) {
-                        openQuickTokenPopoverForApiKey();
-                    }
                 };
             }
 
@@ -1609,6 +1613,7 @@
                         lastTouchEndTime = Date.now();
                     }
                     if (!moved) {
+                        if (e && e.cancelable) e.preventDefault();
                         handleTap();
                     }
                 };
