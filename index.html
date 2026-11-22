@@ -335,8 +335,8 @@
 
     </main>
 
-    <!-- Instagram-Style Floating Bottom Dock Navigation -->
-    <div id="floating-bottom-dock" class="fixed bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 z-40 max-w-[94vw] transition-all duration-500">
+    <!-- Instagram-Style Floating Bottom Dock Navigation (Hidden in initial dormant state, appears blurred in awake state) -->
+    <div id="floating-bottom-dock" class="hidden fixed bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 z-40 max-w-[94vw] transition-all duration-500">
         <div id="dock-pill-shell" class="relative bg-black/85 backdrop-blur-2xl border border-white/15 rounded-full p-1.5 shadow-[0_12px_40px_rgba(0,0,0,0.9)] flex items-center justify-center transition-all duration-500 overflow-hidden">
             <!-- Real Authenticated Navigation Icons + User Avatar Pill (Hidden until authenticated) -->
             <nav id="dock-nav-content" class="hidden items-center gap-1 sm:gap-1.5 transition-all duration-500" aria-label="ניווט ראשי">
@@ -416,6 +416,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // Core DOM Elements
+            const floatingBottomDock = document.getElementById('floating-bottom-dock');
             const dockPillShell = document.getElementById('dock-pill-shell');
             const dockNavContent = document.getElementById('dock-nav-content');
             const dockDummyContent = document.getElementById('dock-dummy-content');
@@ -726,6 +727,9 @@
                 document.body.classList.toggle('bg-[#050507]', isDormantInitial);
                 document.body.classList.toggle('bg-[#0F0F0F]', !isDormantInitial);
 
+                if (floatingBottomDock) {
+                    floatingBottomDock.classList.toggle('hidden', isDormantInitial);
+                }
                 if (initialAwakeBackdrop) {
                     initialAwakeBackdrop.classList.toggle('opacity-0', !isDormantInitial);
                     initialAwakeBackdrop.classList.toggle('opacity-100', isDormantInitial);
