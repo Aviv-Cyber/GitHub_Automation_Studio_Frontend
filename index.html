@@ -148,6 +148,12 @@
                                 </svg>
                                 <span>הגדרות תשתית</span>
                             </button>
+                            <button type="button" data-tab="docs" class="nav-tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-white/80 hover:text-white hover:bg-white/10 font-medium text-sm transition-all text-right">
+                                <svg class="w-5 h-5 shrink-0 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/>
+                                </svg>
+                                <span>Docs</span>
+                            </button>
                         </nav>
 
                         <div class="border-t border-white/10 pt-1 mt-1">
@@ -224,7 +230,7 @@
             <div id="repos-content-container" class="space-y-5 transition-all duration-700 blur-md opacity-40 pointer-events-none select-none">
                 <!-- Search & Filter -->
                 <div class="flex flex-col sm:flex-row gap-2.5">
-                    <input type="text" id="repos-search-input" class="flex-1 bg-zinc-900 border border-zinc-800 rounded-full px-4 py-2.5 text-sm text-white focus:outline-none focus:border-zinc-600 transition-colors">
+                    <input type="text" id="repos-search-input" placeholder="חיפוש לפי שם מאגר או כינוי (Alias)..." class="flex-1 bg-zinc-900 border border-zinc-800 rounded-full px-4 py-2.5 text-sm text-white focus:outline-none focus:border-zinc-600 transition-colors">
                     <div class="relative">
                         <select id="repos-visibility-filter" class="w-full sm:w-44 appearance-none bg-zinc-900 border border-zinc-800 rounded-full pr-4 pl-9 py-2.5 text-sm text-white focus:outline-none focus:border-zinc-600 transition-colors cursor-pointer">
                             <option value="all">כל המאגרים</option>
@@ -350,6 +356,50 @@
             </div>
         </section>
 
+        <!-- TAB 5: DOCS / AI ARCHITECTURE README.md -->
+        <section id="tab-docs" class="tab-panel hidden space-y-6 bg-[#0F0F0F] text-white rounded-3xl p-5 sm:p-8 shadow-2xl border border-zinc-800/80">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-zinc-800/80 pb-5">
+                <div>
+                    <div class="flex items-center gap-2.5">
+                        <h1 id="docs-header-title" class="text-xl sm:text-2xl font-bold tracking-tight text-white">Docs (README.md)</h1>
+                        <span id="docs-sync-status-badge" dir="ltr" class="text-[11px] font-mono px-2.5 py-0.5 rounded-full bg-zinc-900 text-zinc-400 border border-zinc-800">GitHub_Automation_Studio_Backend</span>
+                    </div>
+                    <p id="docs-header-subtitle" class="text-xs sm:text-sm text-zinc-400 mt-1">נמשך דינמית מתוך <span dir="ltr" class="font-mono text-zinc-300">GitHub_Automation_Studio_Backend/README.md</span>.</p>
+                </div>
+                <div id="docs-actions-container" class="flex flex-wrap items-center gap-2 transition-all duration-700 blur-md opacity-40 pointer-events-none select-none">
+                    <button type="button" id="refresh-docs-btn" class="bg-zinc-900 hover:bg-zinc-800 text-zinc-200 text-xs font-medium px-3.5 py-2 rounded-full border border-zinc-800 transition-colors">
+                        רענן מה-Backend
+                    </button>
+                    <button type="button" id="toggle-docs-raw-btn" class="bg-zinc-900 hover:bg-zinc-800 text-zinc-200 text-xs font-medium px-3.5 py-2 rounded-full border border-zinc-800 transition-colors">
+                        ערוך Markdown
+                    </button>
+                    <button type="button" id="copy-docs-md-btn" class="bg-zinc-800 hover:bg-zinc-700 text-white text-xs font-medium px-3.5 py-2 rounded-full border border-zinc-700 transition-colors">
+                        העתק ל-AI
+                    </button>
+                </div>
+            </div>
+
+            <div id="docs-content-container" class="space-y-5 transition-all duration-700 blur-md opacity-40 pointer-events-none select-none">
+                <!-- Editable Raw Markdown View (Toggleable) -->
+                <div id="docs-raw-wrapper" class="hidden space-y-2.5">
+                    <div class="flex items-center justify-between text-xs text-zinc-400">
+                        <span dir="ltr" class="font-mono">GitHub_Automation_Studio_Backend/README.md</span>
+                        <button type="button" id="sync-docs-backend-btn" class="bg-apple-blue hover:bg-apple-blueHover text-white text-xs font-medium px-4 py-1.5 rounded-full transition-colors">
+                            שמור שינויים ב-Backend
+                        </button>
+                    </div>
+                    <textarea id="docs-raw-markdown" rows="18" dir="ltr" class="w-full bg-zinc-950 border border-zinc-800 rounded-2xl p-4 text-xs font-mono text-zinc-200 focus:outline-none focus:border-zinc-600 leading-relaxed"></textarea>
+                </div>
+
+                <!-- Dynamically Rendered Markdown Container from Backend -->
+                <div id="docs-rendered-container" class="space-y-4">
+                    <div class="text-center py-10 text-xs text-zinc-500 bg-zinc-900/50 rounded-2xl border border-dashed border-zinc-800">
+                        טוען תיעוד מתוך GitHub_Automation_Studio_Backend/README.md...
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <!-- Delete Confirmation Modal -->
@@ -367,6 +417,7 @@
             <div class="flex items-center justify-center gap-2.5 pt-1">
                 <button type="button" id="cancel-delete-repo-btn" class="flex-1 bg-zinc-800 hover:bg-zinc-700 text-white text-xs font-medium px-4 py-2.5 rounded-full border border-zinc-700 transition-colors">ביטול</button>
                 <button type="button" id="confirm-delete-repo-btn" class="flex-1 bg-red-600 hover:bg-red-700 text-white text-xs font-medium px-4 py-2.5 rounded-full shadow-sm transition-colors">כן, מחק מאגר</button>
+                <button type="button" id="confirm-delete-pair-btn" class="hidden flex-1 bg-rose-700 hover:bg-rose-800 text-white text-xs font-medium px-4 py-2.5 rounded-full shadow-sm transition-colors">מחק זוג</button>
             </div>
         </div>
     </div>
@@ -432,22 +483,85 @@
             const copyAllLogsBtn = document.getElementById('copy-all-logs-btn');
             const clearLogsBtn = document.getElementById('clear-logs-btn');
 
-            const deleteRepoModal = document.getElementById('delete-repo-modal');
-            const deleteModalRepoName = document.getElementById('delete-modal-repo-name');
+            const docsHeaderTitle = document.getElementById('docs-header-title');
+            const docsHeaderSubtitle = document.getElementById('docs-header-subtitle');
+            const docsActionsContainer = document.getElementById('docs-actions-container');
+            const docsContentContainer = document.getElementById('docs-content-container');
+            const refreshDocsBtn = document.getElementById('refresh-docs-btn');
+            const toggleDocsRawBtn = document.getElementById('toggle-docs-raw-btn');
+            const copyDocsMdBtn = document.getElementById('copy-docs-md-btn');
+            const syncDocsBackendBtn = document.getElementById('sync-docs-backend-btn');
+            const docsRawWrapper = document.getElementById('docs-raw-wrapper');
+            const docsRawMarkdown = document.getElementById('docs-raw-markdown');
+            const docsRenderedContainer = document.getElementById('docs-rendered-container');
+            const docsSyncStatusBadge = document.getElementById('docs-sync-status-badge');
+            let loadedBackendReadmeMarkdown = '';
+            let loadedBackendReadmeSha = '';
             const cancelDeleteRepoBtn = document.getElementById('cancel-delete-repo-btn');
             const confirmDeleteRepoBtn = document.getElementById('confirm-delete-repo-btn');
+            const confirmDeletePairBtn = document.getElementById('confirm-delete-pair-btn');
 
             const toastBanner = document.getElementById('toast-banner');
             const toastDot = document.getElementById('toast-dot');
             const toastText = document.getElementById('toast-text');
 
-            // Application State
+            const DEFAULT_SPHERE_PALETTES = {
+                initial: ['#18181B', '#3F3F46', '#71717A', '#A1A1AA', '#E4E4E7'],
+                awake: ['#BA92EC', '#9FE7E5', '#F0C4D9', '#BDCFF3', '#FFFFFF'],
+                ready: ['#0F172A', '#1D4ED8', '#0284C7', '#38BDF8', '#E0F2FE'],
+                building: ['#7C2D12', '#C2410C', '#EA580C', '#FB923C', '#FED7AA'],
+                success: ['#064E3B', '#059669', '#10B981', '#34D399', '#A7F3D0'],
+                error: ['#7F1D1D', '#B91C1C', '#EF4444', '#F87171', '#FCA5A5']
+            };
+
+            const SPHERE_PALETTES = (() => {
+                const clone = {};
+                Object.keys(DEFAULT_SPHERE_PALETTES).forEach((k) => {
+                    clone[k] = [...DEFAULT_SPHERE_PALETTES[k]];
+                });
+                try {
+                    const saved = JSON.parse(localStorage.getItem('gh_custom_sphere_palettes') || '{}');
+                    if (saved && typeof saved === 'object') {
+                        Object.keys(DEFAULT_SPHERE_PALETTES).forEach((k) => {
+                            if (Array.isArray(saved[k]) && saved[k].length && saved[k].every((c) => /^#[0-9A-Fa-f]{6}$/.test(c))) {
+                                clone[k] = saved[k].map((c) => c.toUpperCase());
+                            }
+                        });
+                    }
+                } catch (_) {}
+                return clone;
+            })();
+
+            let activeSphereState = 'initial';
+            let selectedEditorPaletteState = 'ready';
+            let paletteAutoSaveTimer = null;
+
+            function persistCustomPalettes() {
+                try {
+                    localStorage.setItem('gh_custom_sphere_palettes', JSON.stringify(SPHERE_PALETTES));
+                } catch (_) {}
+                if (authenticatedOwner) {
+                    clearTimeout(paletteAutoSaveTimer);
+                    paletteAutoSaveTimer = setTimeout(() => {
+                        savePrivateUserConfig(true);
+                    }, 900);
+                }
+            }
+
             let authenticatedOwner = '';
             let allFetchedRepos = [];
             let isFetchingRepos = false;
             let repoPendingDeletion = null;
+            let deletePairMode = false;
             let expandedRepoName = '';
             const repoLiveStatusMap = {};
+            let repoAliasesMap = (() => {
+                try {
+                    return JSON.parse(localStorage.getItem('gh_repo_aliases') || '{}') || {};
+                } catch (_) {
+                    return {};
+                }
+            })();
             let saltedSecretSeed = localStorage.getItem('gh_app_salted_seed') || '';
             const repoSaltedValuesMap = (() => {
                 try {
@@ -584,6 +698,46 @@
                 });
             }
 
+            if (clearLogsBtn) {
+                clearLogsBtn.addEventListener('click', () => {
+                    appDiagnosticLogs.length = 0;
+                    if (logsErrorBadge) logsErrorBadge.classList.add('hidden');
+                    if (logsMenuDot) logsMenuDot.classList.add('hidden');
+                    renderDiagnosticLogs();
+                    showToast('הלוגים נוקו', 'info');
+                });
+            }
+
+            if (hamburgerMenuBtn) {
+                hamburgerMenuBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const isCurrentlyHidden = hamburgerMenuPanel?.classList.contains('hidden');
+                    setHamburgerMenuOpen(Boolean(isCurrentlyHidden));
+                });
+            }
+
+            document.addEventListener('click', (e) => {
+                if (hamburgerMenuPanel && !hamburgerMenuPanel.classList.contains('hidden')) {
+                    if (!hamburgerMenuPanel.contains(e.target) && !hamburgerMenuBtn?.contains(e.target)) {
+                        setHamburgerMenuOpen(false);
+                    }
+                }
+            });
+
+            // Hamburger Menu & Tab Switching
+            const tabPanels = document.querySelectorAll('.tab-panel');
+            const navTabBtns = document.querySelectorAll('.nav-tab-btn');
+
+            navTabBtns.forEach((btn) => {
+                btn.addEventListener('click', () => {
+                    const targetTab = btn.dataset.tab;
+                    if (targetTab) {
+                        switchActiveTab(targetTab);
+                        setHamburgerMenuOpen(false);
+                    }
+                });
+            });
+
             function syncSettingsBlurState() {
                 const isLoggedOut = !authenticatedOwner;
                 if (hamburgerMenuPanel) {
@@ -665,20 +819,25 @@
                     el.classList.toggle('pointer-events-none', isLoggedOut);
                     el.classList.toggle('select-none', isLoggedOut);
                 });
-            }
 
-            if (clearLogsBtn) {
-                clearLogsBtn.addEventListener('click', () => {
-                    appDiagnosticLogs.length = 0;
-                    if (logsErrorBadge) logsErrorBadge.classList.add('hidden');
-                    if (logsMenuDot) logsMenuDot.classList.add('hidden');
-                    renderDiagnosticLogs();
+                if (docsHeaderTitle) {
+                    if (isLoggedOut) {
+                        docsHeaderTitle.innerHTML = loginIconHtml;
+                    } else {
+                        docsHeaderTitle.textContent = 'Docs (README.md)';
+                    }
+                }
+                if (docsHeaderSubtitle) {
+                    docsHeaderSubtitle.classList.toggle('hidden', isLoggedOut);
+                }
+                [docsActionsContainer, docsContentContainer].forEach((el) => {
+                    if (!el) return;
+                    el.classList.toggle('blur-md', isLoggedOut);
+                    el.classList.toggle('opacity-40', isLoggedOut);
+                    el.classList.toggle('pointer-events-none', isLoggedOut);
+                    el.classList.toggle('select-none', isLoggedOut);
                 });
             }
-
-            // Hamburger Menu & Tab Switching
-            const tabPanels = document.querySelectorAll('.tab-panel');
-            const navTabBtns = document.querySelectorAll('.nav-tab-btn');
 
             function setHamburgerMenuOpen(open) {
                 if (!hamburgerMenuPanel || !hamburgerMenuBtn) return;
@@ -687,23 +846,278 @@
                 hamburgerMenuBtn.setAttribute('aria-expanded', String(shouldOpen));
                 if (hamburgerIconOpen) hamburgerIconOpen.classList.toggle('hidden', shouldOpen);
                 if (hamburgerIconClose) hamburgerIconClose.classList.toggle('hidden', !shouldOpen);
-                if (shouldOpen) {
-                    syncSettingsBlurState();
+            }
+            function escapeHtmlText(str = '') {
+                return String(str || '')
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;');
+            }
+
+            function formatInlineMarkdown(text = '') {
+                let html = escapeHtmlText(text);
+                html = html.replace(/`([^`]+)`/g, '<code dir="ltr" class="font-mono text-[11px] bg-zinc-950 text-sky-300 border border-zinc-800/90 px-1.5 py-0.5 rounded-md">$1</code>');
+                html = html.replace(/\*\*([^*]+)\*\*/g, '<strong class="text-white font-semibold">$1</strong>');
+                html = html.replace(/\*([^*]+)\*/g, '<em class="text-zinc-200">$1</em>');
+                return html;
+            }
+
+            function renderMarkdownToStyledCards(mdText = '') {
+                if (!docsRenderedContainer) return;
+                const cleanMd = String(mdText || '').trim();
+                if (!cleanMd) {
+                    docsRenderedContainer.innerHTML = `<div class="text-center py-10 text-xs text-zinc-500 bg-zinc-900/50 rounded-2xl border border-dashed border-zinc-800">הקובץ README.md ריק ב-Backend. לחץ על "ערוך Markdown" כדי לכתוב תיעוד.</div>`;
+                    return;
+                }
+
+                const lines = cleanMd.split(/\r?\n/);
+                const sections = [];
+                let currentSection = { title: '', blocks: [] };
+                let inCodeBlock = false;
+                let codeLang = '';
+                let codeLines = [];
+                let tableLines = [];
+
+                const flushTable = () => {
+                    if (!tableLines.length) return;
+                    const rows = tableLines
+                        .filter((l) => !/^\|?\s*[-:| ]+\s*\|?$/.test(l))
+                        .map((l) => l.replace(/^\|/, '').replace(/\|$/, '').split('|').map((c) => c.trim()));
+                    if (rows.length) {
+                        const headerCells = rows[0].map((c) => `<th class="px-3 py-2 text-left text-[11px] font-mono text-zinc-300 bg-zinc-950 border-b border-zinc-800">${formatInlineMarkdown(c)}</th>`).join('');
+                        const bodyRows = rows.slice(1).map((r) => `<tr>${r.map((c) => `<td class="px-3 py-2 text-xs text-zinc-300 border-b border-zinc-800/60">${formatInlineMarkdown(c)}</td>`).join('')}</tr>`).join('');
+                        currentSection.blocks.push(`
+                            <div dir="ltr" class="overflow-x-auto rounded-2xl border border-zinc-800 bg-zinc-950/80 my-2">
+                                <table class="w-full border-collapse">
+                                    <thead><tr>${headerCells}</tr></thead>
+                                    <tbody>${bodyRows}</tbody>
+                                </table>
+                            </div>
+                        `);
+                    }
+                    tableLines = [];
+                };
+
+                for (const line of lines) {
+                    if (line.trim().startsWith('```')) {
+                        flushTable();
+                        if (!inCodeBlock) {
+                            inCodeBlock = true;
+                            codeLang = line.trim().slice(3).trim();
+                            codeLines = [];
+                        } else {
+                            inCodeBlock = false;
+                            currentSection.blocks.push(`
+                                <pre dir="ltr" class="bg-zinc-950 border border-zinc-800 rounded-2xl p-3.5 text-xs font-mono text-zinc-200 overflow-x-auto leading-relaxed my-2">${escapeHtmlText(codeLines.join('\n'))}</pre>
+                            `);
+                            codeLines = [];
+                        }
+                        continue;
+                    }
+                    if (inCodeBlock) {
+                        codeLines.push(line);
+                        continue;
+                    }
+                    if (line.trim().startsWith('|') && line.trim().endsWith('|')) {
+                        tableLines.push(line.trim());
+                        continue;
+                    } else {
+                        flushTable();
+                    }
+
+                    if (/^##\s+/.test(line)) {
+                        if (currentSection.title || currentSection.blocks.length) {
+                            sections.push(currentSection);
+                        }
+                        currentSection = { title: line.replace(/^##\s+/, '').trim(), blocks: [] };
+                    } else if (/^#\s+/.test(line)) {
+                        if (currentSection.title || currentSection.blocks.length) {
+                            sections.push(currentSection);
+                        }
+                        currentSection = { title: line.replace(/^#\s+/, '').trim(), isMainTitle: true, blocks: [] };
+                    } else if (/^###\s+/.test(line)) {
+                        currentSection.blocks.push(`<h3 class="text-xs sm:text-sm font-semibold text-sky-300 pt-2">${formatInlineMarkdown(line.replace(/^###\s+/, ''))}</h3>`);
+                    } else if (/^>\s+/.test(line)) {
+                        currentSection.blocks.push(`<blockquote class="border-r-2 border-sky-500/60 pr-3 py-1 text-xs text-zinc-300 bg-zinc-950/60 rounded-l-xl">${formatInlineMarkdown(line.replace(/^>\s+/, ''))}</blockquote>`);
+                    } else if (/^[-*]\s+/.test(line.trim())) {
+                        currentSection.blocks.push(`<div class="flex items-start gap-2 text-xs text-zinc-300 leading-relaxed"><span class="text-sky-400 mt-0.5">•</span><span>${formatInlineMarkdown(line.trim().replace(/^[-*]\s+/, ''))}</span></div>`);
+                    } else if (/^\d+\.\s+/.test(line.trim())) {
+                        const num = line.trim().match(/^(\d+\.)/)[1];
+                        const rest = line.trim().replace(/^\d+\.\s+/, '');
+                        currentSection.blocks.push(`<div class="flex items-start gap-2 text-xs text-zinc-300 leading-relaxed"><span dir="ltr" class="font-mono text-sky-400 shrink-0">${num}</span><span>${formatInlineMarkdown(rest)}</span></div>`);
+                    } else if (/^---+$/.test(line.trim())) {
+                        // Card boundary handled by section cards
+                    } else if (line.trim()) {
+                        currentSection.blocks.push(`<p class="text-xs sm:text-sm text-zinc-300 leading-relaxed">${formatInlineMarkdown(line)}</p>`);
+                    }
+                }
+                flushTable();
+                if (currentSection.title || currentSection.blocks.length) {
+                    sections.push(currentSection);
+                }
+
+                docsRenderedContainer.innerHTML = sections.map((sec) => `
+                    <div class="bg-zinc-900/75 border border-zinc-800 rounded-3xl p-5 space-y-2.5">
+                        ${sec.title ? `<h2 class="${sec.isMainTitle ? 'text-base sm:text-lg' : 'text-sm sm:text-base'} font-bold text-white border-b border-zinc-800/80 pb-2.5">${formatInlineMarkdown(sec.title)}</h2>` : ''}
+                        <div class="space-y-2">${sec.blocks.join('')}</div>
+                    </div>
+                `).join('');
+            }
+
+            async function loadArchitectureReadmeFromBackend(showSuccessToast = false) {
+                const token = (githubTokenInput?.value || localStorage.getItem('gh_automation_pat') || '').trim();
+                if (!token || !authenticatedOwner) return '';
+
+                if (docsSyncStatusBadge) {
+                    docsSyncStatusBadge.textContent = 'טוען מה-Backend...';
+                }
+
+                try {
+                    const fileUrl = `https://api.github.com/repos/${encodeURIComponent(authenticatedOwner)}/${STUDIO_PRIVATE_CONFIG_REPO}/contents/README.md?_t=${Date.now()}`;
+                    const res = await fetch(fileUrl, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Accept': 'application/vnd.github+json'
+                        },
+                        cache: 'no-store'
+                    });
+
+                    if (res.status === 404) {
+                        loadedBackendReadmeMarkdown = '';
+                        loadedBackendReadmeSha = '';
+                        if (docsRawMarkdown) docsRawMarkdown.value = '';
+                        if (docsSyncStatusBadge) docsSyncStatusBadge.textContent = 'README.md לא נמצא ב-Backend';
+                        renderMarkdownToStyledCards('');
+                        return '';
+                    }
+
+                    if (!res.ok) {
+                        throw new Error(`HTTP ${res.status}`);
+                    }
+
+                    const data = await res.json();
+                    loadedBackendReadmeSha = data.sha || '';
+                    const bin = atob(String(data.content || '').replace(/\s+/g, ''));
+                    const bytes = new Uint8Array(bin.length);
+                    for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+                    loadedBackendReadmeMarkdown = new TextDecoder('utf-8').decode(bytes);
+
+                    if (docsRawMarkdown) docsRawMarkdown.value = loadedBackendReadmeMarkdown;
+                    renderMarkdownToStyledCards(loadedBackendReadmeMarkdown);
+
+                    if (docsSyncStatusBadge) {
+                        docsSyncStatusBadge.textContent = `נטען מ-Backend (${new Date().toLocaleTimeString('he-IL')})`;
+                    }
+                    if (showSuccessToast) {
+                        showToast('README.md נמשך בהצלחה מה-Backend', 'success');
+                    }
+                    return loadedBackendReadmeMarkdown;
+                } catch (err) {
+                    if (docsSyncStatusBadge) {
+                        docsSyncStatusBadge.textContent = 'שגיאה בטעינה';
+                    }
+                    addDiagnosticLog('error', 'Failed Loading README.md from Backend Repo', {
+                        message: err?.message || String(err)
+                    });
+                    if (showSuccessToast) {
+                        showToast(`שגיאה בטעינת README.md: ${err?.message || err}`, 'error');
+                    }
+                    return '';
                 }
             }
 
-            if (hamburgerLoggedOutOverlay) {
-                hamburgerLoggedOutOverlay.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    setHamburgerMenuOpen(false);
-                    switchActiveTab('create');
-                    isAppAwake = true;
-                    lastAwakenTimestamp = Date.now();
-                    updateSphereState('awake');
-                    if (appHeader) {
-                        appHeader.classList.remove('blur-md', 'opacity-40', 'pointer-events-none', 'select-none');
+            async function saveArchitectureReadmeToBackend(markdownText) {
+                const token = (githubTokenInput?.value || localStorage.getItem('gh_automation_pat') || '').trim();
+                if (!token || !authenticatedOwner) {
+                    showToast('יש להתחבר לפני שמירת README.md ב-Backend', 'error');
+                    return false;
+                }
+                const cleanText = String(markdownText || '');
+                try {
+                    const fileUrl = `https://api.github.com/repos/${encodeURIComponent(authenticatedOwner)}/${STUDIO_PRIVATE_CONFIG_REPO}/contents/README.md`;
+                    const headers = {
+                        'Authorization': `Bearer ${token}`,
+                        'Accept': 'application/vnd.github+json',
+                        'Content-Type': 'application/json'
+                    };
+
+                    let sha = loadedBackendReadmeSha;
+                    if (!sha) {
+                        const getRes = await fetch(`${fileUrl}?_t=${Date.now()}`, { headers });
+                        if (getRes.ok) {
+                            const existing = await getRes.json().catch(() => ({}));
+                            sha = existing.sha || '';
+                        }
                     }
-                    openQuickTokenPopoverForApiKey();
+
+                    const utf8Bytes = new TextEncoder().encode(cleanText);
+                    let binary = '';
+                    utf8Bytes.forEach((b) => { binary += String.fromCharCode(b); });
+
+                    const putRes = await fetch(fileUrl, {
+                        method: 'PUT',
+                        headers,
+                        body: JSON.stringify({
+                            message: 'Update README.md from AutoGit Docs tab',
+                            content: btoa(binary),
+                            ...(sha ? { sha } : {})
+                        })
+                    });
+                    const putData = await putRes.json().catch(() => ({}));
+                    if (!putRes.ok) {
+                        throw new Error(putData.message || `HTTP ${putRes.status}`);
+                    }
+
+                    loadedBackendReadmeMarkdown = cleanText;
+                    loadedBackendReadmeSha = putData?.content?.sha || sha;
+                    renderMarkdownToStyledCards(loadedBackendReadmeMarkdown);
+
+                    if (docsSyncStatusBadge) {
+                        docsSyncStatusBadge.textContent = `נשמר ב-Backend (${new Date().toLocaleTimeString('he-IL')}) ✓`;
+                    }
+                    showToast('README.md נשמר בהצלחה ב-Backend', 'success');
+                    return true;
+                } catch (err) {
+                    addDiagnosticLog('error', 'Failed Saving README.md to Backend Repo', {
+                        message: err?.message || String(err)
+                    });
+                    showToast(`שגיאה בשמירת README.md: ${err?.message || err}`, 'error');
+                    return false;
+                }
+            }
+
+            if (refreshDocsBtn) {
+                refreshDocsBtn.addEventListener('click', () => {
+                    loadArchitectureReadmeFromBackend(true);
+                });
+            }
+
+            if (toggleDocsRawBtn) {
+                toggleDocsRawBtn.addEventListener('click', () => {
+                    if (docsRawMarkdown && !docsRawMarkdown.value && loadedBackendReadmeMarkdown) {
+                        docsRawMarkdown.value = loadedBackendReadmeMarkdown;
+                    }
+                    const showRaw = docsRawWrapper?.classList.contains('hidden');
+                    if (docsRawWrapper) docsRawWrapper.classList.toggle('hidden', !showRaw);
+                    if (docsRenderedContainer) docsRenderedContainer.classList.toggle('hidden', showRaw);
+                    toggleDocsRawBtn.textContent = showRaw ? 'הצג תצוגה מעוצבת' : 'ערוך Markdown';
+                });
+            }
+
+            if (copyDocsMdBtn) {
+                copyDocsMdBtn.addEventListener('click', async () => {
+                    const md = loadedBackendReadmeMarkdown || await loadArchitectureReadmeFromBackend(false);
+                    if (!md) {
+                        showToast('אין תוכן README.md להעתקה', 'error');
+                        return;
+                    }
+                    copyTextToClipboard(md, 'מסמך ה-README.md מה-Backend הועתק ללוח');
+                });
+            }
+
+            if (syncDocsBackendBtn) {
+                syncDocsBackendBtn.addEventListener('click', () => {
+                    saveArchitectureReadmeToBackend(docsRawMarkdown?.value || '');
                 });
             }
 
@@ -732,85 +1146,8 @@
                 if (tabName === 'logs') {
                     renderDiagnosticLogs();
                 }
-            }
-
-            if (hamburgerMenuBtn) {
-                hamburgerMenuBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    const isCurrentlyOpen = hamburgerMenuPanel && !hamburgerMenuPanel.classList.contains('hidden');
-                    setHamburgerMenuOpen(!isCurrentlyOpen);
-                });
-            }
-
-            navTabBtns.forEach((btn) => {
-                btn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    switchActiveTab(btn.dataset.tab);
-                    setHamburgerMenuOpen(false);
-                });
-            });
-
-            document.addEventListener('click', (e) => {
-                if (
-                    hamburgerMenuPanel &&
-                    !hamburgerMenuPanel.classList.contains('hidden') &&
-                    !hamburgerMenuPanel.contains(e.target) &&
-                    hamburgerMenuBtn &&
-                    !hamburgerMenuBtn.contains(e.target)
-                ) {
-                    setHamburgerMenuOpen(false);
-                }
-            });
-
-            window.addEventListener('error', (ev) => {
-                addDiagnosticLog('error', 'Uncaught JS Error', {
-                    message: ev.message,
-                    filename: ev.filename,
-                    lineno: ev.lineno,
-                    colno: ev.colno
-                });
-            });
-
-            window.addEventListener('unhandledrejection', (ev) => {
-                addDiagnosticLog('error', 'Unhandled Promise Rejection', {
-                    reason: ev.reason?.message || String(ev.reason)
-                });
-            });
-
-            const SPHERE_PALETTES = {
-                initial: ["#18181B", "#3F3F46", "#71717A", "#A1A1AA", "#E4E4E7"],
-                awake: ["#F0C4D9", "#F0A0A0", "#F3E5BE", "#E0ECB0", "#B4F2AC", "#A2F0C4", "#9FE7E5", "#BDCFF3", "#BA92EC", "#DE90EA"],
-                ready: ["#10B981", "#06B6D4", "#0284C7", "#3B82F6", "#6366F1"],
-                building: ["#9A3412", "#EA580C", "#F97316", "#FACC15", "#FEF08A"],
-                success: ["#064E3B", "#047857", "#10B981", "#34D399", "#A7F3D0"],
-                error: ["#7F1D1D", "#B91C1C", "#EF4444", "#F87171", "#FCA5A5"]
-            };
-
-            const DEFAULT_SPHERE_PALETTES = JSON.parse(JSON.stringify(SPHERE_PALETTES));
-            let activeSphereState = 'initial';
-            let selectedEditorPaletteState = 'ready';
-
-            try {
-                const savedPalettes = JSON.parse(localStorage.getItem('gh_custom_sphere_palettes') || 'null');
-                if (savedPalettes && typeof savedPalettes === 'object') {
-                    Object.keys(SPHERE_PALETTES).forEach((k) => {
-                        if (Array.isArray(savedPalettes[k]) && savedPalettes[k].length) {
-                            SPHERE_PALETTES[k] = savedPalettes[k];
-                        }
-                    });
-                }
-            } catch (_) {}
-
-            let paletteAutoSaveTimer = null;
-            function persistCustomPalettes(autoSyncToRepo = true) {
-                try {
-                    localStorage.setItem('gh_custom_sphere_palettes', JSON.stringify(SPHERE_PALETTES));
-                } catch (_) {}
-                if (autoSyncToRepo && authenticatedOwner) {
-                    clearTimeout(paletteAutoSaveTimer);
-                    paletteAutoSaveTimer = setTimeout(() => {
-                        savePrivateUserConfig(true);
-                    }, 900);
+                if (tabName === 'docs' && authenticatedOwner) {
+                    loadArchitectureReadmeFromBackend(false);
                 }
             }
 
@@ -911,6 +1248,46 @@
 
             function getProjectBaseSlug(repoName = '') {
                 return String(repoName || '').replace(/_(Backend|Frontend)$/i, '');
+            }
+
+            function escapeHtmlAttr(str = '') {
+                return String(str || '')
+                    .replace(/&/g, '&amp;')
+                    .replace(/"/g, '&quot;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;');
+            }
+
+            function getRepoAlias(repoName = '') {
+                if (!repoName) return '';
+                if (repoAliasesMap[repoName]) return repoAliasesMap[repoName];
+                const slug = getProjectBaseSlug(repoName);
+                return (slug && repoAliasesMap[slug]) ? repoAliasesMap[slug] : '';
+            }
+
+            function setRepoAlias(repoName, aliasText, applyToPair = true) {
+                const cleanAlias = String(aliasText || '').trim();
+                const slug = getProjectBaseSlug(repoName);
+                const key = (applyToPair && slug) ? slug : repoName;
+                if (cleanAlias) {
+                    repoAliasesMap[key] = cleanAlias;
+                    if (applyToPair && slug) {
+                        delete repoAliasesMap[`${slug}_Backend`];
+                        delete repoAliasesMap[`${slug}_Frontend`];
+                    }
+                } else {
+                    delete repoAliasesMap[key];
+                    if (applyToPair && slug) {
+                        delete repoAliasesMap[`${slug}_Backend`];
+                        delete repoAliasesMap[`${slug}_Frontend`];
+                    }
+                }
+                try {
+                    localStorage.setItem('gh_repo_aliases', JSON.stringify(repoAliasesMap));
+                } catch (_) {}
+                if (authenticatedOwner) {
+                    savePrivateUserConfig(true);
+                }
             }
 
             function saveProvisionedSaltedValue(owner, projectSlug, backendRepo, frontendRepo, saltedHex) {
@@ -1702,177 +2079,154 @@
             renderPaletteManager();
 
             const STUDIO_PRIVATE_CONFIG_REPO = 'GitHub_Automation_Studio_Backend';
-            function findWorkerUrlDeep(obj) {
-                if (!obj) return '';
-                if (typeof obj === 'string') {
-                    const trimmed = obj.trim();
-                    const match = trimmed.match(/https?:\/\/[^\s"'`]+\.workers\.dev[^\s"'`]*/i);
-                    if (match) return match[0].replace(/\/+$/, '');
-                    if (/^[a-z0-9-]+\.[a-z0-9-]+\.workers\.dev$/i.test(trimmed)) {
-                        return `https://${trimmed}`;
-                    }
-                    return '';
-                }
-                if (Array.isArray(obj)) {
-                    for (let i = obj.length - 1; i >= 0; i--) {
-                        const found = findWorkerUrlDeep(obj[i]);
-                        if (found) return found;
-                    }
-                    return '';
-                }
-                if (typeof obj === 'object') {
-                    for (const key of ['workerUrl', 'workerBaseUrl', 'worker_url', 'workerHost', 'worker', 'url', 'proxyUrl']) {
-                        if (typeof obj[key] === 'string' && obj[key].trim()) {
-                            let val = obj[key].trim();
-                            if (!/^https?:\/\//i.test(val) && val.includes('.')) val = `https://${val}`;
-                            if (/^https?:\/\//i.test(val)) return val.replace(/\/+$/, '');
-                        }
-                    }
-                    for (const val of Object.values(obj)) {
-                        const nested = findWorkerUrlDeep(val);
-                        if (nested) return nested;
-                    }
-                }
-                return '';
-            }
-
-            async function loadPrivateUserConfig(token, owner) {
-                if (!token || !owner) return { ok: false, workerUrl: '' };
-                const fileName = '.studio-config.json';
-                try {
-                    const res = await fetch(
-                        `https://api.github.com/repos/${encodeURIComponent(owner)}/${STUDIO_PRIVATE_CONFIG_REPO}/contents/${encodeURIComponent(fileName)}?_t=${Date.now()}`,
-                        {
-                            headers: {
-                                'Authorization': `Bearer ${token}`,
-                                'Accept': 'application/vnd.github.raw'
-                            }
-                        }
-                    );
-                    if (res.ok) {
-                        const cfg = await res.json();
-                        const activeObj = Array.isArray(cfg) ? (cfg[cfg.length - 1] || {}) : cfg;
-                        const resolvedWorker = findWorkerUrlDeep(cfg);
-                        if (resolvedWorker) {
-                            localStorage.setItem('gh_worker_base_url', resolvedWorker);
-                            if (workerBaseUrlInput) workerBaseUrlInput.value = resolvedWorker;
-                        }
-                        if (activeObj.backendTemplateRepo && templateRepoInput) {
-                            templateRepoInput.value = activeObj.backendTemplateRepo;
-                            localStorage.setItem('gh_backend_template_repo', activeObj.backendTemplateRepo);
-                        }
-                        if (activeObj.frontendTemplateRepo && frontendTemplateRepoInput) {
-                            frontendTemplateRepoInput.value = activeObj.frontendTemplateRepo;
-                            localStorage.setItem('gh_frontend_template_repo', activeObj.frontendTemplateRepo);
-                        }
-                        if (activeObj.customPalettes && typeof activeObj.customPalettes === 'object') {
-                            Object.keys(SPHERE_PALETTES).forEach((k) => {
-                                if (Array.isArray(activeObj.customPalettes[k]) && activeObj.customPalettes[k].length) {
-                                    SPHERE_PALETTES[k] = activeObj.customPalettes[k];
-                                }
-                            });
-                            persistCustomPalettes(false);
-                            renderPaletteManager();
-                            updateSphereState(activeSphereState);
-                        }
-                        if (resolvedWorker) {
-                            addDiagnosticLog('success', 'Loaded Config from Private Studio Backend', {
-                                repo: `${owner}/${STUDIO_PRIVATE_CONFIG_REPO}`,
-                                file: fileName,
-                                workerHost: new URL(resolvedWorker).host,
-                                backendTemplateRepo: activeObj.backendTemplateRepo || '',
-                                frontendTemplateRepo: activeObj.frontendTemplateRepo || ''
-                            });
-                            return { ok: true, workerUrl: resolvedWorker };
-                        }
-                    }
-                } catch (_) {}
-                addDiagnosticLog('error', 'Missing Worker URL in .studio-config.json', {
-                    repo: `${owner}/${STUDIO_PRIVATE_CONFIG_REPO}`,
-                    checkedFiles: [fileName]
-                });
-                return { ok: false, workerUrl: '' };
-            }
 
             async function savePrivateUserConfig(silent = false) {
                 const token = (githubTokenInput?.value || localStorage.getItem('gh_automation_pat') || '').trim();
                 const workerUrl = (workerBaseUrlInput?.value || localStorage.getItem('gh_worker_base_url') || '').trim().replace(/\/+$/, '');
-                if (!token || !authenticatedOwner) {
-                    if (!silent) showToast('יש להתחבר לפני שמירה במאגר הפרטי', 'error');
-                    return;
-                }
-                localStorage.setItem('gh_worker_base_url', workerUrl);
-                localStorage.setItem('gh_backend_template_repo', (templateRepoInput?.value || '_Template_Backend').trim());
-                localStorage.setItem('gh_frontend_template_repo', (frontendTemplateRepoInput?.value || '_Template_Frontend').trim());
+                const backendTemplate = (templateRepoInput?.value || '_Template_Backend').trim();
+                const frontendTemplate = (frontendTemplateRepoInput?.value || '_Template_Frontend').trim();
 
-                const payloadObj = {
+                if (workerUrl) {
+                    localStorage.setItem('gh_worker_base_url', workerUrl);
+                }
+                localStorage.setItem('gh_backend_template_repo', backendTemplate);
+                localStorage.setItem('gh_frontend_template_repo', frontendTemplate);
+
+                if (!token || !authenticatedOwner) {
+                    if (!silent) showToast('יש להתחבר לפני שמירת הגדרות בפרטי', 'error');
+                    return false;
+                }
+
+                const configPayload = {
+                    updatedAt: new Date().toISOString(),
                     workerUrl,
-                    backendTemplateRepo: (templateRepoInput?.value || '_Template_Backend').trim(),
-                    frontendTemplateRepo: (frontendTemplateRepoInput?.value || '_Template_Frontend').trim(),
+                    backendTemplateRepo: backendTemplate,
+                    frontendTemplateRepo: frontendTemplate,
                     customPalettes: SPHERE_PALETTES,
-                    updatedAt: new Date().toISOString()
+                    repoAliases: repoAliasesMap
                 };
 
                 try {
-                    const fileUrl = `https://api.github.com/repos/${encodeURIComponent(authenticatedOwner)}/${STUDIO_PRIVATE_CONFIG_REPO}/contents/${encodeURIComponent('.studio-config.json')}`;
+                    const fileUrl = `https://api.github.com/repos/${encodeURIComponent(authenticatedOwner)}/${STUDIO_PRIVATE_CONFIG_REPO}/contents/.studio-config.json`;
+                    const headers = {
+                        'Authorization': `Bearer ${token}`,
+                        'Accept': 'application/vnd.github+json',
+                        'Content-Type': 'application/json'
+                    };
                     let sha = undefined;
-                    const existingRes = await fetch(`${fileUrl}?_t=${Date.now()}`, {
-                        headers: { 'Authorization': `Bearer ${token}`, 'Accept': 'application/vnd.github+json' }
-                    });
-                    if (existingRes.ok) {
-                        const existingData = await existingRes.json();
-                        sha = existingData.sha;
+                    const getRes = await fetch(`${fileUrl}?_t=${Date.now()}`, { headers });
+                    if (getRes.ok) {
+                        const existing = await getRes.json().catch(() => ({}));
+                        sha = existing.sha;
                     }
-                    const utf8Bytes = new TextEncoder().encode(JSON.stringify(payloadObj, null, 2));
-                    let binary = '';
-                    utf8Bytes.forEach((b) => { binary += String.fromCharCode(b); });
+                    const utf8Bytes = new TextEncoder().encode(JSON.stringify(configPayload, null, 2));
+                    let bin = '';
+                    utf8Bytes.forEach((b) => { bin += String.fromCharCode(b); });
+
                     const putRes = await fetch(fileUrl, {
                         method: 'PUT',
-                        headers: {
-                            'Authorization': `Bearer ${token}`,
-                            'Accept': 'application/vnd.github+json',
-                            'Content-Type': 'application/json'
-                        },
+                        headers,
                         body: JSON.stringify({
-                            message: 'Update .studio-config.json from Studio UI',
-                            content: btoa(binary),
+                            message: 'Update .studio-config.json from AutoGit',
+                            content: btoa(bin),
                             ...(sha ? { sha } : {})
                         })
                     });
-                    if (!putRes.ok) throw new Error('Failed to save .studio-config.json');
-                    if (workerUrl && activeSphereState === 'error') updateSphereState('ready');
-                    if (!silent) {
-                        showToast('ההגדרות והפאלטות נשמרו ב-.studio-config.json', 'success');
+                    if (!putRes.ok) {
+                        const errObj = await putRes.json().catch(() => ({}));
+                        throw new Error(errObj.message || `HTTP ${putRes.status}`);
                     }
+                    if (!silent) {
+                        showToast('ההגדרות נשמרו בהצלחה במאגר הפרטי', 'success');
+                    }
+                    return true;
                 } catch (err) {
+                    addDiagnosticLog('error', 'Failed Saving .studio-config.json', {
+                        message: err?.message || String(err)
+                    });
                     if (!silent) {
-                        showToast(`שגיאה בשמירה: ${err.message}`, 'error');
+                        showToast(`שגיאה בשמירת הגדרות: ${err?.message || err}`, 'error');
                     }
+                    return false;
+                }
+            }
+
+            async function loadPrivateUserConfig(token, owner) {
+                if (!token || !owner) return null;
+                try {
+                    const fileUrl = `https://api.github.com/repos/${encodeURIComponent(owner)}/${STUDIO_PRIVATE_CONFIG_REPO}/contents/.studio-config.json?_t=${Date.now()}`;
+                    const res = await fetch(fileUrl, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Accept': 'application/vnd.github+json'
+                        }
+                    });
+                    if (!res.ok) return null;
+                    const data = await res.json().catch(() => null);
+                    if (!data?.content) return null;
+
+                    const bin = atob(String(data.content).replace(/\s+/g, ''));
+                    const bytes = new Uint8Array(bin.length);
+                    for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+                    const cfg = JSON.parse(new TextDecoder('utf-8').decode(bytes));
+
+                    if (cfg.workerUrl) {
+                        localStorage.setItem('gh_worker_base_url', cfg.workerUrl);
+                        if (workerBaseUrlInput) workerBaseUrlInput.value = cfg.workerUrl;
+                    }
+                    if (cfg.backendTemplateRepo) {
+                        localStorage.setItem('gh_backend_template_repo', cfg.backendTemplateRepo);
+                        if (templateRepoInput) templateRepoInput.value = cfg.backendTemplateRepo;
+                    }
+                    if (cfg.frontendTemplateRepo) {
+                        localStorage.setItem('gh_frontend_template_repo', cfg.frontendTemplateRepo);
+                        if (frontendTemplateRepoInput) frontendTemplateRepoInput.value = cfg.frontendTemplateRepo;
+                    }
+                    if (cfg.customPalettes && typeof cfg.customPalettes === 'object') {
+                        Object.keys(DEFAULT_SPHERE_PALETTES).forEach((k) => {
+                            if (Array.isArray(cfg.customPalettes[k]) && cfg.customPalettes[k].length) {
+                                SPHERE_PALETTES[k] = cfg.customPalettes[k].map((c) => String(c).toUpperCase());
+                            }
+                        });
+                        localStorage.setItem('gh_custom_sphere_palettes', JSON.stringify(SPHERE_PALETTES));
+                        renderPaletteManager();
+                        updateSphereState(activeSphereState);
+                    }
+                    if (cfg.repoAliases && typeof cfg.repoAliases === 'object') {
+                        repoAliasesMap = { ...repoAliasesMap, ...cfg.repoAliases };
+                        localStorage.setItem('gh_repo_aliases', JSON.stringify(repoAliasesMap));
+                        if (allFetchedRepos.length) renderRepositoriesList();
+                    }
+                    return cfg;
+                } catch (err) {
+                    addDiagnosticLog('error', 'Failed Loading .studio-config.json', {
+                        message: err?.message || String(err)
+                    });
+                    return null;
                 }
             }
 
             if (saveWorkerConfigBtn) {
-                saveWorkerConfigBtn.addEventListener('click', () => savePrivateUserConfig(false));
+                saveWorkerConfigBtn.addEventListener('click', () => {
+                    savePrivateUserConfig(false);
+                });
             }
 
             if (testWorkerBtn) {
                 testWorkerBtn.addEventListener('click', async () => {
                     const base = (workerBaseUrlInput?.value || '').trim().replace(/\/+$/, '');
                     if (!base) {
-                        showToast('יש להזין כתובת Worker', 'error');
+                        showToast('יש להזין כתובת Cloudflare Worker', 'error');
                         return;
                     }
                     try {
                         const res = await fetch(`${base}/ping?_t=${Date.now()}`, { mode: 'cors', cache: 'no-store' });
-                        const data = await res.json();
-                        if (res.ok && data.ok) {
-                            showToast(`Worker מחובר (${data.mode || 'ok'})`, 'success');
-                            if (authenticatedOwner) checkTenantGitHubAppStatus(base, authenticatedOwner);
-                        } else {
-                            throw new Error(data.error || `HTTP ${res.status}`);
-                        }
+                        const data = await res.json().catch(() => ({}));
+                        if (!res.ok || !data.ok) throw new Error(`HTTP ${res.status}`);
+                        showToast(`ה-Worker פעיל ומחובר (${data.cfRay || 'OK'})`, 'success');
+                        if (authenticatedOwner) checkTenantGitHubAppStatus(base, authenticatedOwner);
                     } catch (err) {
-                        showToast(`בדיקת Worker נכשלה: ${err.message}`, 'error');
+                        showToast(`בדיקת Worker נכשלה: ${err?.message || err}`, 'error');
                     }
                 });
             }
@@ -1944,6 +2298,7 @@
                         updateSphereState('ready');
                         checkTenantGitHubAppStatus(activeWorker, authenticatedOwner);
                     }
+                    loadArchitectureReadmeFromBackend(false);
                     fetchAccountRepositories();
                     return true;
                 } catch (err) {
@@ -2105,7 +2460,8 @@
                 const filtered = allFetchedRepos.filter((r) => {
                     if (vis === 'private' && !r.private) return false;
                     if (vis === 'public' && r.private) return false;
-                    if (q && !r.name.toLowerCase().includes(q)) return false;
+                    const aliasLower = getRepoAlias(r.name).toLowerCase();
+                    if (q && !r.name.toLowerCase().includes(q) && !aliasLower.includes(q)) return false;
                     return true;
                 });
 
@@ -2123,24 +2479,45 @@
                     const livePagesUrl = `https://${ownerSlug}.github.io/${encodeURIComponent(repo.name)}/`;
                     const defaultBranch = encodeURIComponent(repo.default_branch || 'main');
                     const editIndexHtmlUrl = `https://github.com/${encodeURIComponent(authenticatedOwner)}/${encodeURIComponent(repo.name)}/edit/${defaultBranch}/index.html`;
+                    const repoAlias = getRepoAlias(repo.name);
+                    const roleTag = /_Backend$/i.test(repo.name) ? 'Backend' : (/_Frontend$/i.test(repo.name) ? 'Frontend' : '');
+                    const hasProjectPair = /_(Backend|Frontend)$/i.test(repo.name);
                     return `
                     <div class="bg-zinc-900/80 hover:bg-zinc-900 border border-zinc-800 rounded-2xl transition-colors overflow-hidden">
                         <div class="flex items-center justify-between gap-3 px-4 py-3">
-                            <div class="min-w-0 flex items-center gap-2.5">
-                                <span class="text-[10px] font-mono px-2 py-0.5 rounded-full border ${repo.private ? 'bg-amber-500/10 text-amber-300 border-amber-500/30' : 'bg-emerald-500/10 text-emerald-300 border-emerald-500/30'}">${repo.private ? 'PRIVATE' : 'PUBLIC'}</span>
+                            <div class="min-w-0 flex items-center gap-2.5 flex-wrap">
+                                <span class="text-[10px] font-mono px-2 py-0.5 rounded-full border shrink-0 ${repo.private ? 'bg-amber-500/10 text-amber-300 border-amber-500/30' : 'bg-emerald-500/10 text-emerald-300 border-emerald-500/30'}">${repo.private ? 'PRIVATE' : 'PUBLIC'}</span>
                                 ${isPublicRepo && liveStatus ? `
                                 <span class="w-4 h-4 shrink-0 inline-flex items-center justify-center" title="${liveStatus === 'live' ? '200 OK — האתר באוויר' : liveStatus === 'offline' ? '404 — עדיין בתהליך פריסה' : 'בודק סטטוס...'}">
                                     <canvas data-live-status-canvas="${repo.name}" class="repo-live-status-sphere" style="width:100%;height:100%;display:block;background:transparent"></canvas>
                                 </span>
                                 ` : ''}
-                                <button type="button" data-edit-repo="${repo.name}" dir="ltr" class="edit-repo-trigger font-mono text-xs sm:text-sm font-medium ${isExpanded ? 'text-sky-300' : 'text-white hover:text-sky-400'} truncate text-left cursor-pointer transition-colors">${repo.name}</button>
+                                <button type="button" data-edit-repo="${repo.name}" class="edit-repo-trigger min-w-0 flex items-center gap-2 flex-wrap text-right cursor-pointer transition-colors group">
+                                    ${repoAlias ? `
+                                    <span class="text-xs sm:text-sm font-semibold ${isExpanded ? 'text-sky-300' : 'text-white group-hover:text-sky-300'} truncate">${escapeHtmlAttr(repoAlias)}${roleTag ? ` <span class="text-[11px] font-normal text-zinc-400">(${roleTag})</span>` : ''}</span>
+                                    <span dir="ltr" class="font-mono text-[11px] text-zinc-400 bg-zinc-950/90 border border-zinc-800 px-2 py-0.5 rounded-full truncate">${repo.name}</span>
+                                    ` : `
+                                    <span dir="ltr" class="font-mono text-xs sm:text-sm font-medium ${isExpanded ? 'text-sky-300' : 'text-white group-hover:text-sky-400'} truncate text-left">${repo.name}</span>
+                                    `}
+                                </button>
                             </div>
                             <div class="flex items-center gap-2 shrink-0">
+                                ${hasProjectPair ? `<button type="button" data-delete-pair="${repo.name}" class="delete-pair-trigger text-xs text-rose-300 hover:text-rose-200 px-2.5 py-1.5 rounded-full bg-rose-500/15 hover:bg-rose-500/25 border border-rose-500/30 transition-colors">מחק זוג</button>` : ''}
                                 <button type="button" data-delete-repo="${repo.name}" class="delete-repo-trigger text-xs text-red-400 hover:text-red-300 px-2.5 py-1.5 rounded-full bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 transition-colors">מחק</button>
                             </div>
                         </div>
                         ${isExpanded ? `
                         <div class="px-4 py-3.5 border-t border-zinc-800/90 bg-[#0F0F0F]/75 space-y-3">
+                            <!-- Simple Persistent Alias Editor -->
+                            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 bg-zinc-900/70 border border-zinc-800/90 rounded-2xl p-2">
+                                <input type="text" data-alias-input="${repo.name}" value="${escapeHtmlAttr(repoAlias)}" placeholder="כינוי / שם קריא לפרויקט (Alias)..." class="flex-1 bg-zinc-950 border border-zinc-800 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-sky-500 transition-colors">
+                                <div class="flex items-center gap-1.5 shrink-0">
+                                    <button type="button" data-save-alias="${repo.name}" data-pair-mode="${hasProjectPair ? '1' : '0'}" class="save-alias-btn text-xs font-medium bg-sky-600 hover:bg-sky-500 text-white px-3.5 py-1.5 rounded-xl transition-colors">
+                                        ${hasProjectPair ? 'שמור כינוי לזוג' : 'שמור כינוי'}
+                                    </button>
+                                    ${repoAlias ? `<button type="button" data-clear-alias="${repo.name}" data-pair-mode="${hasProjectPair ? '1' : '0'}" class="clear-alias-btn text-xs text-zinc-400 hover:text-red-300 px-2.5 py-1.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 transition-colors">נקה</button>` : ''}
+                                </div>
+                            </div>
                             <div class="flex flex-wrap items-center gap-2">
                                 ${isPublicRepo ? `
                                 <a href="${livePagesUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs font-medium bg-emerald-600 hover:bg-emerald-500 text-white px-3.5 py-1.5 rounded-full transition-colors">
@@ -2202,6 +2579,28 @@
                         const targetName = btn.dataset.editRepo || '';
                         expandedRepoName = expandedRepoName === targetName ? '' : targetName;
                         renderRepositoriesList();
+                    });
+                });
+
+                reposListContainer.querySelectorAll('.save-alias-btn').forEach((btn) => {
+                    btn.addEventListener('click', () => {
+                        const targetName = btn.dataset.saveAlias || '';
+                        const isPair = btn.dataset.pairMode === '1';
+                        const inp = reposListContainer.querySelector(`[data-alias-input="${targetName}"]`);
+                        const newAlias = (inp?.value || '').trim();
+                        setRepoAlias(targetName, newAlias, isPair);
+                        renderRepositoriesList();
+                        showToast(newAlias ? `הכינוי "${newAlias}" נשמר בהצלחה` : 'הכינוי הוסר', 'success');
+                    });
+                });
+
+                reposListContainer.querySelectorAll('.clear-alias-btn').forEach((btn) => {
+                    btn.addEventListener('click', () => {
+                        const targetName = btn.dataset.clearAlias || '';
+                        const isPair = btn.dataset.pairMode === '1';
+                        setRepoAlias(targetName, '', isPair);
+                        renderRepositoriesList();
+                        showToast('הכינוי הוסר', 'info');
                     });
                 });
 
@@ -2303,7 +2702,36 @@
                 reposListContainer.querySelectorAll('.delete-repo-trigger').forEach((btn) => {
                     btn.addEventListener('click', () => {
                         repoPendingDeletion = btn.dataset.deleteRepo;
-                        if (deleteModalRepoName) deleteModalRepoName.textContent = `${authenticatedOwner}/${repoPendingDeletion}`;
+                        deletePairMode = false;
+                        if (deleteModalRepoName) {
+                            deleteModalRepoName.textContent = `${authenticatedOwner}/${repoPendingDeletion}`;
+                        }
+                        if (confirmDeleteRepoBtn) {
+                            confirmDeleteRepoBtn.classList.remove('hidden');
+                            confirmDeleteRepoBtn.textContent = 'כן, מחק מאגר';
+                        }
+                        if (confirmDeletePairBtn) {
+                            confirmDeletePairBtn.classList.add('hidden');
+                        }
+                        if (deleteRepoModal) deleteRepoModal.classList.remove('hidden');
+                    });
+                });
+
+                reposListContainer.querySelectorAll('.delete-pair-trigger').forEach((btn) => {
+                    btn.addEventListener('click', () => {
+                        repoPendingDeletion = btn.dataset.deleteRepo || btn.dataset.deletePair;
+                        deletePairMode = true;
+                        const slug = getProjectBaseSlug(repoPendingDeletion);
+                        if (deleteModalRepoName) {
+                            deleteModalRepoName.textContent = `${authenticatedOwner}/${slug}_Backend + Frontend`;
+                        }
+                        if (confirmDeleteRepoBtn) {
+                            confirmDeleteRepoBtn.classList.add('hidden');
+                        }
+                        if (confirmDeletePairBtn) {
+                            confirmDeletePairBtn.classList.remove('hidden');
+                            confirmDeletePairBtn.textContent = 'כן, מחק זוג';
+                        }
                         if (deleteRepoModal) deleteRepoModal.classList.remove('hidden');
                     });
                 });
@@ -2716,20 +3144,28 @@
             if (cancelDeleteRepoBtn) {
                 cancelDeleteRepoBtn.addEventListener('click', () => {
                     repoPendingDeletion = null;
+                    deletePairMode = false;
                     if (deleteRepoModal) deleteRepoModal.classList.add('hidden');
                 });
             }
 
-            if (confirmDeleteRepoBtn) {
-                confirmDeleteRepoBtn.addEventListener('click', async () => {
-                    const targetRepo = repoPendingDeletion;
-                    const token = (githubTokenInput?.value || localStorage.getItem('gh_automation_pat') || '').trim();
-                    if (!targetRepo || !authenticatedOwner || !token) return;
+            async function executeRepoDeletionFlow(targetRepo, includePair = false) {
+                const token = (githubTokenInput?.value || localStorage.getItem('gh_automation_pat') || '').trim();
+                if (!targetRepo || !authenticatedOwner || !token) return;
 
-                    confirmDeleteRepoBtn.disabled = true;
-                    try {
+                const slug = getProjectBaseSlug(targetRepo);
+                const targets = includePair && /_(Backend|Frontend)$/i.test(targetRepo)
+                    ? Array.from(new Set([targetRepo, `${slug}_Backend`, `${slug}_Frontend`]))
+                    : [targetRepo];
+
+                if (confirmDeleteRepoBtn) confirmDeleteRepoBtn.disabled = true;
+                if (confirmDeletePairBtn) confirmDeletePairBtn.disabled = true;
+
+                try {
+                    const deletedNames = [];
+                    for (const repoName of targets) {
                         const res = await fetch(
-                            `https://api.github.com/repos/${encodeURIComponent(authenticatedOwner)}/${encodeURIComponent(targetRepo)}`,
+                            `https://api.github.com/repos/${encodeURIComponent(authenticatedOwner)}/${encodeURIComponent(repoName)}`,
                             {
                                 method: 'DELETE',
                                 headers: {
@@ -2738,31 +3174,67 @@
                                 }
                             }
                         );
+                        // Ignore 404 when deleting a pair so a missing twin never causes an error
+                        if (res.status === 404 && repoName !== targetRepo) {
+                            addDiagnosticLog('info', `Pair Twin Not Found (Skipped) ${authenticatedOwner}/${repoName}`, {
+                                repo: repoName
+                            });
+                            continue;
+                        }
                         if (!res.ok && res.status !== 204) {
                             const errData = await res.json().catch(() => ({}));
                             throw new Error(errData.message || `HTTP ${res.status}`);
                         }
-                        allFetchedRepos = allFetchedRepos.filter((r) => r.name !== targetRepo);
-                        delete repoLiveStatusMap[targetRepo];
-                        if (expandedRepoName === targetRepo) expandedRepoName = '';
-                        if (reposCountBadge) {
-                            reposCountBadge.textContent = `${allFetchedRepos.length} מאגרים`;
-                        }
-                        renderRepositoriesList();
-                        addDiagnosticLog('success', `Deleted Repository ${authenticatedOwner}/${targetRepo}`, {
-                            repo: targetRepo
-                        });
-                        showToast(`המאגר ${targetRepo} נמחק בהצלחה`, 'success');
-                    } catch (err) {
-                        addDiagnosticLog('error', `Failed Deleting ${authenticatedOwner}/${targetRepo}`, {
-                            message: err?.message || String(err)
-                        });
-                        showToast(`שגיאה במחיקת המאגר: ${err?.message || err}`, 'error');
-                    } finally {
-                        confirmDeleteRepoBtn.disabled = false;
-                        repoPendingDeletion = null;
-                        if (deleteRepoModal) deleteRepoModal.classList.add('hidden');
+                        deletedNames.push(repoName);
                     }
+
+                    const deletedSet = new Set(deletedNames);
+                    allFetchedRepos = allFetchedRepos.filter((r) => !deletedSet.has(r.name));
+                    deletedNames.forEach((name) => {
+                        delete repoLiveStatusMap[name];
+                        if (expandedRepoName === name) expandedRepoName = '';
+                    });
+
+                    if (includePair && slug) {
+                        setRepoAlias(targetRepo, '', true);
+                    }
+
+                    if (reposCountBadge) {
+                        reposCountBadge.textContent = `${allFetchedRepos.length} מאגרים`;
+                    }
+                    renderRepositoriesList();
+                    addDiagnosticLog('success', `Deleted ${deletedNames.join(', ')}`, {
+                        repos: deletedNames
+                    });
+                    showToast(
+                        deletedNames.length > 1
+                            ? `נמחקו הזוג: ${deletedNames.join(' + ')}`
+                            : `המאגר ${deletedNames[0] || targetRepo} נמחק בהצלחה`,
+                        'success'
+                    );
+                } catch (err) {
+                    addDiagnosticLog('error', `Failed Deleting ${authenticatedOwner}/${targetRepo}`, {
+                        message: err?.message || String(err)
+                    });
+                    showToast(`שגיאה במחיקת המאגר: ${err?.message || err}`, 'error');
+                } finally {
+                    if (confirmDeleteRepoBtn) confirmDeleteRepoBtn.disabled = false;
+                    if (confirmDeletePairBtn) confirmDeletePairBtn.disabled = false;
+                    repoPendingDeletion = null;
+                    deletePairMode = false;
+                    if (deleteRepoModal) deleteRepoModal.classList.add('hidden');
+                }
+            }
+
+            if (confirmDeleteRepoBtn) {
+                confirmDeleteRepoBtn.addEventListener('click', () => {
+                    executeRepoDeletionFlow(repoPendingDeletion, false);
+                });
+            }
+
+            if (confirmDeletePairBtn) {
+                confirmDeletePairBtn.addEventListener('click', () => {
+                    executeRepoDeletionFlow(repoPendingDeletion, true);
                 });
             }
 
