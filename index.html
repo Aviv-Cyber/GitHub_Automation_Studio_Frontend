@@ -84,6 +84,108 @@
             touch-action: manipulation;
             -webkit-tap-highlight-color: transparent;
         }
+        /* True Apple iOS 26 Liquid Glass Styling for Bottom Dock & Active Indicator */
+        .glass-dock {
+            background: linear-gradient(
+                145deg,
+                rgba(255, 255, 255, 0.24) 0%,
+                rgba(255, 255, 255, 0.08) 45%,
+                rgba(255, 255, 255, 0.14) 100%
+            );
+            border: 1px solid rgba(255, 255, 255, 0.42);
+            border-radius: 9999px;
+            backdrop-filter: blur(22px) saturate(195%) contrast(108%);
+            -webkit-backdrop-filter: blur(22px) saturate(195%) contrast(108%);
+            box-shadow:
+                inset 0 1.5px 2px rgba(255, 255, 255, 0.72),
+                inset 1.5px 0 2px rgba(255, 255, 255, 0.35),
+                inset 0 -2px 6px rgba(255, 255, 255, 0.22),
+                inset 0 0 18px rgba(255, 255, 255, 0.10),
+                0 14px 34px rgba(0, 0, 0, 0.38);
+            transition: all 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .glass-dock::before {
+            content: "";
+            position: absolute;
+            inset: 1px;
+            border-radius: 9999px;
+            pointer-events: none;
+            background: radial-gradient(
+                120% 85% at 22% 0%,
+                rgba(255, 255, 255, 0.42) 0%,
+                rgba(255, 255, 255, 0.08) 45%,
+                transparent 75%
+            );
+            opacity: 0.85;
+        }
+        .glass-dock:hover {
+            background: linear-gradient(
+                145deg,
+                rgba(255, 255, 255, 0.28) 0%,
+                rgba(255, 255, 255, 0.11) 45%,
+                rgba(255, 255, 255, 0.18) 100%
+            );
+            border-color: rgba(255, 255, 255, 0.58);
+            box-shadow:
+                inset 0 1.5px 2.5px rgba(255, 255, 255, 0.85),
+                inset 1.5px 0 2.5px rgba(255, 255, 255, 0.45),
+                inset 0 -2px 7px rgba(255, 255, 255, 0.28),
+                inset 0 0 22px rgba(255, 255, 255, 0.14),
+                0 16px 38px rgba(0, 0, 0, 0.44);
+        }
+        .glass-dock-indicator {
+            background: radial-gradient(
+                130% 130% at 28% 18%,
+                rgba(255, 255, 255, 0.46) 0%,
+                rgba(255, 255, 255, 0.16) 52%,
+                rgba(255, 255, 255, 0.24) 100%
+            );
+            border: 1px solid rgba(255, 255, 255, 0.62);
+            border-radius: 9999px;
+            backdrop-filter: blur(18px) saturate(210%);
+            -webkit-backdrop-filter: blur(18px) saturate(210%);
+            box-shadow:
+                inset 0 1.5px 2.5px rgba(255, 255, 255, 0.88),
+                inset 0 -1.5px 3px rgba(255, 255, 255, 0.34),
+                0 6px 18px rgba(0, 0, 0, 0.28);
+        }
+        /* True Apple iOS 26 Liquid Glass Styling for Sphere Popover Inputs */
+        .glass-sphere-form {
+            background: linear-gradient(
+                145deg,
+                rgba(255, 255, 255, 0.22) 0%,
+                rgba(255, 255, 255, 0.07) 48%,
+                rgba(255, 255, 255, 0.14) 100%
+            );
+            border: 1px solid rgba(255, 255, 255, 0.44);
+            border-radius: 9999px;
+            backdrop-filter: blur(22px) saturate(195%) contrast(108%);
+            -webkit-backdrop-filter: blur(22px) saturate(195%) contrast(108%);
+            box-shadow:
+                inset 0 1.5px 2px rgba(255, 255, 255, 0.72),
+                inset 1.5px 0 2px rgba(255, 255, 255, 0.32),
+                inset 0 -2px 6px rgba(255, 255, 255, 0.20),
+                0 14px 34px rgba(0, 0, 0, 0.42);
+            transition: all 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .glass-sphere-form:focus-within {
+            border-color: rgba(255, 255, 255, 0.68);
+            box-shadow:
+                inset 0 1.5px 2.5px rgba(255, 255, 255, 0.88),
+                inset 1.5px 0 2.5px rgba(255, 255, 255, 0.45),
+                inset 0 -2px 7px rgba(255, 255, 255, 0.28),
+                0 16px 38px rgba(0, 0, 0, 0.48);
+        }
+        .glass-sphere-input {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.22);
+            color: #ffffff;
+        }
+        .glass-sphere-input:focus {
+            background: rgba(255, 255, 255, 0.14);
+            border-color: rgba(255, 255, 255, 0.55);
+        }
         /* Prevent iOS/Mobile Safari auto-zoom on input focus */
         input, select, textarea {
             font-size: 16px !important;
@@ -135,13 +237,13 @@
                 </div>
 
                 <!-- Password Step Triggered After Tapping Sphere -->
-                <form id="sphere-password-form" class="hidden absolute top-full mt-6 left-1/2 -translate-x-1/2 w-full max-w-xs flex items-center gap-2 bg-[#0F0F0F]/90 border border-zinc-800 rounded-full p-1.5 shadow-xl z-40">
-                    <input type="password" id="sphere-password-input" dir="ltr" class="flex-1 min-w-0 bg-zinc-900 border border-zinc-800 rounded-full px-3.5 py-2 text-xs font-mono text-white focus:outline-none focus:border-apple-blue transition-colors">
+                <form id="sphere-password-form" class="glass-sphere-form hidden absolute top-full mt-6 left-1/2 -translate-x-1/2 w-full max-w-xs flex items-center gap-2 rounded-full p-1.5 z-40">
+                    <input type="password" id="sphere-password-input" dir="ltr" class="glass-sphere-input flex-1 min-w-0 rounded-full px-4 py-2 text-xs font-mono text-white placeholder-white/50 focus:outline-none transition-all">
                 </form>
 
                 <!-- GitHub Token Step Triggered on Second Sphere Tap When Not Logged In -->
-                <form id="sphere-token-form" class="hidden absolute top-full mt-6 left-1/2 -translate-x-1/2 w-full max-w-xs flex items-center gap-2 bg-[#0F0F0F]/95 border border-zinc-700 rounded-full p-1.5 shadow-2xl z-40">
-                    <input type="password" id="sphere-token-input" dir="ltr" class="flex-1 min-w-0 bg-zinc-900 border border-zinc-800 rounded-full px-3.5 py-2 text-xs font-mono text-white focus:outline-none focus:border-apple-blue transition-colors">
+                <form id="sphere-token-form" class="glass-sphere-form hidden absolute top-full mt-6 left-1/2 -translate-x-1/2 w-full max-w-xs flex items-center gap-2 rounded-full p-1.5 z-40">
+                    <input type="password" id="sphere-token-input" dir="ltr" class="glass-sphere-input flex-1 min-w-0 rounded-full px-4 py-2 text-xs font-mono text-white placeholder-white/50 focus:outline-none transition-all">
                 </form>
             </div>
         </section>
@@ -370,12 +472,12 @@
 
     <!-- Instagram-Style Floating Bottom Dock Navigation (Hidden in initial dormant state, appears blurred in awake state) -->
     <div id="floating-bottom-dock" class="hidden fixed bottom-7 sm:bottom-9 left-1/2 -translate-x-1/2 z-40 max-w-[96vw] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]">
-        <div id="dock-pill-shell" class="relative bg-white/[0.09] backdrop-blur-3xl border border-white/25 rounded-full p-2 shadow-[0_14px_44px_rgba(0,0,0,0.75),inset_0_1px_1px_rgba(255,255,255,0.28)] flex items-center justify-center transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] overflow-hidden">
+        <div id="dock-pill-shell" class="glass-dock relative rounded-full p-2 flex items-center justify-center overflow-hidden">
             <!-- Real Authenticated Navigation Icons + User Avatar Pill (Hidden until authenticated) -->
             <nav id="dock-nav-content" class="relative hidden items-center gap-1.5 sm:gap-2 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]" aria-label="ניווט ראשי">
                 <!-- Sliding Glass Pill Indicator -->
-                <span id="dock-active-indicator" aria-hidden="true" class="pointer-events-none absolute top-0 left-0 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white/25 border border-white/30 shadow-[0_4px_16px_rgba(255,255,255,0.12),inset_0_1px_1px_rgba(255,255,255,0.35)] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"></span>
-                <button type="button" data-tab="create" title="מסך ראשי" aria-label="מסך ראשי" class="nav-tab-btn active relative z-10 w-12 h-12 sm:w-14 sm:h-14 rounded-full text-white flex items-center justify-center transition-all duration-300 ease-out active:scale-95">
+                <span id="dock-active-indicator" aria-hidden="true" class="glass-dock-indicator pointer-events-none absolute top-0 left-0 w-12 h-12 sm:w-14 sm:h-14 rounded-full transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"></span>
+                <button type="button" data-tab="create" title="מסך ראשי" aria-label="מסך ראשי" class="nav-tab-btn active relative z-10 w-12 h-12 sm:w-14 sm:h-14 rounded-full text-white flex items-center justify-center transition-all duration-250 ease-out hover:-translate-y-0.5 active:translate-y-0">
                     <svg class="w-6 h-6 sm:w-7 sm:h-7 shrink-0 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2.1" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
                     </svg>
@@ -1680,7 +1782,7 @@
             }
 
             // Initialize Liquid Sphere Engine
-            const SPHERE_INTRO_DURATION_MS = 1000; // משך אנימציית הכניסה של הכדור במילישניות (1000 = שנייה אחת)
+            const SPHERE_INTRO_DURATION_MS = 450; // משך אנימציית הכניסה של הכדור במילישניות
             const SPHERE_INTRO_START_SCALE = 0.08;  // גודל התחלתי של הכדור בפתיחה (8% מהגודל המלא)
             let PALETTE = [...SPHERE_PALETTES.initial];
             let targetSpinSpeed = 1.0;
@@ -1893,7 +1995,7 @@
                     if (isSphereRebirthing) {
                         const shrunkTargetScale = 0.58;
                         if (sphereRebirthPhase === 'imploding') {
-                            sphereRebirthProgress = Math.min(1, sphereRebirthProgress + 0.024);
+                            sphereRebirthProgress = Math.min(1, sphereRebirthProgress + 0.045);
                             const p = sphereRebirthProgress;
                             const easeShrink = p * p * (3 - 2 * p);
                             rebirthScale = rebirthStartScale + (shrunkTargetScale - rebirthStartScale) * easeShrink;
@@ -1904,7 +2006,7 @@
                                 sphereRebirthProgress = 0;
                             }
                         } else if (sphereRebirthPhase === 'spawning') {
-                            sphereRebirthProgress = Math.min(1, sphereRebirthProgress + 0.018);
+                            sphereRebirthProgress = Math.min(1, sphereRebirthProgress + 0.036);
                             const p = sphereRebirthProgress;
                             const easeExpand = p * p * (3 - 2 * p);
                             rebirthScale = shrunkTargetScale + (1.0 - shrunkTargetScale) * easeExpand;
@@ -1924,7 +2026,7 @@
                             }
                         }
                     } else {
-                        rebirthScale += (1.0 - rebirthScale) * 0.08;
+                        rebirthScale += (1.0 - rebirthScale) * 0.14;
                         rebirthStartScale = rebirthScale;
                     }
 
@@ -2192,8 +2294,11 @@
                         if (spherePasswordInput) {
                             spherePasswordInput.value = '';
                             setTimeout(() => {
-                                try { spherePasswordInput.focus(); } catch (_) {}
-                            }, 30);
+                                try {
+                                    spherePasswordInput.focus({ preventScroll: false });
+                                    spherePasswordForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                } catch (_) {}
+                            }, 20);
                         }
                     } else if (nextState !== 'error') {
                         spherePasswordForm.classList.add('hidden');
