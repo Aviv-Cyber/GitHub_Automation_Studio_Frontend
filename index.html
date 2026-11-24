@@ -84,6 +84,15 @@
             touch-action: manipulation;
             -webkit-tap-highlight-color: transparent;
         }
+        .nav-tab-btn svg {
+            stroke-width: 1.9;
+            transition: stroke-width 0.22s ease, transform 0.22s ease;
+        }
+        .nav-tab-btn.active svg,
+        .nav-tab-btn.is-hovered-slide svg {
+            stroke-width: 2.85;
+            transform: scale(1.06);
+        }
         /* True Apple iOS 26 Liquid Glass Styling for Bottom Dock & Active Indicator */
         .glass-dock {
             background: linear-gradient(
@@ -447,6 +456,20 @@
             </div>
 
             <div id="docs-content-container" class="flex-1 min-h-0 flex flex-col gap-4 pt-4 overflow-hidden transition-all duration-700 blur-md opacity-40 pointer-events-none select-none">
+                <!-- Home Screen & Liquid Sphere Design Compass Snippet Card -->
+                <div class="shrink-0 bg-zinc-900/90 border border-sky-500/25 rounded-3xl p-4 sm:p-5 space-y-3">
+                    <div class="flex flex-wrap items-center justify-between gap-2.5">
+                        <div class="flex items-center gap-2.5 min-w-0">
+                            <span class="w-2.5 h-2.5 rounded-full bg-sky-400 shrink-0"></span>
+                            <h2 class="text-sm sm:text-base font-bold text-white truncate">מצפן עיצובי — דף הבית וה-Liquid Sphere (AI Design Compass)</h2>
+                        </div>
+                        <button type="button" id="copy-design-compass-btn" class="bg-apple-blue hover:bg-apple-blueHover text-white text-xs font-medium px-3.5 py-1.5 rounded-full transition-colors shrink-0">
+                            העתק מצפן עיצובי
+                        </button>
+                    </div>
+                    <pre id="design-compass-snippet-box" dir="ltr" class="ios-scroll-pane max-h-44 overflow-y-auto bg-zinc-950 border border-zinc-800/90 rounded-2xl p-3.5 text-[11px] font-mono text-zinc-300 leading-relaxed whitespace-pre-wrap select-all"></pre>
+                </div>
+
                 <!-- Editable Raw Markdown View (Toggleable) -->
                 <div id="docs-raw-wrapper" class="hidden flex-1 min-h-0 flex flex-col gap-2.5">
                     <div class="shrink-0 flex flex-wrap items-center justify-between gap-2 text-xs text-zinc-400">
@@ -506,12 +529,12 @@
                 </button>
 
                 <!-- User Profile Avatar & Sign-Out Trigger (Instagram Profile Slot) -->
-                <div id="dock-profile-wrapper" class="relative flex items-center gap-1.5 pr-1.5 mr-0.5 border-r border-white/20">
-                    <button type="button" id="dock-profile-btn" title="פרופיל והתנתקות" aria-label="פרופיל והתנתקות" class="relative w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center hover:bg-white/15 transition-all duration-300 ease-out active:scale-95">
-                        <img id="header-user-avatar" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Ccircle cx='20' cy='20' r='20' fill='%2327272A'/%3E%3Ccircle cx='20' cy='15' r='6' fill='%2371717A'/%3E%3Cpath d='M9 33c2.5-6 19.5-6 22 0' fill='%2371717A'/%3E%3C/svg%3E" alt="User Avatar" class="w-9 h-9 sm:w-10 sm:h-10 rounded-full object-cover border border-white/40">
+                <div id="dock-profile-wrapper" class="relative flex items-center pr-1.5 mr-0.5 border-r border-white/20">
+                    <button type="button" id="dock-profile-btn" title="פרופיל והתנתקות" aria-label="פרופיל והתנתקות" class="relative z-10 w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center hover:bg-white/15 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] active:scale-95">
+                        <img id="header-user-avatar" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Ccircle cx='20' cy='20' r='20' fill='%2327272A'/%3E%3Ccircle cx='20' cy='15' r='6' fill='%2371717A'/%3E%3Cpath d='M9 33c2.5-6 19.5-6 22 0' fill='%2371717A'/%3E%3C/svg%3E" alt="User Avatar" class="w-9 h-9 sm:w-10 sm:h-10 rounded-full object-cover border border-white/40 transition-transform duration-300">
                         <span class="absolute bottom-1.5 right-1.5 w-2.5 h-2.5 rounded-full bg-emerald-400 ring-2 ring-black/60"></span>
                     </button>
-                    <button type="button" id="header-signout-btn" title="התנתק" aria-label="התנתק" class="hidden w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-red-500/20 hover:bg-red-500/35 border border-red-400/35 text-red-200 flex items-center justify-center transition-all duration-300 ease-out active:scale-95">
+                    <button type="button" id="header-signout-btn" title="התנתק" aria-label="התנתק" aria-hidden="true" tabindex="-1" class="w-0 h-12 sm:h-14 mr-0 opacity-0 scale-75 pointer-events-none overflow-hidden rounded-full bg-red-500/20 hover:bg-red-500/35 border border-transparent text-red-200 flex items-center justify-center transition-all duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] active:scale-95">
                         <svg class="w-5 h-5 sm:w-6 sm:h-6 shrink-0 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2.1" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"/>
                         </svg>
@@ -665,8 +688,63 @@
             const docsRawMarkdown = document.getElementById('docs-raw-markdown');
             const docsRenderedContainer = document.getElementById('docs-rendered-container');
             const docsSyncStatusBadge = document.getElementById('docs-sync-status-badge');
+            const copyDesignCompassBtn = document.getElementById('copy-design-compass-btn');
+            const designCompassSnippetBox = document.getElementById('design-compass-snippet-box');
             let loadedBackendReadmeMarkdown = '';
             let loadedBackendReadmeSha = '';
+
+            const HOME_AND_SPHERE_DESIGN_COMPASS = `# Frontend Template — Liquid Sphere & Password Lock Design Compass
+
+## 1. Visual Philosophy & Atmosphere
+- **Spatial Minimalism:** Ultra-clean, distraction-free dark canvas centered around a single living focal point — the interactive **3D-shaded Liquid Sphere** and its Liquid Glass password input pill underneath (no bottom navigation dock or extra chrome on the lock screen).
+- **Color & Surface Tokens:**
+  - Dormant / Initial Canvas Background: \`#050507\` paired with a full-viewport dim backdrop (\`bg-black/55 backdrop-blur-[2px]\`) and a subtle radial halo (\`bg-radial from-white/15 via-zinc-400/5 to-transparent blur-2xl\`).
+  - Awake / Active Canvas Background: \`#0F0F0F\` (smooth \`transition-colors duration-700\`), Elevated Cards (post-unlock): \`#0F0F0F\` with \`border-zinc-800/80\` and \`rounded-3xl\`, Inner Inputs/Rows: \`bg-zinc-900\` with \`rounded-2xl\` or \`rounded-full\`.
+  - Typography: \`Inter\` for UI & Hebrew RTL copy (\`dir="rtl"\`), \`JetBrains Mono\` for the password input and timestamps (\`dir="ltr"\`). All inputs enforce \`font-size: 16px\` to prevent mobile Safari auto-zoom.
+
+## 2. Lock Screen Layout & Liquid Glass Password Input
+- **Centered Anchor:** \`#vault-lock-screen\` occupies the full viewport center (\`flex-1 w-full max-w-5xl mx-auto px-4 sm:px-6 flex flex-col items-center justify-center\`). The Sphere container uses \`width: min(72vw, 220px); aspect-ratio: 1\` with an oversized burst canvas overlay (\`inset: -45%; width: 190%; height: 190%\`) so shockwaves and particles never clip.
+- **Password Input Pill (\`glass-sphere-form\`):**
+  - Positioned directly beneath the Sphere (\`absolute top-full mt-6 left-1/2 -translate-x-1/2 w-full max-w-xs flex items-center gap-2 rounded-full p-1.5 z-40\`), revealed smoothly after awakening the Sphere.
+  - Styled with **Apple iOS 26 Liquid Glass**: multi-stop diagonal white translucency gradient (\`rgba(255,255,255,0.22)\` -> \`0.07\` -> \`0.14\`), \`1px solid rgba(255,255,255,0.44)\`, \`backdrop-filter: blur(22px) saturate(195%) contrast(108%)\`, specular top/left inner highlights (\`inset 0 1.5px 2px rgba(255,255,255,0.72)\`), and deep ambient drop shadow (\`0 14px 34px rgba(0,0,0,0.42)\`).
+  - Inner field (\`glass-sphere-input\`): \`type="password"\`, \`dir="ltr"\`, \`rounded-full px-4 py-2 text-xs font-mono\`, translucent \`rgba(255,255,255,0.08)\` fill with \`1px solid rgba(255,255,255,0.22)\` border.
+- **Zero-Knowledge Vault Unlock Flow:**
+  - Submitting the password (or tapping the awakened Sphere) derives an AES-GCM-256 key via Web Crypto PBKDF2 (\`100,000\` iterations, \`SHA-256\`) to decrypt \`SALTED_VAULT\` into the backend Cloudflare Worker endpoint, transitions the Sphere through \`building\` -> \`success\`, and reveals \`#unlocked-app-screen\`.
+
+## 3. Liquid Sphere Canvas Engine — Rendering & Shader Math
+- **Dual-Canvas Pipeline:** Renders on an offscreen buffer (\`R\` clamped \`96..180px\`) and upscales smoothly onto the DPR-aware main \`#liquidSphere\` canvas (\`dpr <= 2\`) for crisp 60fps mobile & desktop performance.
+- **Organic Domain-Warped fBm Fluid:**
+  - Maps each pixel inside the unit circle \`r^2 <= 1\` to a 3D unit sphere normal \`(nx, ny, nz)\`, rotated by \`yaw\` and \`pitch\`.
+  - Applies 3-octave trigonometric Fractional Brownian Motion (\`fbm\`) with \`swirl = 0.65\` to warp coordinates into flowing liquid currents.
+  - Distributes the active 5-color palette across Fibonacci-sphere directions and blends colors via smooth softmax exponential weights (\`Math.exp(dot * 2.8)\`).
+- **Dynamic Studio Lighting & Specular:**
+  - Key light drifts organically over time around \`baseL = [-0.45, -0.65, 0.72]\`.
+  - Combines Lambertian diffuse (\`0.34 + 0.72 * ndl\`), tight glossy specular highlight (\`pow(max(0, reflZ), 26) * 0.85\`), Fresnel rim glow (\`pow(1 - nz, 2.6) * 0.25\`), and edge anti-aliasing.
+
+## 4. Sphere State Machine, Palettes & Drop-Shadow Glows
+1. **\`initial\` (Dormant):** Monochrome obsidian-to-silver \`['#18181B', '#3F3F46', '#71717A', '#A1A1AA', '#E4E4E7']\` + white halo glow.
+2. **\`awake\` (Awakened / Password Input Visible):** Iridescent pastel pearl \`['#BA92EC', '#9FE7E5', '#F0C4D9', '#BDCFF3', '#FFFFFF']\` + soft lavender-blue glow.
+3. **\`ready\` (Authenticated / Unlocked):** Deep ocean-to-sky \`['#0F172A', '#1D4ED8', '#0284C7', '#38BDF8', '#E0F2FE']\` + cyan-blue glow.
+4. **\`building\` (Decrypting / Syncing):** Molten amber-orange \`['#7C2D12', '#C2410C', '#EA580C', '#FB923C', '#FED7AA']\` + intense orange glow, accelerated spin (\`2.2x\`), and deep rapid breathing.
+5. **\`success\` (Unlocked / Saved):** Emerald mint \`['#064E3B', '#059669', '#10B981', '#34D399', '#A7F3D0']\` + green glow + particle & shockwave burst.
+6. **\`error\` (Wrong Password / Error):** Crimson red \`['#7F1D1D', '#B91C1C', '#EF4444', '#F87171', '#FCA5A5']\` + red glow.
+
+## 5. Physics, Gestures & Choreography Animations
+- **Intro Spawn:** Ease-out cubic scale from \`0.08\` to \`1.0\` over \`450ms\`.
+- **Organic Dual-Harmonic Breathing:** Continuous sinusoidal scale oscillation (\`sin(phase) + 0.25 * sin(2*phase - 0.8)\`). Calm rate \`1.35\` / amplitude \`0.036\`; intensifies in \`building\` state to rate \`2.85\` / amplitude \`0.13\`.
+- **Tactile Press & Spring Squish:** Pressing down compresses scale toward \`0.95\` with an underdamped spring-damper bounce (\`stiffness 0.02\`, \`damping 0.86\`).
+- **3D Drag & Momentum Inertia:** Pointer/touch drag rotates \`yaw\` and \`pitch\` (\`clamped ±1.45 rad\`) with \`0.94\` velocity decay on release; movements \`<= 5px\` register as a clean tap.
+- **Awaken Rebirth Choreography:** First tap triggers a two-phase rebirth — \`imploding\` smoothly down to \`0.58\` scale while accelerating spin, then \`spawning\` back to \`1.0\` as the palette morphs from \`initial\` to \`awake\` and reveals the Liquid Glass password input pill.
+- **State-Change Spin Boost & Success Burst:** Every state transition injects \`colorChangeSpinBoost = 4.5\` (decaying \`0.92/frame\`). Entering \`success\` triggers \`burstPopImpulse = 0.22\`, two expanding additive shockwave rings, and 42 radial glowing particles.`;
+
+            if (designCompassSnippetBox) {
+                designCompassSnippetBox.textContent = HOME_AND_SPHERE_DESIGN_COMPASS;
+            }
+            if (copyDesignCompassBtn) {
+                copyDesignCompassBtn.addEventListener('click', () => {
+                    copyTextToClipboard(HOME_AND_SPHERE_DESIGN_COMPASS, 'המצפן העיצובי הועתק ללוח');
+                });
+            }
             const cancelDeleteRepoBtn = document.getElementById('cancel-delete-repo-btn');
             const confirmDeleteRepoBtn = document.getElementById('confirm-delete-repo-btn');
             const confirmDeletePairBtn = document.getElementById('confirm-delete-pair-btn');
@@ -861,10 +939,49 @@
                 });
             }
 
+            function setSignoutMenuOpen(isOpen) {
+                if (!headerSignoutBtn) return;
+                headerSignoutBtn.dataset.open = isOpen ? 'true' : 'false';
+                headerSignoutBtn.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+                headerSignoutBtn.tabIndex = isOpen ? 0 : -1;
+
+                headerSignoutBtn.classList.toggle('w-12', isOpen);
+                headerSignoutBtn.classList.toggle('sm:w-14', isOpen);
+                headerSignoutBtn.classList.toggle('mr-1.5', isOpen);
+                headerSignoutBtn.classList.toggle('opacity-100', isOpen);
+                headerSignoutBtn.classList.toggle('scale-100', isOpen);
+                headerSignoutBtn.classList.toggle('pointer-events-auto', isOpen);
+                headerSignoutBtn.classList.toggle('border-red-400/35', isOpen);
+
+                headerSignoutBtn.classList.toggle('w-0', !isOpen);
+                headerSignoutBtn.classList.toggle('mr-0', !isOpen);
+                headerSignoutBtn.classList.toggle('opacity-0', !isOpen);
+                headerSignoutBtn.classList.toggle('scale-75', !isOpen);
+                headerSignoutBtn.classList.toggle('pointer-events-none', !isOpen);
+                headerSignoutBtn.classList.toggle('border-transparent', !isOpen);
+
+                const avatarImg = dockProfileBtn?.querySelector('img');
+                if (avatarImg) {
+                    avatarImg.classList.toggle('scale-95', isOpen);
+                    avatarImg.classList.toggle('ring-2', isOpen);
+                    avatarImg.classList.toggle('ring-white/40', isOpen);
+                }
+
+                // Continuously sync sliding pill indicator across the 400ms width transition
+                const start = performance.now();
+                const syncFrame = (now) => {
+                    moveDockSlidingIndicator();
+                    if (now - start < 430) {
+                        requestAnimationFrame(syncFrame);
+                    }
+                };
+                requestAnimationFrame(syncFrame);
+            }
+
             if (dockProfileBtn && headerSignoutBtn) {
                 dockProfileBtn.addEventListener('click', () => {
-                    headerSignoutBtn.classList.toggle('hidden');
-                    requestAnimationFrame(() => moveDockSlidingIndicator());
+                    const nextState = headerSignoutBtn.dataset.open !== 'true';
+                    setSignoutMenuOpen(nextState);
                 });
             }
 
@@ -898,6 +1015,7 @@
                 const activeTabBtn = dockNavContent?.querySelector('.nav-tab-btn.active');
                 navTabBtns.forEach((b) => {
                     const isHovered = hoveredBtn ? b === hoveredBtn : b === activeTabBtn;
+                    b.classList.toggle('is-hovered-slide', Boolean(hoveredBtn && b === hoveredBtn));
                     b.classList.toggle('text-white', isHovered);
                     b.classList.toggle('text-white/75', !isHovered);
                 });
@@ -945,6 +1063,7 @@
                 const targetBtn = lastHoveredSlideBtn;
                 isDockSliding = false;
                 dockSlideMoved = false;
+                navTabBtns.forEach((b) => b.classList.remove('is-hovered-slide'));
 
                 if (dockActiveIndicator) {
                     dockActiveIndicator.style.transition = '';
@@ -1074,7 +1193,7 @@
                     dockLoggedOutBtn.classList.toggle('opacity-50', !isDormantInitial && isLoggedOut);
                 }
                 if (headerSignoutBtn && isLoggedOut) {
-                    headerSignoutBtn.classList.add('hidden');
+                    setSignoutMenuOpen(false);
                 }
                 const loginIconHtml = `<span class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-white/10 border border-white/15 text-white" aria-label="התחבר"><svg class="w-5 h-5 -rotate-45 translate-x-[1px] -translate-y-[1px]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg></span>`;
                 if (reposHeaderTitle) {
@@ -1289,12 +1408,12 @@
                     });
 
                     if (res.status === 404) {
-                        loadedBackendReadmeMarkdown = '';
+                        loadedBackendReadmeMarkdown = HOME_AND_SPHERE_DESIGN_COMPASS;
                         loadedBackendReadmeSha = '';
-                        if (docsRawMarkdown) docsRawMarkdown.value = '';
-                        if (docsSyncStatusBadge) docsSyncStatusBadge.textContent = 'README.md לא נמצא ב-Backend';
-                        renderMarkdownToStyledCards('');
-                        return '';
+                        if (docsRawMarkdown) docsRawMarkdown.value = HOME_AND_SPHERE_DESIGN_COMPASS;
+                        if (docsSyncStatusBadge) docsSyncStatusBadge.textContent = 'מצפן עיצובי מקומי (README.md טרם נשמר ב-Backend)';
+                        renderMarkdownToStyledCards(HOME_AND_SPHERE_DESIGN_COMPASS);
+                        return HOME_AND_SPHERE_DESIGN_COMPASS;
                     }
 
                     if (!res.ok) {
@@ -1412,12 +1531,11 @@
 
             if (copyDocsMdBtn) {
                 copyDocsMdBtn.addEventListener('click', async () => {
-                    const md = loadedBackendReadmeMarkdown || await loadArchitectureReadmeFromBackend(false);
-                    if (!md) {
-                        showToast('אין תוכן להעתקה ב-README.md', 'error');
-                        return;
-                    }
-                    copyTextToClipboard(md, 'תיעוד ה-README הועתק ללוח');
+                    const backendMd = loadedBackendReadmeMarkdown || await loadArchitectureReadmeFromBackend(false);
+                    const combinedPrompt = backendMd && backendMd.trim() !== HOME_AND_SPHERE_DESIGN_COMPASS.trim()
+                        ? `${HOME_AND_SPHERE_DESIGN_COMPASS}\n\n---\n\n${backendMd}`
+                        : HOME_AND_SPHERE_DESIGN_COMPASS;
+                    copyTextToClipboard(combinedPrompt, 'המצפן העיצובי ותיעוד המערכת הועתקו ללוח');
                 });
             }
 
@@ -1484,15 +1602,6 @@
                 building: 'drop-shadow(0 0 38px rgba(249, 115, 22, 0.55))',
                 success: 'drop-shadow(0 0 34px rgba(16, 185, 129, 0.45))',
                 error: 'drop-shadow(0 0 34px rgba(239, 68, 68, 0.5))'
-            };
-
-            const SPHERE_ACCENT_COLORS = {
-                initial: '#A1A1AA',
-                awake: '#BDCFF3',
-                ready: '#38BDF8',
-                building: '#FDBA74',
-                success: '#6EE7B7',
-                error: '#FCA5A5'
             };
 
             const HEADER_THEMES = {
@@ -1782,8 +1891,8 @@
             }
 
             // Initialize Liquid Sphere Engine
-            const SPHERE_INTRO_DURATION_MS = 450; // משך אנימציית הכניסה של הכדור במילישניות
-            const SPHERE_INTRO_START_SCALE = 0.08;  // גודל התחלתי של הכדור בפתיחה (8% מהגודל המלא)
+            const SPHERE_INTRO_DURATION_MS = 450;
+            const SPHERE_INTRO_START_SCALE = 0.08;
             let PALETTE = [...SPHERE_PALETTES.initial];
             let targetSpinSpeed = 1.0;
             let colorChangeSpinBoost = 0;
@@ -1991,7 +2100,7 @@
                         : 1;
                     const introEase = 1 - Math.pow(1 - introLinear, 3);
                     const introScale = SPHERE_INTRO_START_SCALE + (1 - SPHERE_INTRO_START_SCALE) * introEase;
-                    // Shrink smoothly from current scale, expand back, and swap state once complete without size jumps
+
                     if (isSphereRebirthing) {
                         const shrunkTargetScale = 0.58;
                         if (sphereRebirthPhase === 'imploding') {
@@ -2030,7 +2139,6 @@
                         rebirthStartScale = rebirthScale;
                     }
 
-                    // Spring physics for tactile press squish feedback (gentle, damped motion)
                     const targetPressScale = drag ? 0.95 : 1.0;
                     const springForce = (targetPressScale - pressSquishScale) * 0.02;
                     pressSquishVelocity = (pressSquishVelocity + springForce) * 0.86;
@@ -2650,9 +2758,7 @@
                     if (headerUserAvatar && userData.avatar_url) {
                         headerUserAvatar.src = userData.avatar_url;
                     }
-                    if (headerSignoutBtn) {
-                        headerSignoutBtn.classList.add('hidden');
-                    }
+                    setSignoutMenuOpen(false);
 
                     updateSphereState('ready');
                     syncSettingsBlurState();
@@ -2713,9 +2819,7 @@
                     if (headerUserAvatar) {
                         headerUserAvatar.src = '';
                     }
-                    if (headerSignoutBtn) {
-                        headerSignoutBtn.classList.add('hidden');
-                    }
+                    setSignoutMenuOpen(false);
                     switchActiveTab('create');
                     updateSphereState('initial');
                     syncSettingsBlurState();
@@ -2745,7 +2849,6 @@
                     }
 
                     let latestPagesRun = null;
-                    // Check GitHub Actions workflows / pages-build-deployment runs to detect active deploy
                     try {
                         const runsRes = await fetch(
                             `https://api.github.com/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repoName)}/actions/runs?per_page=10&_t=${Date.now()}`,
@@ -2772,7 +2875,6 @@
                         }
                     } catch (_) {}
 
-                    // Also check GitHub Pages deployments API if available
                     try {
                         const depRes = await fetch(
                             `https://api.github.com/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repoName)}/pages/deployments?per_page=3&_t=${Date.now()}`,
@@ -2822,7 +2924,7 @@
                 }
 
                 let checks = 0;
-                const maxChecks = 24; // up to ~2 minutes (every 5s)
+                const maxChecks = 24;
                 activeDeployWatchers[key] = setInterval(async () => {
                     checks += 1;
                     if (!authenticatedOwner) {
@@ -2968,7 +3070,6 @@
                             throw new Error(errData.message || `HTTP ${delRes.status}`);
                         }
 
-                        // GitHub Pages DELETE can return 202/204 while teardown finishes; poll briefly until 404 or timeout
                         let confirmedOffline = false;
                         for (let attempt = 0; attempt < 5; attempt++) {
                             await new Promise((resolve) => setTimeout(resolve, 650));
@@ -3086,6 +3187,7 @@
                 reposListContainer.innerHTML = filtered.map((repo) => {
                     const repoName = repo.name;
                     const isPrivate = Boolean(repo.private);
+                    const isFrontendRepo = !isPrivate || /_Frontend$/i.test(repoName);
                     const isExpanded = expandedRepoName === repoName;
                     const aliasVal = getRepoAlias(repoName);
                     const liveStatus = !isPrivate ? (repoLiveStatusMap[repoName] || 'checking') : null;
@@ -3162,16 +3264,18 @@
                                         </div>
                                     </div>
 
-                                    <div class="space-y-1.5">
-                                        <div class="flex items-center justify-between gap-2">
-                                            <span dir="ltr" class="text-[11px] font-mono text-zinc-400">data.json</span>
-                                            <div class="flex items-center gap-1.5">
-                                                <button type="button" data-load-data-btn="${escapeHtmlAttr(repoName)}" class="text-[11px] bg-zinc-800 hover:bg-zinc-700 text-zinc-200 px-2.5 py-1 rounded-lg border border-zinc-700 transition-colors">טען</button>
-                                                <button type="button" data-save-data-btn="${escapeHtmlAttr(repoName)}" class="text-[11px] bg-apple-blue hover:bg-apple-blueHover text-white px-2.5 py-1 rounded-lg transition-colors">שמור data.json</button>
+                                    ${!isFrontendRepo ? `
+                                        <div class="space-y-1.5">
+                                            <div class="flex items-center justify-between gap-2">
+                                                <span dir="ltr" class="text-[11px] font-mono text-zinc-400">data.json</span>
+                                                <div class="flex items-center gap-1.5">
+                                                    <button type="button" data-load-data-btn="${escapeHtmlAttr(repoName)}" class="text-[11px] bg-zinc-800 hover:bg-zinc-700 text-zinc-200 px-2.5 py-1 rounded-lg border border-zinc-700 transition-colors">טען</button>
+                                                    <button type="button" data-save-data-btn="${escapeHtmlAttr(repoName)}" class="text-[11px] bg-apple-blue hover:bg-apple-blueHover text-white px-2.5 py-1 rounded-lg transition-colors">שמור data.json</button>
+                                                </div>
                                             </div>
+                                            <textarea dir="ltr" data-data-json-editor="${escapeHtmlAttr(repoName)}" rows="4" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-2.5 text-xs font-mono text-zinc-200 focus:outline-none focus:border-zinc-600"></textarea>
                                         </div>
-                                        <textarea dir="ltr" data-data-json-editor="${escapeHtmlAttr(repoName)}" rows="4" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-2.5 text-xs font-mono text-zinc-200 focus:outline-none focus:border-zinc-600"></textarea>
-                                    </div>
+                                    ` : ''}
                                 </div>
                             ` : ''}
                         </div>
@@ -3304,18 +3408,6 @@
                     const cleanSlug = String(slug || '').trim();
                     const encoder = new TextEncoder();
 
-                    const rawPwdDigestBytes = await crypto.subtle.digest(
-                        'SHA-256',
-                        encoder.encode(cleanPwd)
-                    );
-                    const passwordRawHashHex = Array.from(new Uint8Array(rawPwdDigestBytes), (b) => b.toString(16).padStart(2, '0')).join('');
-
-                    const pwdDigestBytes = await crypto.subtle.digest(
-                        'SHA-256',
-                        encoder.encode(`${cleanSlug}:${cleanPwd}`)
-                    );
-                    const passwordHashHex = Array.from(new Uint8Array(pwdDigestBytes), (b) => b.toString(16).padStart(2, '0')).join('');
-
                     const endpoint = workerUrl
                         ? `${workerUrl}/${encodeURIComponent(authenticatedOwner)}/${encodeURIComponent(backendRepo || `${cleanSlug}_Backend`)}`
                         : '';
@@ -3373,7 +3465,6 @@
                     for (let i = 0; i < binStr.length; i++) bytes[i] = binStr.charCodeAt(i);
                     let htmlText = new TextDecoder('utf-8').decode(bytes);
 
-                    // Replace SALTED_VAULT placeholder object in VaultDB frontend template without exposing plaintext metadata
                     if (/const\s+SALTED_VAULT\s*=\s*\{[\s\S]*?\}\s*;/.test(htmlText)) {
                         htmlText = htmlText.replace(
                             /const\s+SALTED_VAULT\s*=\s*\{[\s\S]*?\}\s*;/,
@@ -3386,7 +3477,6 @@
                         );
                     }
 
-                    // Strip any legacy studio-app-auth-config block if present so Worker/GitHub details stay encrypted
                     htmlText = htmlText.replace(/\s*<script id="studio-app-auth-config">[\s\S]*?<\/script>\s*/gi, '\n');
 
                     const outBytes = new TextEncoder().encode(htmlText);
@@ -3743,7 +3833,6 @@
                                 }
                             }
                         );
-                        // Ignore 404 when deleting a pair so a missing twin never causes an error
                         if (res.status === 404 && repoName !== targetRepo) {
                             addDiagnosticLog('info', `Pair Twin Not Found (Skipped) ${authenticatedOwner}/${repoName}`, {
                                 repo: repoName
